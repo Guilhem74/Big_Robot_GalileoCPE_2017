@@ -1,20 +1,24 @@
 void mise_a_jour_robot()
 {
-  D_ancien=D;
+  //Sauvegarde des codeuses
+ D_ancien=D;
 G_ancien=G;
+  //Maj du tems
 t_precedent=t_actuel;
 t_actuel=millis();
 delta_T=t_actuel-t_precedent;
+//Maj des codeuses
 recuperer(0);
 recuperer(1);
+  //Maj de la position
 mise_a_jour_POS();
 }
 
 
 void mise_a_jour_POS()
 {
-  float delta_D = (D_ancien - D)* PI * DIAMETRE_ROUE / TICCODEUSE; //En tic puis converti en mm
-  float delta_G = (G_ancien - G)* PI * DIAMETRE_ROUE / TICCODEUSE; //En tic puis converti en mm
+  float delta_D = (D_ancien - D)* PI * DIAMETRE_ROUE / TICCODEUSES; //En tic puis converti en mm
+  float delta_G = (G_ancien - G)* PI * DIAMETRE_ROUE / TICCODEUSES; //En tic puis converti en mm
   float localX = 0, localY = 0;
   
   localX = (float)(((delta_D + delta_G) / 2.0f) * cos(angle_radian +(delta_D - delta_G) / float(2 * ECARTEMENT_ROUES)));//on parcourt cette distance avec l'angle initial

@@ -1,11 +1,5 @@
-#define TEMPS_MIN_ASSERT 100
-  #define PIN_MOTEUR_DROITE_VITESSE 9
-  #define PIN_MOTEUR_DROITE_SENS    8
-  #define PIN_MOTEUR_GAUCHE_VITESSE 11
-  #define PIN_MOTEUR_GAUCHE_SENS 10
- #define TIC_CODEUSES 1024
- #define DIAMETRE_ROUE 41.25
-  #define ETAT_MOTEUR_AVANCE HIGH
+#include "define.h"
+
 void setup_asservissement()
 {
   Serial1.begin(115200);
