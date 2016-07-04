@@ -1,5 +1,8 @@
 #ifndef DEFINE_H
 #define DEFINE_H
+//Consigne du robot (En tick)
+int L_consigne=10;
+int A_consigne=0;
 
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
@@ -17,20 +20,29 @@
 #define ECARTEMENT_ROUES 186 //en mm
 
 /*Variable de l'assert*********************************************/
-#define TEMPS_MIN_ASSERT 100 // en m
+#define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define P_lineaire 0.1
-#define I_lineaire 0.0020
-#define D_lineaire 0.0020
+#define P_LINEAIRE 0.01
+#define I_LINEAIRE 0.0020*0
+#define D_LINEAIRE 0.0020*0
 float erreur_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement linéaire ****
-#define P_angulaire 0.1
-#define I_angulaire 0.0020
-#define D_angulaire 0.0020
+#define P_ANGULAIRE 0.1
+#define I_ANGULAIRE 0.00
+#define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
+
+#define P_VITESSE 4
+#define I_VITESSE 0.5
+#define D_VITESSE 0
+float erreur_vitesseD=0;
+float Somme_erreur_vitesseD=0;
+float erreur_vitesseG=0;
+float Somme_erreur_vitesseG=0;
+
 
 //Valeur des codeuses
 int32_t D=0;//Nbr de tick droite
@@ -39,17 +51,14 @@ int32_t D_ancien=0;//Ancien nbr de tick droite
 int32_t G_ancien=0;//Ancien nbr de tick gauche
 
 //Variable global
-int t_precedent=0;
-int t_actuel=0;
+int32_t t_precedent=0;
+int32_t t_actuel=0;
 float delta_T=0;
 
 
-long vitesse_G=0;
-long vitesse_D=0;
+int32_t vitesse_G=0;
+int32_t vitesse_D=0;
 
-//Consigne du robot (En tick)
-int L_consigne=4000;
-int A_consigne=0;
 
 
 float X_POS=0,Y_POS=0,ANGLE_POS=0;

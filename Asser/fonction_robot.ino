@@ -1,3 +1,5 @@
+#include "define.h"
+
 void mise_a_jour_robot()
 {
   //Sauvegarde des codeuses
@@ -6,11 +8,15 @@ G_ancien=G;
   //Maj du tems
 t_precedent=t_actuel;
 t_actuel=millis();
-delta_T=t_actuel-t_precedent;
+delta_T=t_actuel-t_precedent;//en ms
 //Maj des codeuses
 recuperer(0);
 recuperer(1);
-  //Maj de la position
+//Maj des vitesses;
+vitesse_D=10*(D-D_ancien)/delta_T;//Vitesse par s
+vitesse_G=10*(G-G_ancien)/delta_T;//Vitesse 
+
+//Maj de la position
 mise_a_jour_POS();
 }
 
@@ -30,11 +36,5 @@ void mise_a_jour_POS()
   X_POS += int(localX);
   Y_POS += int(localY);
   ANGLE_POS = (angle_radian * 360 / (float)(2 * PI));
-  Serial.println(X_POS);
-  Serial.println(Y_POS);
-  
-  Serial.println(ANGLE_POS);
-  
-
 
 }
