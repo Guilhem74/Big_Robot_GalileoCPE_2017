@@ -23,13 +23,12 @@ void recuperer(byte A)
       if (A == 0)
       {
         D = inputString.toInt();
-        
+               
       }
       if (A == 1)
       {
         G = inputString.toInt();
-       
-
+      
       }
      
       fini = false;

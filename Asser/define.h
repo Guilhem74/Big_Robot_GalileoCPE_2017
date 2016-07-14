@@ -1,9 +1,9 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 //Consigne du robot (En tick)
-int L_consigne=10;
+int L_consigne=0;
 int A_consigne=0;
-
+int angle_robot=0;
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
@@ -20,23 +20,26 @@ int A_consigne=0;
 #define ECARTEMENT_ROUES 186 //en mm
 
 /*Variable de l'assert*********************************************/
+
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
 #define P_LINEAIRE 0.01
-#define I_LINEAIRE 0.0020*0
-#define D_LINEAIRE 0.0020*0
+#define I_LINEAIRE 0
+#define D_LINEAIRE 0
 float erreur_lineaire=0;
 float Somme_erreur_lineaire=0;
 
-//Asservissement linéaire ****
-#define P_ANGULAIRE 0.1
+//Asservissement angulaire ****
+#define P_ANGULAIRE 0.04
 #define I_ANGULAIRE 0.00
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
 
+
+//Asservissement vitesse ****
 #define P_VITESSE 4
-#define I_VITESSE 0.5
+#define I_VITESSE 0*0.5
 #define D_VITESSE 0
 float erreur_vitesseD=0;
 float Somme_erreur_vitesseD=0;

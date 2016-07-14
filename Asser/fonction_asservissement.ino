@@ -2,14 +2,14 @@ void asservissement_robot()
 {
 //Lancement des asservissements
 int Commande_Lin=asservissement_lineaire();
+
 int Commande_Ang=asservissement_angulaire();
 //Somme des commandes
 
-Serial.println(Commande_Lin);
 
 
 int Commande_D=asservissement_vitesseD(Commande_Lin+Commande_Ang);
-int Commande_G=asservissement_vitesseD(Commande_Lin-Commande_Ang);
+int Commande_G=asservissement_vitesseG(Commande_Lin-Commande_Ang);
 
 
 //Analyse du sens des moteurs en fonction des commandes (Commande <0 -> on recule)
@@ -32,7 +32,8 @@ if(Commande_G>255) Commande_G=255;//PWM_MAX est 255
   analogWrite(PIN_MOTEUR_GAUCHE_VITESSE, Commande_G);
 if((millis()-t_actuel)>TEMPS_MIN_ASSERT)
 {
-  Serial.println("Assert trop lent");
+  //Serial.println("Assert trop lent");
+  while(1);
 }
 
 while((millis()-t_actuel)<TEMPS_MIN_ASSERT);//Afin d'avoir un asservissement régulier a constante de temps connu
