@@ -1,9 +1,15 @@
 #ifndef DEFINE_H
 #define DEFINE_H
+
+
 //Consigne du robot (En tick)
 int L_consigne=0;
 int A_consigne=0;
 int angle_robot=0;
+
+float X_DEST=0,Y_DEST=300,ANGLE_DEST=0,ANGLE_FINAL=-90;
+bool MARCHE_ARRIERE=false;
+bool close_to_goal=false;
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
@@ -18,28 +24,33 @@ int angle_robot=0;
 //Variable du robot
 #define DIAMETRE_ROUE 41.25 //en mm
 #define ECARTEMENT_ROUES 186 //en mm
-
+#define TICS2MM ((PI*DIAMETRE_ROUE)/(TICCODEUSES))
+#define MM2TICS ((TICCODEUSES)/(PI*DIAMETRE_ROUE))
+#define RAD2DEG 360/(2*PI)
+#define DEG2RAD (2*PI)/360
 /*Variable de l'assert*********************************************/
-
+float Distance_moyenne =0;
+float erreur_angle_radian=0;
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define P_LINEAIRE 0.01
+#define P_LINEAIRE 0.04
 #define I_LINEAIRE 0
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
+float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 0.04
+#define P_ANGULAIRE 30
 #define I_ANGULAIRE 0.00
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
-
+float erreur_precedente_angulaire=0;
 
 //Asservissement vitesse ****
-#define P_VITESSE 4
-#define I_VITESSE 0*0.5
+#define P_VITESSE 3
+#define I_VITESSE 0
 #define D_VITESSE 0
 float erreur_vitesseD=0;
 float Somme_erreur_vitesseD=0;
@@ -59,8 +70,8 @@ int32_t t_actuel=0;
 float delta_T=0;
 
 
-int32_t vitesse_G=0;
-int32_t vitesse_D=0;
+float vitesse_G=0;
+float vitesse_D=0;
 
 
 

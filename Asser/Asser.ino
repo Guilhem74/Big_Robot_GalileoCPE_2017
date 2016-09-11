@@ -3,17 +3,18 @@
 
 void setup() {
 setup_asservissement();
-  pinMode(13, OUTPUT);
-    digitalWrite(13, LOW);  
+  
+//  while(!Serial.available());
+//  Serial.print("X:");
+    delay(1000);
 }
+
 
 
 void loop() {
-mise_a_jour_robot();
-/*
-
-*/
- asservissement_robot();
+ mise_a_jour_robot();
+ //Calcul erreur
+ //A_consigne= 
+ asservissement_robot(((TICCODEUSES)/(PI*DIAMETRE_ROUE))*Distance_moyenne,ANGLE_DEST);
 }
-
 
