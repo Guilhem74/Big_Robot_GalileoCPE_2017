@@ -62,8 +62,10 @@ void calcul_erreur()
   
    
    Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*(float)cos(erreur_angle_radian -PI*MARCHE_ARRIERE);
+
    if(erreur_angle_radian*RAD2DEG>90 ||erreur_angle_radian*RAD2DEG<-90)
    {
+    
      Distance_moyenne = -(float)sqrt(dx*dx+dy*dy)*(float)cos(erreur_angle_radian -PI);
      erreur_angle_radian= angle_radian - ANGLE_DEST  -PI;
      
@@ -87,8 +89,11 @@ void calcul_erreur()
       close_to_goal=false;
      }
    } 
-
-
+ for(int i=0; i<40;i++)
+    {
+      Info[i]="";
+    }
+sprintf(Info,"X;%d;%d;",(int)sqrt(X_DEST*X_DEST+Y_DEST*Y_DEST),(int)sqrt(X_DEST*X_DEST+Y_DEST*Y_DEST)-(int)sqrt(dx*dx+dy*dy));
    
 
    

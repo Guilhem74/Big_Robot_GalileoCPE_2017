@@ -1,14 +1,25 @@
 void asservissement_robot(int Consigne_Lin, int Consigne_Ang)
 {
 //Lancement des asservissements
-erreur_lineaire=Consigne_Lin;
+ erreur_precedente_lineaire = erreur_lineaire;//Sauvegarde de l'erreur precedente
+  erreur_lineaire=Consigne_Lin;
+
 int Commande_Lin=asservissement_lineaire();
 int Commande_Ang=asservissement_angulaire();
 //Somme des commandes
 
 
+Serial.println(Info);
+if(abs(Commande_Lin)>100)
+{
+  if(Commande_Lin<0)
+    Commande_Lin=-100;
+  else
+    Commande_Lin=100;
+}
 int Commande_D=asservissement_vitesseD(Commande_Lin+Commande_Ang);
 int Commande_G=asservissement_vitesseG(Commande_Lin-Commande_Ang);
+
 
 //Analyse du sens des moteurs en fonction des commandes (Commande <0 -> on recule)
 bool sens_D=ETAT_MOTEUR_AVANCE;
@@ -41,11 +52,12 @@ int asservissement_lineaire()
 {
  //erreur_lineaire
   int Commande_lineaire;
+ 
   float delta_erreur_lineaire = erreur_lineaire-erreur_precedente_lineaire;//D
   Somme_erreur_lineaire +=erreur_lineaire;//I
   
   Commande_lineaire=P_LINEAIRE*erreur_lineaire+I_LINEAIRE*Somme_erreur_lineaire+D_LINEAIRE*delta_erreur_lineaire;//On determine la commande a envoyer aux moteurs;
-  erreur_precedente_lineaire = erreur_lineaire;//Sauvegarde de l'erreur precedente
+  
 return Commande_lineaire;
 }
 
