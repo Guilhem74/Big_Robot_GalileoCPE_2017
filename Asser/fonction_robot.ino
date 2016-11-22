@@ -67,7 +67,7 @@ void calcul_erreur()
   while (erreur_angle_radian >= PI)erreur_angle_radian -= 2*PI;
   while (erreur_angle_radian < -PI)erreur_angle_radian += 2*PI;
 
-   if(sqrt(dx*dx+dy*dy)<1)
+   if(sqrt(dx*dx+dy*dy)<5)
    {//Si je suis dans la boule d'arrivée
      erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;
      Distance_moyenne=0;//asservissement uniquement en angle
@@ -77,7 +77,7 @@ void calcul_erreur()
    }
    else 
    {//Si je n'y suis pas
-    if(close_to_goal=true&&sqrt(dx*dx+dy*dy)<10)
+    if(close_to_goal=true&&sqrt(dx*dx+dy*dy)<30)
      {//Mais que j'y était avant et que je suis dans la boule de sortie
       erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;//Asservissement uniquement sur la disatnce et mon angle final
     
