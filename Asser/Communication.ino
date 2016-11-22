@@ -58,9 +58,52 @@ void Traitement()
     X_DEST=(float)data[1].toInt();
     Y_DEST=(float)data[2].toInt();
     ANGLE_FINAL=(float)data[3].toInt();
+    MARCHE_ARRIERE=false;
    
+  }
+  if(data[0].equals("S"))
+  {
+     mise_a_jour_POS();
+    X_DEST=X_POS;
+    Y_DEST=Y_POS;
+    ANGLE_FINAL=ANGLE_POS;
+
+
+  }
+  if(data[0].equals("R"))
+  {
+    X_DEST=(float)data[1].toInt();
+    Y_DEST=(float)data[2].toInt();
+    ANGLE_FINAL=(float)data[3].toInt();
+    MARCHE_ARRIERE=true;
+  }
+  if(data[0].equals("U"))
+  {
+    Serial1.write('r');
+    
+    X_DEST=0;
+    X_POS=0;
+    Y_DEST=0;
+    Y_POS=0;
+    ANGLE_FINAL=0;
+    ANGLE_POS=0;
+    Distance_moyenne =0;
+    erreur_angle_radian=0;
+    erreur_lineaire=0;
+    erreur_precedente_lineaire=0;
+    Somme_erreur_lineaire=0;
+    erreur_angulaire=0;
+    Somme_erreur_angulaire=0;
+    erreur_precedente_angulaire=0;
+    erreur_vitesseD=0;
+    Somme_erreur_vitesseD=0;
+    erreur_vitesseG=0;
+    Somme_erreur_vitesseG=0;
+    mise_a_jour_POS();
+calcul_erreur();
   }
 
 
 }
+
 

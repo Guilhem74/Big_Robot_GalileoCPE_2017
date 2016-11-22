@@ -58,31 +58,29 @@ void calcul_erreur()
 //}
 
 //TO DO MARCHE ARRIERE
-   erreur_angle_radian= angle_radian - ANGLE_DEST  ;
+   erreur_angle_radian= angle_radian - ANGLE_DEST -PI*MARCHE_ARRIERE  ;
   
    
-   Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*(float)cos(erreur_angle_radian -PI*MARCHE_ARRIERE);
-
-   if(erreur_angle_radian*RAD2DEG>90 ||erreur_angle_radian*RAD2DEG<-90)
-   {
-    
-     Distance_moyenne = -(float)sqrt(dx*dx+dy*dy)*(float)cos(erreur_angle_radian -PI);
-     erreur_angle_radian= angle_radian - ANGLE_DEST  -PI;
-     
-   }
+   
  
-   if(sqrt(dx*dx+dy*dy)<5)
+   Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*(float)cos(erreur_angle_radian -PI*MARCHE_ARRIERE);
+  while (erreur_angle_radian >= PI)erreur_angle_radian -= 2*PI;
+  while (erreur_angle_radian < -PI)erreur_angle_radian += 2*PI;
+
+   if(sqrt(dx*dx+dy*dy)<1)
    {//Si je suis dans la boule d'arrivée
      erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;
      Distance_moyenne=0;//asservissement uniquement en angle
      close_to_goal=true;
      
+     
    }
    else 
    {//Si je n'y suis pas
-    if(close_to_goal=true&&sqrt(dx*dx+dy*dy)<50)
+    if(close_to_goal=true&&sqrt(dx*dx+dy*dy)<10)
      {//Mais que j'y était avant et que je suis dans la boule de sortie
       erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;//Asservissement uniquement sur la disatnce et mon angle final
+    
      }
      else
      {//je suis en dehors de la boule de sortie ou je ne suis pas encore passé par la boule d'arrivée

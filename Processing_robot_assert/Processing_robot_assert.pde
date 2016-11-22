@@ -18,7 +18,7 @@ void setup()
   background(255,255,255); // fond noir
   println("Ports série disponibles sur le PC :");
   println(Serial.list()); // affiche dans la console la liste des ports séries
-  Port_COM = new Serial(this, "COM6", 115200); // Initialise une nouvelle instance du port Série
+  Port_COM = new Serial(this, "COM4", 115200); // Initialise une nouvelle instance du port Série
   Y[1]=0;
   X[1]=0;
   Z[1]=0;
@@ -79,7 +79,20 @@ void serialEvent (Serial Port_COM)
 } // fin de la fonction de gestion des évènements Série
  void keyPressed() {
 
-  println("Rafik");
-    Port_COM.write("XYA;0;500;0 \n");
+  if (key == 'a' || key == 'A') {
+      Port_COM.write("XYA;0;500;0 \n");
+    }
+  if (key == 'H' || key == 'h') {
+      Port_COM.write("XYA;0;0;0 \n");
+    }
+    if (key == 's' || key == 'S') {
+      Port_COM.write("S; \n");
+    }
+    if (key == 'r' || key == 'R') {
+     Port_COM.write("R;0;0;0 \n");;
+    }
+    if (key == 'U' || key == 'u') {
+     Port_COM.write("U; \n");;
+    }
   
   }

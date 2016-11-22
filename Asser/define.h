@@ -13,8 +13,10 @@ int A_consigne=0;
 int angle_robot=0;
 
 float X_DEST=0,Y_DEST=0,ANGLE_DEST=0,ANGLE_FINAL=0;
-bool MARCHE_ARRIERE=false;
+bool MARCHE_ARRIERE=true;
 bool close_to_goal=false;
+float X_POS=0,Y_POS=0,ANGLE_POS=0;
+float angle_radian=0;
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
@@ -42,7 +44,7 @@ float erreur_angle_radian=0;
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
 #define P_LINEAIRE 0.04
-#define I_LINEAIRE 0.000025
+#define I_LINEAIRE 0.000015
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
 float erreur_precedente_lineaire=0;
@@ -50,7 +52,7 @@ float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
 #define P_ANGULAIRE 150
-#define I_ANGULAIRE 0.00
+#define I_ANGULAIRE 2
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
@@ -80,10 +82,5 @@ float delta_T=0;
 
 float vitesse_G=0;
 float vitesse_D=0;
-
-
-
-float X_POS=0,Y_POS=0,ANGLE_POS=0;
-float angle_radian=0;
 
 #endif
