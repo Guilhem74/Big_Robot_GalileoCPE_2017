@@ -75,10 +75,10 @@ void Tourner_Moteur_G()
 void Plz_Share_What_U_Know_About_Encoder()
 {
   Serial.print("D: ");
-  Serial.print(D);
+  Serial.print(Codeuse_Droite);
   Serial.print("  ");
   Serial.print("G: ");
-  Serial.println(G);
+  Serial.println(Codeuse_Gauche);
 }
 
 void Where_Is_Robot()
@@ -89,6 +89,16 @@ void Where_Is_Robot()
   Serial.print("Y: ");
   Serial.print(Y_POS);
    Serial.print("O: ");
-  Serial.print(ANGLE_POS);
+  Serial.println(ANGLE_POS);
+}
+
+void Are_U_Wrong()
+{
+  Serial.print("Distance: ");
+  Serial.print(Distance_moyenne);
+  Serial.print("   ");
+  Serial.print("Erreur_Angle: ");
+  Serial.print(erreur_angle_radian*RAD2DEG);
+  Serial.println("");
 }
 

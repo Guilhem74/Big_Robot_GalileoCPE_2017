@@ -47,10 +47,10 @@ void initialisation_variables()
  erreur_vitesseG=0;
  Somme_erreur_vitesseG=0;
 
- D=0;//Nbr de tick droite
- G=0;//Nbr de tick gauche
- D_ancien=0;//Ancien nbr de tick droite
- G_ancien=0;//Ancien nbr de tick gauche
+ Codeuse_Droite=0;//Nbr de tick droite
+ Codeuse_Gauche=0;//Nbr de tick gauche
+ Codeuse_Droite_PAST=0;//Ancien nbr de tick droite
+ Codeuse_Gauche_PAST=0;//Ancien nbr de tick gauche
  t_precedent=0;
  t_actuel=0;
  delta_T=0;

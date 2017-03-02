@@ -13,8 +13,9 @@ char Info[40]={};
 
 void setup() {
 setup_asservissement();
+
 delay(1000);
- 
+ //Droit_Au_But();
 }
 
 
@@ -22,6 +23,7 @@ delay(1000);
 void loop() {
  mise_a_jour_robot();
  Where_Is_Robot();
+ //Are_U_Wrong();
  //Calcul erreur
  //A_consigne= 
  asservissement_robot(((TICCODEUSES)/(PI*DIAMETRE_ROUE))*Distance_moyenne,ANGLE_DEST);

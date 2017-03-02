@@ -22,12 +22,12 @@ void recuperer(byte A)
     { inputString += inChar;
       if (A == 0)
       {
-        D = -inputString.toInt();
+        Codeuse_Droite= -inputString.toInt();
                
       }
       if (A == 1)
       {
-        G = -inputString.toInt();
+        Codeuse_Gauche = -inputString.toInt();
       
       }
      

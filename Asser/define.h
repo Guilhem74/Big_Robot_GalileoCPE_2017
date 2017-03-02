@@ -27,10 +27,10 @@ float angle_radian=0;
 #define PIN_MOTEUR_DROITE_VITESSE 9
 #define PIN_MOTEUR_DROITE_SENS    8
 
-#define LIMIT_PWM_MAX 40 
+#define LIMIT_PWM_MAX 100 
 //Variable du robot
 #define DIAMETRE_ROUE 41.25 //en mm
-#define ECARTEMENT_ROUES 186 //en mm
+#define ECARTEMENT_ROUES 230//en mm
 #define TICS2MM ((PI*DIAMETRE_ROUE)/(TICCODEUSES))
 #define MM2TICS ((TICCODEUSES)/(PI*DIAMETRE_ROUE))
 #define RAD2DEG 360/(2*PI)
@@ -41,18 +41,18 @@ float angle_radian=0;
 float Distance_moyenne =0;
 float erreur_angle_radian=0;
 
-#define TEMPS_MIN_ASSERT 5// en ms
+#define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define P_LINEAIRE 0.04
-#define I_LINEAIRE 0.000015
+#define P_LINEAIRE 0.05
+#define I_LINEAIRE 0
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
 float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 150
-#define I_ANGULAIRE 2
+#define P_ANGULAIRE 10
+#define I_ANGULAIRE 0
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
@@ -69,10 +69,10 @@ float Somme_erreur_vitesseG=0;
 
 
 //Valeur des codeuses
-int32_t D=0;//Nbr de tick droite
-int32_t G=0;//Nbr de tick gauche
-int32_t D_ancien=0;//Ancien nbr de tick droite
-int32_t G_ancien=0;//Ancien nbr de tick gauche
+int32_t Codeuse_Droite=0;//Nbr de tick droite
+int32_t Codeuse_Gauche=0;//Nbr de tick gauche
+int32_t Codeuse_Droite_PAST=0;//Ancien nbr de tick droite
+int32_t Codeuse_Gauche_PAST=0;//Ancien nbr de tick gauche
 
 //Variable global
 int32_t t_precedent=0;

@@ -41,7 +41,7 @@ if(Commande_G>LIMIT_PWM_MAX) Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
   analogWrite(PIN_MOTEUR_GAUCHE_VITESSE, Commande_G);
 if((millis()-t_actuel)>TEMPS_MIN_ASSERT)
 {
-  //Serial.println("Assert trop lent");
+  Serial.println("Assert trop lent");
   while(1);
 }
 
@@ -64,11 +64,12 @@ return Commande_lineaire;
 int asservissement_angulaire()
 {
   //erreur_angle_radian
+  erreur_angulaire=-erreur_angle_radian;
   int Commande_angulaire;
-  float delta_erreur_angulaire = erreur_angle_radian-erreur_precedente_angulaire;//D
-  Somme_erreur_angulaire +=erreur_angle_radian;//I
+  float delta_erreur_angulaire = erreur_angulaire-erreur_precedente_angulaire;//D
+  Somme_erreur_angulaire +=erreur_angulaire;//I
 
-  Commande_angulaire = erreur_angle_radian * P_ANGULAIRE +I_ANGULAIRE*Somme_erreur_angulaire+D_ANGULAIRE*delta_erreur_angulaire;//PID
+  Commande_angulaire = -erreur_angle_radian * P_ANGULAIRE +I_ANGULAIRE*Somme_erreur_angulaire+D_ANGULAIRE*delta_erreur_angulaire;//PID
   erreur_precedente_angulaire = erreur_angulaire;//Sauvegarde de l'erreur precedente
 
   return Commande_angulaire;
