@@ -22,12 +22,12 @@ void recuperer(byte A)
     { inputString += inChar;
       if (A == 0)
       {
-        D = inputString.toInt();
+        D = -inputString.toInt();
                
       }
       if (A == 1)
       {
-        G = inputString.toInt();
+        G = -inputString.toInt();
       
       }
      

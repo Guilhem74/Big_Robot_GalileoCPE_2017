@@ -27,7 +27,7 @@ float angle_radian=0;
 #define PIN_MOTEUR_DROITE_VITESSE 9
 #define PIN_MOTEUR_DROITE_SENS    8
 
-
+#define LIMIT_PWM_MAX 40 
 //Variable du robot
 #define DIAMETRE_ROUE 41.25 //en mm
 #define ECARTEMENT_ROUES 186 //en mm
@@ -41,7 +41,7 @@ float angle_radian=0;
 float Distance_moyenne =0;
 float erreur_angle_radian=0;
 
-#define TEMPS_MIN_ASSERT 10// en ms
+#define TEMPS_MIN_ASSERT 5// en ms
 //Asservissement linéaire ****
 #define P_LINEAIRE 0.04
 #define I_LINEAIRE 0.000015

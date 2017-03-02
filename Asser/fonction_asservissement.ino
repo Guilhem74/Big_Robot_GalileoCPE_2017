@@ -29,8 +29,8 @@ if(Commande_G<0) sens_G=!ETAT_MOTEUR_AVANCE;
 Commande_D=abs(Commande_D);//PWM est toujours positif
 Commande_G=abs(Commande_G);//PWM est toujours positif
 
-if(Commande_D>255) Commande_D=255;//PWM_MAX est 255
-if(Commande_G>255) Commande_G=255;//PWM_MAX est 255
+if(Commande_D>LIMIT_PWM_MAX) Commande_D=LIMIT_PWM_MAX;//PWM_MAX est 255
+if(Commande_G>LIMIT_PWM_MAX) Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
 
 
 //Envoi des commandes aux moteurs
