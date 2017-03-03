@@ -98,7 +98,7 @@ void Are_U_Wrong()
   Serial.print(Distance_moyenne);
   Serial.print("   ");
   Serial.print("Erreur_Angle: ");
-  Serial.print(erreur_angle_radian*RAD2DEG);
+  Serial.print(erreur_angle_radian*RAD_TO_DEG);
   Serial.println("");
 }
 

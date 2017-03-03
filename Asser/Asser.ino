@@ -13,7 +13,7 @@ char Info[40]={};
 
 void setup() {
 setup_asservissement();
-
+while(!Serial.available());
 delay(1000);
  //Droit_Au_But();
 }
@@ -22,11 +22,17 @@ delay(1000);
 
 void loop() {
  mise_a_jour_robot();
- Where_Is_Robot();
+// Where_Is_Robot();
  //Are_U_Wrong();
  //Calcul erreur
  //A_consigne= 
- asservissement_robot(((TICCODEUSES)/(PI*DIAMETRE_ROUE))*Distance_moyenne,ANGLE_DEST);
+ if((millis()-Temps_assert )>TEMPS_MIN_ASSERT)
+{
+calcul_erreur();
+Temps_assert=millis();
+ asservissement_robot(Distance_moyenne,-erreur_angle_radian);
+}
+
  Reception();
   
 }

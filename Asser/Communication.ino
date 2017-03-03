@@ -70,6 +70,10 @@ void Traitement()
 
 
   }
+   if(data[0].equals("O"))
+  {
+    Y_DEST=(float)data[1].toInt();
+  }
   if(data[0].equals("R"))
   {
     X_DEST=(float)data[1].toInt();
@@ -102,6 +106,10 @@ void Traitement()
     mise_a_jour_POS();
 calcul_erreur();
   }
+   if(data[0].equals("P"))
+   {
+  
+   }
 
 
 }

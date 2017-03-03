@@ -18,7 +18,6 @@ vitesse_G=(Codeuse_Gauche-Codeuse_Gauche_PAST)/delta_T;//Vitesse
 
 //Maj de la position
 mise_a_jour_POS();
-calcul_erreur();
 }
 
 void mise_a_jour_POS()
@@ -49,35 +48,48 @@ if(dx==0&&dy==0)
 else
         angle_dest =-(PI/2-atan2(dy,dx));
     int i=0;
-    static int close_to_goal=0;
-
-     erreur_angle_radian= (angle_radian - angle_dest) ;
    
 
-     Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*cos(erreur_angle_radian );
 
 
  
   
-   if(sqrt(dx*dx+dy*dy)<15)
-   {//Si je suis dans la boule d'arrivée
-     erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;
+   if(sqrt(dx*dx+dy*dy)<5||(close_to_goal=true&&sqrt(dx*dx+dy*dy)<15))
+   {//je suis arrivé ou je l'étais juste avant et je suis tres proche
+     erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG_TO_RAD;//asservissement sur angle final
      Distance_moyenne=0;//asservissement uniquement en angle
      close_to_goal=1;
-     Serial.println("D1");
-   }
-   else
-   {//Si je n'y suis pas
-  if(close_to_goal=true&&sqrt(dx*dx+dy*dy)<30)
-     {//Mais que j'y était avant et que je suis dans la boule de sortie
-      erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG2RAD;//Asservissement uniquement sur la disatnce et mon angle final
-    
+     Compteur_stabilite_final++;
+     if(Compteur_stabilite_final>=DUREE_VALIDATION_ETAT_FINAL)
+     {//je suis stable
+      At_goal=true;
      }
      else
-     {//je suis en dehors de la boule de sortie ou je ne suis pas encore passé par la boule d'arrivée
-      close_to_goal=false;
+     {
+      At_goal=false;
      }
+
+   }
+   else
+   {//Je ne suis pas arrivé
+    Compteur_stabilite_final=0;
+    At_goal=false;
+     //Je ne suis pas arrivé je dois donc m'asservir sur un angle/ou et une distance
+      close_to_goal=false;
+      erreur_angle_radian= (angle_radian - angle_dest) ;
+      if(abs(erreur_angle_radian)<TOLERANCE_ANGLE)//On a le bon angle de destination on doit donc maintenant parcourir la distance
+        Compteur_stabilite_angulaire++;
+      else
+        Compteur_stabilite_angulaire=0;
+        
+      if(Compteur_stabilite_angulaire>DUREE_VALIDATION_ETAT_FINAL)//je suis au bon angle
+                Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*cos(erreur_angle_radian );//J'asservis sur la distance
+      else
+                Distance_moyenne=0;
+      
+     
     }
+     
 
 }
 
