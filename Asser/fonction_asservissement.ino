@@ -3,37 +3,57 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang)
 float Commande_Lin=asservissement_lineaire(Consigne_Lin);
 float Commande_Ang=asservissement_angulaire(Consigne_Ang);
 //Somme des commandes
-
-
+if(Commande_Ang>2*LIMIT_PWM_MAX)
+{
+  Commande_Ang=LIMIT_PWM_MAX;
+}
+if(Commande_Ang<-2*LIMIT_PWM_MAX)
+{
+  Commande_Ang=-LIMIT_PWM_MAX;
+}
+  Serial.println("Ded");
+  Serial.println(Commande_Ang);
 int Commande_D=(Commande_Lin+Commande_Ang);
 int Commande_G=(Commande_Lin-Commande_Ang);
 
+
+
+
+if(Commande_D>LIMIT_PWM_MAX&&Commande_Ang>0) 
+{
+  Commande_D=LIMIT_PWM_MAX;//PWM_MAX est 255
+  Commande_G=LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
+  Serial.println("D_max");
+}
+else if(Commande_G>LIMIT_PWM_MAX&&Commande_Ang<0) 
+{
+  Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
+  Commande_D=LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
+  Serial.println("G_max");
+}
+else if(Commande_D<-LIMIT_PWM_MAX&&Commande_Ang>0) 
+{
+  Commande_D=-LIMIT_PWM_MAX;//PWM_MAX est 255
+  Commande_G=-LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
+  Serial.println("Darr_max");
+}
+else if(Commande_G<-LIMIT_PWM_MAX&&Commande_Ang<0) 
+{
+  Commande_G=-LIMIT_PWM_MAX;//PWM_MAX est 255
+  Commande_D=-LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
+  Serial.println("Garr_max");
+}
 
 //Analyse du sens des moteurs en fonction des commandes (Commande <0 -> on recule)
 bool sens_D=ETAT_MOTEUR_AVANCE;
 bool sens_G=ETAT_MOTEUR_AVANCE;
 if(Commande_D<0) sens_D=!ETAT_MOTEUR_AVANCE;
 if(Commande_G<0) sens_G=!ETAT_MOTEUR_AVANCE;
-Commande_D=abs(Commande_D);//PWM est toujours positif
-Commande_G=abs(Commande_G);//PWM est toujours positif
-
-//if(Commande_D>LIMIT_PWM_MAX) 
-//{
-//  Commande_D=LIMIT_PWM_MAX;//PWM_MAX est 255
-//  Commande_G=LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
-//  Serial.println("D_max");
-//}
-//if(Commande_G>LIMIT_PWM_MAX) 
-//{
-//  Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
-//  Commande_D=LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
-//  Serial.println("G_max");
-//}
-
 //Envoi des commandes aux moteurs
   digitalWrite(PIN_MOTEUR_DROITE_SENS, sens_D);
   digitalWrite(PIN_MOTEUR_GAUCHE_SENS, sens_G);
   delayMicroseconds(10);
+  
   analogWrite(PIN_MOTEUR_DROITE_VITESSE, Commande_D);
   analogWrite(PIN_MOTEUR_GAUCHE_VITESSE, Commande_G);
 

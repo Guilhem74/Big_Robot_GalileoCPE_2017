@@ -39,13 +39,13 @@ float angle_radian=0;
 
 /*Variable de l'assert*********************************************/
 #define DUREE_VALIDATION_ETAT_FINAL 10// Nombre de coup d'assert pour valider la position finale 
-#define TOLERANCE_ANGLE 0.04
+#define TOLERANCE_ANGLE 0.2
 float Distance_moyenne =0;
 float erreur_angle_radian=0;
 
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define  P_LINEAIRE 0.05
+#define  P_LINEAIRE 0.4
 #define I_LINEAIRE 0
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
@@ -53,8 +53,8 @@ float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 40
-#define I_ANGULAIRE 0.1
+#define P_ANGULAIRE 80
+#define I_ANGULAIRE 0
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
 float Somme_erreur_angulaire=0;
