@@ -11,38 +11,37 @@ if(Commande_Ang<-2*LIMIT_PWM_MAX)
 {
   Commande_Ang=-LIMIT_PWM_MAX;
 }
-  Serial.println("Ded");
-  Serial.println(Commande_Ang);
+ 
 int Commande_D=(Commande_Lin+Commande_Ang);
 int Commande_G=(Commande_Lin-Commande_Ang);
 
 
-
-
-if(Commande_D>LIMIT_PWM_MAX&&Commande_Ang>0) 
-{
-  Commande_D=LIMIT_PWM_MAX;//PWM_MAX est 255
-  Commande_G=LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
-  Serial.println("D_max");
-}
-else if(Commande_G>LIMIT_PWM_MAX&&Commande_Ang<0) 
-{
-  Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
-  Commande_D=LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
-  Serial.println("G_max");
-}
-else if(Commande_D<-LIMIT_PWM_MAX&&Commande_Ang>0) 
-{
-  Commande_D=-LIMIT_PWM_MAX;//PWM_MAX est 255
-  Commande_G=-LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
-  Serial.println("Darr_max");
-}
-else if(Commande_G<-LIMIT_PWM_MAX&&Commande_Ang<0) 
-{
-  Commande_G=-LIMIT_PWM_MAX;//PWM_MAX est 255
-  Commande_D=-LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
-  Serial.println("Garr_max");
-}
+//
+//
+//if(Commande_D>LIMIT_PWM_MAX&&Commande_Ang>0) 
+//{
+//  Commande_D=LIMIT_PWM_MAX;//PWM_MAX est 255
+//  Commande_G=LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
+//  Serial.println("D_max");
+//}
+//else if(Commande_G>LIMIT_PWM_MAX&&Commande_Ang<0) 
+//{
+//  Commande_G=LIMIT_PWM_MAX;//PWM_MAX est 255
+//  Commande_D=LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
+//  Serial.println("G_max");
+//}
+//else if(Commande_D<-LIMIT_PWM_MAX&&Commande_Ang>0) 
+//{
+//  Commande_D=-LIMIT_PWM_MAX;//PWM_MAX est 255
+//  Commande_G=-LIMIT_PWM_MAX+2*Commande_Ang;//PWM_MAX est 255
+//  Serial.println("Darr_max");
+//}
+//else if(Commande_G<-LIMIT_PWM_MAX&&Commande_Ang<0) 
+//{
+//  Commande_G=-LIMIT_PWM_MAX;//PWM_MAX est 255
+//  Commande_D=-LIMIT_PWM_MAX-2*Commande_Ang;//PWM_MAX est 255
+//  Serial.println("Garr_max");
+//}
 
 //Analyse du sens des moteurs en fonction des commandes (Commande <0 -> on recule)
 bool sens_D=ETAT_MOTEUR_AVANCE;
