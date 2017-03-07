@@ -56,8 +56,8 @@ void initialisation_variables()
  delta_T=0;
  vitesse_G=0;
  vitesse_D=0;
- X_POS=0,Y_POS=0,ANGLE_POS=0;
- angle_radian=0;
+ //X_POS=0,Y_POS=0,ANGLE_POS=0;
+ //angle_radian=0;
 
 }
 

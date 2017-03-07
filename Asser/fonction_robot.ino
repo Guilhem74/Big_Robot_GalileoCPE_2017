@@ -43,67 +43,138 @@ void calcul_erreur()
 
    int32_t dx=X_DEST-X_POS;
    int32_t dy=Y_DEST-Y_POS;
-    float angle_dest=0;
-        angle_dest =-(atan2(dx,dy));
+    float angle_dest =-(atan2(dx,dy));
     int i=0;
-   
-
-      Serial.print("X: ");
-  Serial.print(X_POS);
-  Serial.print(" Y:  ");
-  Serial.print( Y_POS);
-   Serial.print(" A:  ");
-  Serial.print( ANGLE_POS);
-    Serial.print("A_Dest: ");
-  Serial.print(angle_dest*RAD_TO_DEG);
-  Serial.print("  ");
-  Serial.print("Erreur_A: ");
-  Serial.println(erreur_angle_radian*RAD_TO_DEG);
-
- 
+   //mise au bon angle du robot avant déplacement
+  float angle_robot=angle_radian*RAD_TO_DEG;
+  Serial.print(angle_robot);
+   Serial.print(" ");
+  //conversion angle entre 0 et 360 car angle droite entre 0 et 360
+  if(angle_robot<0) angle_robot+=360;
+  //calcul angle de la droite
+  float angle_droite1=-(atan2(dx,dy))*RAD_TO_DEG;
+  Serial.print(angle_droite1);
+   Serial.print(" ");
+  float angle_droite2=angle_droite1+180;
+  if(angle_droite2>360) angle_droite2=angle_droite1-180;
+  Serial.print(angle_droite2);
+   Serial.print(" ");
+  //Calcul angle minimum à faire pour s'aligner sur la droite
+  float angle_necessaire=abs(angle_droite1-angle_robot);
+  int angle_droite_retenu=angle_droite1;
+  int avancer=1;
+  if(angle_necessaire>abs(angle_droite2-angle_robot)){
+    angle_necessaire=abs(angle_droite2-angle_robot);
+    angle_droite_retenu=angle_droite2;
+    avancer=0;
+  }
+  if(360+angle_robot-angle_droite1<angle_necessaire){
+    angle_necessaire=360+angle_robot-angle_droite1;
+    angle_droite_retenu=-360+angle_robot-angle_droite1;
+    avancer=1;
+  }
+  if(360+angle_robot-angle_droite2<angle_necessaire){
+    angle_necessaire=360+angle_robot-angle_droite2;
+    angle_droite_retenu=-360+angle_robot-angle_droite2;
+    avancer=0;
+  }
+  Serial.print(angle_necessaire);
+  Serial.print(" ");
+  Serial.print(avancer);
+  Serial.print(" ");
+  //mise du robot au bon angle
+  float angle_envoye=angle_radian;
   
-   if(sqrt(dx*dx+dy*dy)<5||(close_to_goal=true&&sqrt(dx*dx+dy*dy)<50))
-   {//je suis arrivé ou je l'étais juste avant et je suis tres proche
-   // Serial.println("Boule arrivé");
-     erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG_TO_RAD;//asservissement sur angle final
-                       Distance_moyenne = (float)sqrt(dx*dx+dy*dy);//J'asservis sur la distance
-                       if(dy<0)
-                        Distance_moyenne=- Distance_moyenne;
-     close_to_goal=1;
-     Compteur_stabilite_final++;
-     if(Compteur_stabilite_final>=DUREE_VALIDATION_ETAT_FINAL)
-     {//je suis stable
-       // Serial.println("Boule Stabilité");
-      At_goal=true;
-     }
-     else
-     {
-      At_goal=false;
-     }
+  if(angle_robot<=angle_droite_retenu) angle_envoye+=angle_necessaire;
+  else angle_envoye-=angle_necessaire;
+  Serial.print("\n");
+  Serial.println(angle_envoye);
+  Serial.print("\n");
+  Serial.print("\n");
 
-   }
-   else
-   {//Je ne suis pas arrivé
-    Compteur_stabilite_final=0;
-    At_goal=false;
-     //Je ne suis pas arrivé je dois donc m'asservir sur un angle/ou et une distance
-      close_to_goal=false;
-      erreur_angle_radian= (angle_radian - angle_dest) ;
-      if(abs(erreur_angle_radian)<TOLERANCE_ANGLE)//On a le bon angle de destination on doit donc maintenant parcourir la distance
-        Compteur_stabilite_angulaire++;
-      else
-        Compteur_stabilite_angulaire=0;
-        //  Serial.println("Assert angle");
-      if(Compteur_stabilite_angulaire>DUREE_VALIDATION_ETAT_FINAL)//je suis au bon angle
-      {
-                       Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*cos(erreur_angle_radian );//J'asservis sur la distance
-          //Serial.println("Assert distance;"); 
-      }
-      else
-                Distance_moyenne=0;
-      
-     
-    }
+  //à présent robot dans l'axe de la droite passant par lui et le point
+  //coeff directeur droite
+  float m=dy/dx;
+  //calcul distance entre les deux
+  float distance=sqrt(dx*dx+dy*dy);
+  
+
+
+    
+   /*
+float angle_calc =abs(abs(angle_radian)-abs(angle_dest));
+float angle_calc2 =abs(abs(angle_radian)-abs(angle_dest));
+float angle_calc3 =abs(abs(angle_radian)-abs(angle_dest));
+if(angle_calc < angle_calc2 && angle_calc <angle_calc3)
+{
+  angle_dest=angle_calc;
+}
+else if(angle_calc2 < angle_calc3 && angle_calc2 <angle_calc)
+{
+  angle_dest=-angle_calc2;
+}
+else if(angle_calc3 < angle_calc2 && angle_calc3 <angle_calc)
+{
+  angle_dest=-angle_calc3;
+}*/
+//      Serial.print("X: ");
+//  Serial.print(angle_calc);
+//  Serial.print(" Y:  ");
+//  Serial.print( angle_calc2);
+//   Serial.print(" A:  ");
+//  Serial.print( angle_calc3);
+//    Serial.print("A_Dest: ");
+//    Serial.print( angle_dest);
+//    Serial.print("A_Dest deg: ");
+//  Serial.print(angle_dest*RAD_TO_DEG);
+//  Serial.print("  ");
+//  Serial.print("Erreur_A: ");
+//  Serial.println(erreur_angle_radian*RAD_TO_DEG);
+  
+ 
+//  
+//   if(sqrt(dx*dx+dy*dy)<5||(close_to_goal=true&&sqrt(dx*dx+dy*dy)<50))
+//   {//je suis arrivé ou je l'étais juste avant et je suis tres proche
+//   // Serial.println("Boule arrivé");
+//     erreur_angle_radian=angle_radian-ANGLE_FINAL*DEG_TO_RAD;//asservissement sur angle final
+//                       Distance_moyenne = (float)sqrt(dx*dx+dy*dy);//J'asservis sur la distance
+//                       if(dy<0)
+//                        Distance_moyenne=- Distance_moyenne;
+//     close_to_goal=1;
+//     Compteur_stabilite_final++;
+//     if(Compteur_stabilite_final>=DUREE_VALIDATION_ETAT_FINAL)
+//     {//je suis stable
+//       // Serial.println("Boule Stabilité");
+//      At_goal=true;
+//     }
+//     else
+//     {
+//      At_goal=false;
+//     }
+//
+//   }
+//   else
+//   {//Je ne suis pas arrivé
+//    Compteur_stabilite_final=0;
+//    At_goal=false;
+//     //Je ne suis pas arrivé je dois donc m'asservir sur un angle/ou et une distance
+//      close_to_goal=false;
+//      erreur_angle_radian= (angle_radian - angle_dest) ;
+//      if(abs(erreur_angle_radian)<TOLERANCE_ANGLE)//On a le bon angle de destination on doit donc maintenant parcourir la distance
+//        Compteur_stabilite_angulaire++;
+//      else
+//        Compteur_stabilite_angulaire=0;
+//        //  Serial.println("Assert angle");
+//      if(Compteur_stabilite_angulaire>DUREE_VALIDATION_ETAT_FINAL)//je suis au bon angle
+//      {
+//                       Distance_moyenne = (float)sqrt(dx*dx+dy*dy)*cos(erreur_angle_radian );//J'asservis sur la distance
+//          //Serial.println("Assert distance;"); 
+//      }
+//      else
+//                Distance_moyenne=0;
+//      
+//     
+//    }
      
 
 }
