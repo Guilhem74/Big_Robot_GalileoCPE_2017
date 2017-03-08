@@ -31,11 +31,14 @@ void mise_a_jour_POS()
   angle_radian += ((float)(delta_D - delta_G) / ECARTEMENT_ROUES); //Mise a jour de l'angle pour le prochain déplacement,toutes les distances doivent avoir les mêmes unités!
 
 
-  X_POS += localX;
+  X_POS -= localX;
   Y_POS -= localY;
   ANGLE_POS = (angle_radian * 360 / (float)(2 * PI));
-
-
+Serial.print(X_POS);
+Serial.print(" ");
+Serial.print(Y_POS);
+Serial.print(" ");
+Serial.println(ANGLE_POS);
 
 }
 void calcul_erreur()
@@ -47,18 +50,18 @@ void calcul_erreur()
     int i=0;
    //mise au bon angle du robot avant déplacement
   float angle_robot=angle_radian*RAD_TO_DEG;
-  Serial.print(angle_robot);
-   Serial.print(" ");
+//  Serial.print(angle_robot);
+//   Serial.print(" ");
   //conversion angle entre 0 et 360 car angle droite entre 0 et 360
   if(angle_robot<0) angle_robot+=360;
   //calcul angle de la droite
   float angle_droite1=-(atan2(dx,dy))*RAD_TO_DEG;
-  Serial.print(angle_droite1);
-   Serial.print(" ");
+//  Serial.print(angle_droite1);
+//   Serial.print(" ");
   float angle_droite2=angle_droite1+180;
   if(angle_droite2>360) angle_droite2=angle_droite1-180;
-  Serial.print(angle_droite2);
-   Serial.print(" ");
+//  Serial.print(angle_droite2);
+//   Serial.print(" ");
   //Calcul angle minimum à faire pour s'aligner sur la droite
   float angle_necessaire=abs(angle_droite1-angle_robot);
   int angle_droite_retenu=angle_droite1;
@@ -78,19 +81,19 @@ void calcul_erreur()
     angle_droite_retenu=-360+angle_robot-angle_droite2;
     avancer=0;
   }
-  Serial.print(angle_necessaire);
-  Serial.print(" ");
-  Serial.print(avancer);
-  Serial.print(" ");
+//  Serial.print(angle_necessaire);
+//  Serial.print(" ");
+//  Serial.print(avancer);
+//  Serial.print(" ");
   //mise du robot au bon angle
   float angle_envoye=angle_radian;
   
   if(angle_robot<=angle_droite_retenu) angle_envoye+=angle_necessaire;
   else angle_envoye-=angle_necessaire;
-  Serial.print("\n");
-  Serial.println(angle_envoye);
-  Serial.print("\n");
-  Serial.print("\n");
+//  Serial.print("\n");
+//  Serial.println(angle_envoye);
+//  Serial.print("\n");
+//  Serial.print("\n");
 
   //à présent robot dans l'axe de la droite passant par lui et le point
   //coeff directeur droite

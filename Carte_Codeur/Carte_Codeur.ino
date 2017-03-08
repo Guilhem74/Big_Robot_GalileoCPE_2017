@@ -22,7 +22,8 @@ void loop() {
        Serial.print("C;");
        Serial.print(Codeur_total1);
        Serial.print(";");
-       Serial.println(Codeur_total2);
+       Serial.print(Codeur_total2);
+       Serial.print("\n");
       }
       else if(inputString=="r"||inputString=="R")
       {

@@ -2,37 +2,26 @@
 void recuperer(byte A)
 {
 
-  String inputString = "";
+  String inputString_Codeuse = "";
+  String data_Codeuse[10]; // stockage des données découpées
   bool fini = true;
-  if (A == 0) //Droite
-  {
-    Serial1.write("x");
-  }
-
-  if (A == 1) //Gauche
-    Serial1.write("y");
+  Serial1.print("C\n");
 
   while (Serial1.available() && fini)
   {
     char inChar = (char)Serial1.read();
 
-    inputString += inChar;
-
     if (inChar == '\n')
-    { inputString += inChar;
-      if (A == 0)
-      {
-        Codeuse_Droite= -inputString.toInt();
-               
-      }
-      if (A == 1)
-      {
-        Codeuse_Gauche = -inputString.toInt();
-      
-      }
-     
-      fini = false;
+    { 
+ 
+    splitString(inputString_Codeuse, SEPARATEUR,data_Codeuse);
+     Codeuse_Droite=data_Codeuse[1].toInt();
+     Codeuse_Gauche=-data_Codeuse[2].toInt();
+     fini = false;
+    
     }
+    else
+      inputString_Codeuse += inChar;
   }
 
 }
