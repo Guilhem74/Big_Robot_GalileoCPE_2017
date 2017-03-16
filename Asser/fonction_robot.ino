@@ -44,6 +44,7 @@ void calcul_erreur()
    int32_t dy=Y_DEST-Y_POS;
     float angle_dest =-(atan2(dx,dy));
     int i=0;
+    int avancer=0;
    //mise au bon angle du robot avant déplacement
   float angle_robot=angle_radian*RAD_TO_DEG;
 //conversion angle entre 0 et 360 car angle droite entre 0 et 360
@@ -65,40 +66,34 @@ void calcul_erreur()
   //Calcul angle minimum à faire pour s'aligner sur la droite
   float angle_necessaire=abs(angle_droite1-angle_robot);
   int angle_droite_retenu=angle_droite1;
-  int avancer=0;
   if(abs(angle_necessaire)>abs(angle_droite2-angle_robot)){
     angle_necessaire=abs(angle_droite2-angle_robot);
     angle_droite_retenu=angle_droite2;
-    avancer=1;
-    Serial.print("2");
+    Serial.print(" 2 ");
     Serial.print(" ");
   }
   if(abs(360-angle_robot+angle_droite1)<abs(angle_necessaire)){
     angle_necessaire=abs(360-angle_robot+angle_droite1);
     angle_droite_retenu=angle_droite1;
-    avancer=0;
-    Serial.print("3");
+    Serial.print(" 3 ");
     Serial.print(" ");
   }
   if(abs(360-angle_robot+angle_droite2)<abs(angle_necessaire)){
     angle_necessaire=abs(360-angle_robot+angle_droite2);
     angle_droite_retenu=angle_droite2;
-    avancer=1;
-    Serial.print("4");
+    Serial.print(" 4 ");
     Serial.print(" ");
   }
   if(abs(360-angle_droite2+angle_robot)<abs(angle_necessaire)){
     angle_necessaire=abs(360-angle_droite2+angle_robot);
     angle_droite_retenu=angle_droite2;
-    avancer=1;
-    Serial.print("5");
+    Serial.print(" 5 ");
     Serial.print(" ");
   }
   if(abs(360-angle_droite1+angle_robot)<abs(angle_necessaire)){
     angle_necessaire=abs(360-angle_droite1+angle_robot);
     angle_droite_retenu=angle_droite1;
-    avancer=1;
-    Serial.print("6");
+    Serial.print(" 6 ");
     Serial.print(" ");
   }
   Serial.print("Angle droite retenu: ");
@@ -112,7 +107,11 @@ void calcul_erreur()
 
   if(angle_droite_retenu>angle_robot+180) angle_envoye=-abs(angle_necessaire);
   if(angle_droite_retenu+180<angle_robot) angle_envoye=abs(angle_necessaire);
-  
+  if(Y_DEST<Y_POS) avancer=0;
+  else avancer=1;
+  if(Y_DEST=Y_POS){
+    avancer=1;
+  }
   
   Serial.print("\n");
   Serial.println(angle_envoye);
