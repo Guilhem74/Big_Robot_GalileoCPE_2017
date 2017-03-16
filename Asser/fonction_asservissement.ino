@@ -12,9 +12,11 @@ if(Commande_Ang<-2*LIMIT_PWM_MAX)
   Commande_Ang=-LIMIT_PWM_MAX;
 }
  
-int Commande_D=(Commande_Lin+Commande_Ang);
-int Commande_G=(Commande_Lin-Commande_Ang);
-
+float Commande_D=(Commande_Lin+Commande_Ang);
+float Commande_G=(Commande_Lin-Commande_Ang);
+Serial.print(Commande_D);
+Serial.print("GGG: ");
+Serial.println(Commande_G);
 
 //
 //

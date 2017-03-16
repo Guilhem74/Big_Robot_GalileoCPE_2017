@@ -45,7 +45,7 @@ float erreur_angle_radian=0;
 
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define  P_LINEAIRE 0.4
+#define  P_LINEAIRE 0.6
 #define I_LINEAIRE 0
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
@@ -53,7 +53,7 @@ float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 80
+#define P_ANGULAIRE 3
 #define I_ANGULAIRE 0
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
