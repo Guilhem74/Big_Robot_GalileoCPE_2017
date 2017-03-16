@@ -101,18 +101,21 @@ void calcul_erreur()
     Serial.print("6");
     Serial.print(" ");
   }
-  Serial.print("Angle necessaire: ");
-  Serial.print(angle_necessaire);
+  Serial.print("Angle droite retenu: ");
+  Serial.print(angle_droite_retenu);
   Serial.print("   ");
   //mise du robot au bon angle
   float angle_envoye=angle_radian;
-  if(angle_droite_retenu>angle_robot) angle_envoye=-angle_necessaire;
-  else angle_envoye=abs(angle_necessaire);
+  
+  if(angle_droite_retenu>angle_robot) angle_envoye=abs(angle_necessaire);
+  else angle_envoye=-abs(angle_necessaire);
 
-  if(angle_droite_retenu>angle_robot+180) angle_envoye=abs(angle_necessaire);
-  else angle_envoye=-angle_necessaire;
+  if(angle_droite_retenu>angle_robot+180) angle_envoye=-abs(angle_necessaire);
+  if(angle_droite_retenu+180<angle_robot) angle_envoye=abs(angle_necessaire);
+  
+  
   Serial.print("\n");
-  Serial.println(angle_droite_retenu);
+  Serial.println(angle_envoye);
    Serial.print(avancer);
   Serial.print("\n");  Serial.print("\n");  Serial.print("\n");
 
