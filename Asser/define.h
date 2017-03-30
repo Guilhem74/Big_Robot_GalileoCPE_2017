@@ -19,7 +19,7 @@ bool At_goal=false;
 int Compteur_stabilite_final=0;
 int Compteur_stabilite_angulaire=0;
 float X_POS=0,Y_POS=0,ANGLE_POS=0;
-float angle_radian=0;
+float angle_radian=45*DEG_TO_RAD;;
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
