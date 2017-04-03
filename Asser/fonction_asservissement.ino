@@ -12,11 +12,9 @@ if(Commande_Ang<-2*LIMIT_PWM_MAX)
   Commande_Ang=-LIMIT_PWM_MAX;
 }
  
-float Commande_D=(Commande_Lin+Commande_Ang);
-float Commande_G=(Commande_Lin-Commande_Ang);
-Serial.print(Commande_D);
-Serial.print("GGG: ");
-Serial.println(Commande_G);
+float Commande_D=round(Commande_Lin+Commande_Ang);
+float Commande_G=round(Commande_Lin-Commande_Ang);
+
 
 //
 //
@@ -50,6 +48,11 @@ bool sens_D=ETAT_MOTEUR_AVANCE;
 bool sens_G=ETAT_MOTEUR_AVANCE;
 if(Commande_D<0) sens_D=!ETAT_MOTEUR_AVANCE;
 if(Commande_G<0) sens_G=!ETAT_MOTEUR_AVANCE;
+
+
+Commande_D=abs(Commande_D);
+Commande_G=abs(Commande_G);
+
 //Envoi des commandes aux moteurs
   digitalWrite(PIN_MOTEUR_DROITE_SENS, sens_D);
   digitalWrite(PIN_MOTEUR_GAUCHE_SENS, sens_G);

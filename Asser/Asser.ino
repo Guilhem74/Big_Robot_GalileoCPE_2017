@@ -31,7 +31,7 @@ void loop() {
    mise_a_jour_robot();
 calcul_erreur();
 Temps_assert=millis();
- asservissement_robot(Distance_moyenne,0*-erreur_angle_radian);
+ asservissement_robot(Distance_moyenne,erreur_angle_radian);
 }
 
  Reception();

@@ -19,7 +19,7 @@ bool At_goal=false;
 int Compteur_stabilite_final=0;
 int Compteur_stabilite_angulaire=0;
 float X_POS=0,Y_POS=0,ANGLE_POS=0;
-float angle_radian=45*DEG_TO_RAD;;
+float angle_radian=0*DEG_TO_RAD;
 //Paramètre constant du robot
 #define TICCODEUSES 1024 //Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
@@ -45,7 +45,7 @@ float erreur_angle_radian=0;
 
 #define TEMPS_MIN_ASSERT 10// en ms
 //Asservissement linéaire ****
-#define  P_LINEAIRE 0.6
+#define  P_LINEAIRE 0.4
 #define I_LINEAIRE 0
 #define D_LINEAIRE 0
 float erreur_lineaire=0;
@@ -53,7 +53,7 @@ float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 3
+#define P_ANGULAIRE 20
 #define I_ANGULAIRE 0
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
