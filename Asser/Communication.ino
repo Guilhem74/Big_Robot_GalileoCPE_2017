@@ -59,7 +59,9 @@ void Traitement()
     Y_DEST=(float)data[2].toInt();
     ANGLE_FINAL=(float)data[3].toInt();
     MARCHE_ARRIERE=false;
-   
+    New_moove_angle=true;
+    Rampe_angle=0;
+    Rampe_distance=0;
   }
   if(data[0].equals("S"))
   {

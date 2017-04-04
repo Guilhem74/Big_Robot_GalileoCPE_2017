@@ -2,15 +2,7 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang)
 {
 float Commande_Lin=asservissement_lineaire(Consigne_Lin);
 float Commande_Ang=asservissement_angulaire(Consigne_Ang);
-//Somme des commandes
-if(Commande_Ang>2*LIMIT_PWM_MAX)
-{
-  Commande_Ang=LIMIT_PWM_MAX;
-}
-if(Commande_Ang<-2*LIMIT_PWM_MAX)
-{
-  Commande_Ang=-LIMIT_PWM_MAX;
-}
+
  
 float Commande_D=round(Commande_Lin+Commande_Ang);
 float Commande_G=round(Commande_Lin-Commande_Ang);
@@ -46,12 +38,18 @@ float Commande_G=round(Commande_Lin-Commande_Ang);
 //Analyse du sens des moteurs en fonction des commandes (Commande <0 -> on recule)
 bool sens_D=ETAT_MOTEUR_AVANCE;
 bool sens_G=ETAT_MOTEUR_AVANCE;
+
 if(Commande_D<0) sens_D=!ETAT_MOTEUR_AVANCE;
 if(Commande_G<0) sens_G=!ETAT_MOTEUR_AVANCE;
 
 
 Commande_D=abs(Commande_D);
 Commande_G=abs(Commande_G);
+if(Commande_D>255)
+Commande_D=255;
+if(Commande_G>255)
+Commande_G=255;
+
 
 //Envoi des commandes aux moteurs
   digitalWrite(PIN_MOTEUR_DROITE_SENS, sens_D);

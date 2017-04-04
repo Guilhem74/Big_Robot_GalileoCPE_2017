@@ -16,6 +16,11 @@ float X_DEST=0,Y_DEST=0,ANGLE_DEST=0,ANGLE_FINAL=0;
 bool MARCHE_ARRIERE=true;
 bool close_to_goal=false;
 bool At_goal=false;
+bool New_moove_angle=false;
+bool New_moove_distance=false;
+int Rampe_angle=0;
+int Rampe_distance=0;
+
 int Compteur_stabilite_final=0;
 int Compteur_stabilite_angulaire=0;
 float X_POS=0,Y_POS=0,ANGLE_POS=0;
@@ -53,7 +58,7 @@ float erreur_precedente_lineaire=0;
 float Somme_erreur_lineaire=0;
 
 //Asservissement angulaire ****
-#define P_ANGULAIRE 20
+#define P_ANGULAIRE 40
 #define I_ANGULAIRE 0
 #define D_ANGULAIRE 0.00
 float erreur_angulaire=0;
