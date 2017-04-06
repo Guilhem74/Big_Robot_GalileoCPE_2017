@@ -2,9 +2,10 @@
 
 void setup_asservissement()
 {
+   Serial.begin(115200);
   Serial1.begin(115200);
  Serial1.print("R\n");
- Serial.begin(115200);
+
  pinMode(PIN_MOTEUR_DROITE_VITESSE, OUTPUT);
   pinMode(PIN_MOTEUR_DROITE_SENS, OUTPUT);
   pinMode(PIN_MOTEUR_GAUCHE_VITESSE, OUTPUT);

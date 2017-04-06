@@ -12,8 +12,10 @@ void Where_Is_Robot()
 char Info[40]={};
 
 void setup() {
-setup_asservissement();
 
+
+
+setup_asservissement();
 delay(1000);
  //Droit_Au_But();
 }

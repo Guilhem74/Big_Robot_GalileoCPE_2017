@@ -18,8 +18,13 @@ bool close_to_goal=false;
 bool At_goal=false;
 bool New_moove_angle=false;
 bool New_moove_distance=false;
-int Rampe_angle=0;
-int Rampe_distance=0;
+bool New_moove_angle_final=false;
+bool premier_passage=false;
+float angle_envoye_final=0;
+
+
+float Rampe_angle=0;
+float Rampe_distance=0;
 
 int Compteur_stabilite_final=0;
 int Compteur_stabilite_angulaire=0;
