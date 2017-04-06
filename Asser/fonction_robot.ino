@@ -123,6 +123,7 @@ void calcul_erreur()
 
   
     // if(abs(angle_envoye)<5)
+
    Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
    //else Distance_moyenne=0;
     //angle_envoye-=ANGLE_FINAL;
@@ -147,6 +148,7 @@ void calcul_erreur()
       New_moove_distance=true;
     }
     
+
     if(Distance_moyenne>=50 && New_moove_distance==true){
         if(Distance_moyenne>=0){
           Rampe_distance+=0.001*TEMPS_MIN_ASSERT*Distance_moyenne/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne distance au bout de 2s

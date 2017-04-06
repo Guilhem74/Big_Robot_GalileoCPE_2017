@@ -7,7 +7,11 @@ float Commande_Ang=asservissement_angulaire(Consigne_Ang);
 float Commande_D=round(Commande_Lin+Commande_Ang);
 float Commande_G=round(Commande_Lin-Commande_Ang);
 
+Serial.print("commandes d \n");
+  Serial.print(Commande_D);
+  Serial.print("commandes g \n");
 
+  Serial.print(Commande_G);
 //
 //
 //if(Commande_D>LIMIT_PWM_MAX&&Commande_Ang>0) 
