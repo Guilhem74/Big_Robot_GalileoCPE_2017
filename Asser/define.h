@@ -2,6 +2,20 @@
 #define DEFINE_H
 /*Communication*/
 #define SEPARATEUR ';'
+struct Consigne{
+    float P_ang=0,I_ang=0,D_ang=0;
+    float P_lin=0,I_lin=0,D_lin=0;
+    float X_DEST=0, Y_DEST=0;
+    float angle_final=0;
+    float coeff_ramp_lin=0, coeff_ramp_ang=0;
+    bool New_moove_angle=false;
+    bool New_moove_distance=false;
+    bool New_moove_angle_final=false;
+    bool premier_passage=false;
+    Consigne *consigne_suivante=NULL;
+};
+
+
 int cnt = 0; // nombre de données découpées
 String data[10]; // stockage des données découpées
 bool stringComplete = false;  // pour savoir si la chaine est complète
@@ -17,9 +31,9 @@ bool MARCHE_ARRIERE=true;
 bool close_to_goal=false;
 bool At_goal=false;
 bool New_moove_angle=false;
-bool New_moove_distance=false;
-bool New_moove_angle_final=false;
-bool premier_passage=false;
+    bool New_moove_distance=false;
+    bool New_moove_angle_final=false;
+    bool premier_passage=false;
 float angle_envoye_final=0;
 
 

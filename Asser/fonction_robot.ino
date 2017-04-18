@@ -175,18 +175,39 @@ void calcul_erreur()
     Serial.print("\nrampe angle\n");
     Serial.print(Rampe_angle);*/
     
-   
+   if(sqrt(dx*dx+dy*dy)<50 && New_moove_angle_final==true){
+      if(premier_passage==true){
+        angle_robot=angle_radian*RAD_TO_DEG;
+        if(angle_robot<0) angle_robot+=360;
+        if(ANGLE_FINAL<0) ANGLE_FINAL+=360;        
+        Distance_moyenne=0;
+        Rampe_angle=0;
+        premier_passage==false;
+      }
+      if(angle_robot<=ANGLE_FINAL){
+          Rampe_angle+=0.001*TEMPS_MIN_ASSERT*ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
+          erreur_angle_radian=angle_envoye*DEG_TO_RAD;
+          if(Rampe_angle+angle_robot>=ANGLE_FINAL){
+            erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
+            New_moove_angle_final=false;
+          }
+      }
+      if(angle_robot>ANGLE_FINAL){
+          Rampe_angle-=0.001*TEMPS_MIN_ASSERT*ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
+          erreur_angle_radian=angle_envoye*DEG_TO_RAD;
+          if(Rampe_angle+angle_robot<=ANGLE_FINAL){
+            erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
+            New_moove_angle_final=false;
+          }
+      }
+      angle_envoye=Rampe_angle;
+    }
     
-   if(sqrt(dx*dx+dy*dy)<50){
-        Serial.print("\n moove final\n");
-        Serial.print(ANGLE_FINAL);
-        Serial.print("\n angle\n");
-        Serial.print(angle_radian*RAD_TO_DEG);
+   /*if(sqrt(dx*dx+dy*dy)<50){
+        
         erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
-        Serial.print("\n erreur_angle_radian\n");
-        Serial.print(erreur_angle_radian*RAD_TO_DEG);
    }
-   else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
+   else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;*/
 
   
 
