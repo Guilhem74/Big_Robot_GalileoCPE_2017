@@ -18,6 +18,9 @@ void setup() {
   Setup_Actionneur();
   Consigne_Actuel=&Consigne1;
   setup_asservissement();
+
+  Pince_UP();
+  Pince_CLOSE();
   delay(1000);
   // Droit_Au_But();
 }

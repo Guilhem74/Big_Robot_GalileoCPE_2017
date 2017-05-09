@@ -34,8 +34,6 @@ void initialisation_variables()
  t_precedent=0;
  t_actuel=0;
  delta_T=0;
- vitesse_G=0;
- vitesse_D=0;
  //X_POS=0,Y_POS=0,ANGLE_POS=0;
  //angle_radian=0;
 

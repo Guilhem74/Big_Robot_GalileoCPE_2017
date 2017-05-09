@@ -70,45 +70,26 @@ erreur_angulaire=0;
   Consigne_Actuel=&ConsigneTemp;
   Serial.println("GG");
   }
-  /*if (data[0].equals("S")) {
-    mise_a_jour_POS();
-    X_DEST = X_POS;
-    Y_DEST = Y_POS;
-    ANGLE_FINAL = ANGLE_POS;
-  }
-  if (data[0].equals("O")) {
-    Y_DEST = (float)data[1].toInt();
-  }
-  if (data[0].equals("R")) {
-    X_DEST = (float)data[1].toInt();
-    Y_DEST = (float)data[2].toInt();
-    ANGLE_FINAL = (float)data[3].toInt();
-    MARCHE_ARRIERE = true;
-  }
-  if (data[0].equals("U")) {
-    Serial3.write('r');
+  if (data[0].equals("A")) {
+    ConsigneTemp.X_DEST = (float)data[1].toInt()+X_POS;
+    ConsigneTemp.Y_DEST = (float)data[2].toInt()+Y_POS;
+   ConsigneTemp.New_moove_angle = true;
+   for(int i=0;i<TAILLE_TABLEAU_SOMME;i++)
+   {
+     ConsigneTemp.Somme_Erreur_Lin[i]=0;
+     ConsigneTemp.Somme_Erreur_Ang[i]=0;
+   }
 
-    X_DEST = 0;
-    X_POS = 0;
-    Y_DEST = 0;
-    Y_POS = 0;
-    ANGLE_FINAL = 0;
-    ANGLE_POS = 0;
-    Distance_moyenne = 0;
-    erreur_angle_radian = 0;
-    erreur_lineaire = 0;
-    erreur_precedente_lineaire = 0;
-    Somme_erreur_lineaire = 0;
-    erreur_angulaire = 0;
-    Somme_erreur_angulaire = 0;
-    erreur_precedente_angulaire = 0;
-    erreur_vitesseD = 0;
-    Somme_erreur_vitesseD = 0;
-    erreur_vitesseG = 0;
-    Somme_erreur_vitesseG = 0;
-    mise_a_jour_POS();
-    calcul_erreur();
+    ConsigneTemp.New_moove_angle = true;
+    ConsigneTemp.New_moove_distance = false;
+    ConsigneTemp.New_moove_angle_final = false;
+    ConsigneTemp.premier_passage = false;
+erreur_precedente_lineaire=0;
+erreur_lineaire=0;
+erreur_precedente_angulaire=0;
+erreur_angulaire=0;
+  //Rampe_angle = 0;
+  Rampe_distance = 0;
+  Consigne_Actuel=&ConsigneTemp;
   }
-  if (data[0].equals("P")) {
-  }*/
 }

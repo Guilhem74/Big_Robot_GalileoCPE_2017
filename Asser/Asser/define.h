@@ -17,8 +17,8 @@ float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
 float Rampe_angle = 0;
 float Rampe_distance = 0;
-float X_POS = 0, Y_POS = 0, ANGLE_POS = 0;
-float angle_radian = 0 * DEG_TO_RAD;
+float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
+float angle_radian = ANGLE_POS * DEG_TO_RAD;
 // Paramètre constant du robot
 #define TICCODEUSES 1024 // Tick par tour de roue
 #define ETAT_MOTEUR_AVANCE HIGH
@@ -83,8 +83,8 @@ struct Consigne {
   float P_ang = P_ANGULAIRE, I_ang = I_ANGULAIRE, D_ang = D_ANGULAIRE;
   float P_lin = P_LINEAIRE, I_lin = I_LINEAIRE, D_lin = D_LINEAIRE;
   float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={},Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
-  float X_DEST = 0, Y_DEST = 0;
-  float ANGLE_FINAL = 0;
+  float X_DEST = X_POS, Y_DEST = Y_POS;
+  float ANGLE_FINAL = ANGLE_POS;
   float coeff_ramp_lin = COEFF_RAMP_LINEAIRE, coeff_ramp_ang = COEFF_RAMP_ANG, Rampe_angle_final=COEFF_RAMP_ANG_FINAL;
   bool New_moove_angle = true;
   bool New_moove_distance = false;
