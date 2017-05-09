@@ -1,10 +1,12 @@
+#include <Arduino.h>
+
 #include "define.h"
 
 void setup_asservissement()
 {
    Serial.begin(115200);
-  Serial1.begin(115200);
- Serial1.print("R\n");
+  Serial3.begin(115200);
+  Serial3.print("R\n");
 
  pinMode(PIN_MOTEUR_DROITE_VITESSE, OUTPUT);
   pinMode(PIN_MOTEUR_DROITE_SENS, OUTPUT);
@@ -20,7 +22,7 @@ void initialisation_variables()
   for(int i=0; i<10;i++)
     {
       data[i]="";
-    } 
+    }
  stringComplete = false;  // pour savoir si la chaine est complète
  inputString = "";   // chaine de caractères pour contenir les données
 
@@ -31,7 +33,7 @@ void initialisation_variables()
  X_DEST=0,Y_DEST=0,ANGLE_DEST=0,ANGLE_FINAL=0;
  MARCHE_ARRIERE=true;
  close_to_goal=false;
- 
+
  Distance_moyenne =0;
  erreur_angle_radian=0;
 
@@ -61,4 +63,3 @@ void initialisation_variables()
  //angle_radian=0;
 
 }
-

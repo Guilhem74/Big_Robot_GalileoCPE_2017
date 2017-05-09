@@ -30,12 +30,12 @@ void loop() {
          Codeur_total1=0;
          Codeur_total2=0;
       }
-       
+
     // clear the string:
     inputString = "";
     stringComplete = false;
   }
- 
+
 
 }
 
@@ -66,13 +66,13 @@ void serialEvent() {
     // get the new byte:
     char inChar = (char)Serial.read();
     // add it to the inputString:
-    
+
     // if the incoming character is a newline, set a flag
     // so the main loop can do something about it:
     if (inChar == '\n') {
       stringComplete = true;}
     else
       inputString += inChar;
-    
+
   }
 }
