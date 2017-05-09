@@ -3,18 +3,7 @@
 /*Communication*/
 #define SEPARATEUR ';'
 
-struct Consigne {
-  float P_ang = 0, I_ang = 0, D_ang = 0;
-  float P_lin = 0, I_lin = 0, D_lin = 0;
-  float X_DEST = 0, Y_DEST = 0;
-  float angle_final = 0;
-  float coeff_ramp_lin = 0, coeff_ramp_ang = 0;
-  bool New_moove_angle = false;
-  bool New_moove_distance = false;
-  bool New_moove_angle_final = false;
-  bool premier_passage = false;
-  Consigne *consigne_suivante = NULL;
-};
+
 bool Etat_bras_voulu = 0;
 bool Etat_bras = 0;
 int cnt = 0;                 // nombre de données découpées
@@ -22,26 +11,12 @@ String data[10];             // stockage des données découpées
 bool stringComplete = false; // pour savoir si la chaine est complète
 String inputString = "";     // chaine de caractères pour contenir les données
 
-// Consigne du robot (En tick)
-int L_consigne = 0;
-int A_consigne = 0;
-int angle_robot = 0;
 
-float X_DEST = 0, Y_DEST = 0, ANGLE_DEST = 0, ANGLE_FINAL = 0;
-bool MARCHE_ARRIERE = true;
-bool close_to_goal = false;
-bool At_goal = false;
-bool New_moove_angle = false;
-bool New_moove_distance = false;
-bool New_moove_angle_final = false;
-bool premier_passage = false;
+
+float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
-
 float Rampe_angle = 0;
 float Rampe_distance = 0;
-
-int Compteur_stabilite_final = 0;
-int Compteur_stabilite_angulaire = 0;
 float X_POS = 0, Y_POS = 0, ANGLE_POS = 0;
 float angle_radian = 0 * DEG_TO_RAD;
 // Paramètre constant du robot
@@ -49,8 +24,8 @@ float angle_radian = 0 * DEG_TO_RAD;
 #define ETAT_MOTEUR_AVANCE HIGH
 
 // PINS
-#define PIN_MOTEUR_GAUCHE_VITESSE 44
-#define PIN_MOTEUR_GAUCHE_SENS 12
+#define PIN_MOTEUR_GAUCHE_VITESSE 9
+#define PIN_MOTEUR_GAUCHE_SENS 8
 #define PIN_MOTEUR_DROITE_VITESSE 11
 #define PIN_MOTEUR_DROITE_SENS 10
 
@@ -77,24 +52,14 @@ float erreur_angle_radian = 0;
 #define D_LINEAIRE 0
 float erreur_lineaire = 0;
 float erreur_precedente_lineaire = 0;
-float Somme_erreur_lineaire = 0;
 
 // Asservissement angulaire ****
 #define P_ANGULAIRE 40
-#define I_ANGULAIRE 0
-#define D_ANGULAIRE 0.00
+#define I_ANGULAIRE 0.04
+#define D_ANGULAIRE 0.4
 float erreur_angulaire = 0;
-float Somme_erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
-// Asservissement vitesse ****
-#define P_VITESSE 2
-#define I_VITESSE 0
-#define D_VITESSE 0
-float erreur_vitesseD = 0;
-float Somme_erreur_vitesseD = 0;
-float erreur_vitesseG = 0;
-float Somme_erreur_vitesseG = 0;
 
 // Valeur des codeuses
 int32_t Codeuse_Droite = 0;      // Nbr de tick droite
@@ -110,5 +75,24 @@ int32_t Temps_assert = 0;
 
 float vitesse_G = 0;
 float vitesse_D = 0;
-
+#define COEFF_RAMP_ANG 0.001
+#define COEFF_RAMP_ANG_FINAL 0.001
+#define COEFF_RAMP_LINEAIRE 0.001
+#define TAILLE_TABLEAU_SOMME 100
+struct Consigne {
+  float P_ang = P_ANGULAIRE, I_ang = I_ANGULAIRE, D_ang = D_ANGULAIRE;
+  float P_lin = P_LINEAIRE, I_lin = I_LINEAIRE, D_lin = D_LINEAIRE;
+  float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={},Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
+  float X_DEST = 0, Y_DEST = 0;
+  float ANGLE_FINAL = 0;
+  float coeff_ramp_lin = COEFF_RAMP_LINEAIRE, coeff_ramp_ang = COEFF_RAMP_ANG, Rampe_angle_final=COEFF_RAMP_ANG_FINAL;
+  bool New_moove_angle = true;
+  bool New_moove_distance = false;
+  bool New_moove_angle_final = false;
+  bool premier_passage = false;
+  Consigne *consigne_suivante = NULL;
+};
+Consigne Consigne1;
+Consigne ConsigneTemp;
+Consigne *Consigne_Actuel;
 #endif

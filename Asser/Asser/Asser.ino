@@ -15,39 +15,40 @@ char Info[40] = {};
 
 void setup() {
 
-   Setup_Actionneur();
+  Setup_Actionneur();
+  Consigne_Actuel=&Consigne1;
   setup_asservissement();
   delay(1000);
-//Tourner_Moteur_G();
   // Droit_Au_But();
 }
 
 void loop() {
 
-  Where_Is_Robot();
-Mise_a_jour_bras();
-/*if(Etat_bras==1&&Etat_bras_voulu!=0)
-{
-  Pince_CLOSE();
-  delay(1500);
-  Etat_bras_voulu=0;
-}
-else if (Etat_bras==0&&Etat_bras_voulu!=1)
-{
-  Pince_UP();
-  delay(1000);
-  Pince_OPEN();
-  delay(500);
-  Pince_WAIT();
-  delay(1000);
-  Pince_DOWN();
-  delay(500);
-  digitalWrite(45, LOW);
-  Etat_bras_voulu=1;
-}*/
+  //Where_Is_Robot();
+  Mise_a_jour_bras();
+   /*if(Etat_bras==1&&Etat_bras_voulu!=0)
+  {
+    Pince_CLOSE();
+    delay(1500);
+    Etat_bras_voulu=0;
+  }
+  else if (Etat_bras==0&&Etat_bras_voulu!=1)
+  {
+    Pince_UP();
+    delay(1000);
+    Pince_OPEN();
+    delay(500);
+    Pince_WAIT();
+    delay(1000);
+    Pince_DOWN();
+    delay(500);
+    digitalWrite(45, LOW);
+    Etat_bras_voulu=1;
+  }*/
   if ((millis() - Temps_assert) > TEMPS_MIN_ASSERT) {
     mise_a_jour_robot();
     calcul_erreur();
+
     Temps_assert = millis();
     asservissement_robot(Distance_moyenne, erreur_angle_radian);
   }

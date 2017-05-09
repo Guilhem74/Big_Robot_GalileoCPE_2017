@@ -47,15 +47,30 @@ void Reception() {
 }
 void Traitement() {
   if (data[0].equals("XYA")) {
-    X_DEST = (float)data[1].toInt();
-    Y_DEST = (float)data[2].toInt();
-    ANGLE_FINAL = (float)data[3].toInt();
-    MARCHE_ARRIERE = false;
-    New_moove_angle = true;
-    Rampe_angle = 0;
-    Rampe_distance = 0;
+    ConsigneTemp.X_DEST = (float)data[1].toInt();
+    ConsigneTemp.Y_DEST = (float)data[2].toInt();
+    ConsigneTemp.ANGLE_FINAL = (float)data[3].toInt();
+   ConsigneTemp.New_moove_angle = true;
+   for(int i=0;i<TAILLE_TABLEAU_SOMME;i++)
+   {
+     ConsigneTemp.Somme_Erreur_Lin[i]=0;
+     ConsigneTemp.Somme_Erreur_Ang[i]=0;
+   }
+
+    ConsigneTemp.New_moove_angle = true;
+    ConsigneTemp.New_moove_distance = false;
+    ConsigneTemp.New_moove_angle_final = false;
+    ConsigneTemp.premier_passage = false;
+erreur_precedente_lineaire=0;
+erreur_lineaire=0;
+erreur_precedente_angulaire=0;
+erreur_angulaire=0;
+  //Rampe_angle = 0;
+  Rampe_distance = 0;
+  Consigne_Actuel=&ConsigneTemp;
+  Serial.println("GG");
   }
-  if (data[0].equals("S")) {
+  /*if (data[0].equals("S")) {
     mise_a_jour_POS();
     X_DEST = X_POS;
     Y_DEST = Y_POS;
@@ -95,5 +110,5 @@ void Traitement() {
     calcul_erreur();
   }
   if (data[0].equals("P")) {
-  }
+  }*/
 }

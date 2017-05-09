@@ -7,14 +7,13 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
   float Commande_D = round(Commande_Lin + Commande_Ang);
   float Commande_G = round(Commande_Lin - Commande_Ang);
 
-
   bool sens_D = ETAT_MOTEUR_AVANCE;
-  bool sens_G = ETAT_MOTEUR_AVANCE;
+  bool sens_G = !ETAT_MOTEUR_AVANCE;
 
   if (Commande_D < 0)
     sens_D = !ETAT_MOTEUR_AVANCE;
   if (Commande_G < 0)
-    sens_G = !ETAT_MOTEUR_AVANCE;
+    sens_G = ETAT_MOTEUR_AVANCE;
 
   Commande_D = abs(Commande_D);
   Commande_G = abs(Commande_G);
@@ -38,10 +37,16 @@ float asservissement_lineaire(float Consigne) {
 
   float delta_erreur_lineaire =
       erreur_lineaire - erreur_precedente_lineaire; // D
-  Somme_erreur_lineaire += erreur_lineaire;         // I
-
+      static int32_t i=0;
+  Consigne_Actuel->Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
+  float Somme_Erreur_Lineaire_Local=0;
+  for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
+  {
+    Somme_Erreur_Lineaire_Local+=  Consigne_Actuel->Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
+  }
+  i++;
   float Commande_lineaire =
-      P_LINEAIRE * erreur_lineaire + I_LINEAIRE * Somme_erreur_lineaire +
+      P_LINEAIRE * erreur_lineaire + I_LINEAIRE * Somme_Erreur_Lineaire_Local  +
       D_LINEAIRE * delta_erreur_lineaire; // On determine la commande a envoyer
                                           // aux moteurs;
   return Commande_lineaire;
@@ -53,10 +58,16 @@ float asservissement_angulaire(float Consigne) {
   erreur_angulaire = Consigne;
   float delta_erreur_angulaire =
       erreur_angulaire - erreur_precedente_angulaire; // D
-  Somme_erreur_angulaire += erreur_angulaire;         // I
-
+      static int32_t i=0;
+  Consigne_Actuel->Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
+  float Somme_Erreur_Angulaire_Local=0;
+  for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
+  {
+    Somme_Erreur_Angulaire_Local+=  Consigne_Actuel->Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
+  }
+  i++;
   float Commande_angulaire = erreur_angulaire * P_ANGULAIRE +
-                             I_ANGULAIRE * Somme_erreur_angulaire +
+                             I_ANGULAIRE * Somme_Erreur_Angulaire_Local +
                              D_ANGULAIRE * delta_erreur_angulaire; // PID
   return Commande_angulaire;
 }

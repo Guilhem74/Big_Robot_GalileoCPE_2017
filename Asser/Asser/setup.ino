@@ -26,29 +26,6 @@ void initialisation_variables()
  stringComplete = false;  // pour savoir si la chaine est complète
  inputString = "";   // chaine de caractères pour contenir les données
 
- L_consigne=0;
- A_consigne=0;
- angle_robot=0;
-
- X_DEST=0,Y_DEST=0,ANGLE_DEST=0,ANGLE_FINAL=0;
- MARCHE_ARRIERE=true;
- close_to_goal=false;
-
- Distance_moyenne =0;
- erreur_angle_radian=0;
-
- erreur_lineaire=0;
- erreur_precedente_lineaire=0;
- Somme_erreur_lineaire=0;
-
- erreur_angulaire=0;
- Somme_erreur_angulaire=0;
- erreur_precedente_angulaire=0;
-
- erreur_vitesseD=0;
- Somme_erreur_vitesseD=0;
- erreur_vitesseG=0;
- Somme_erreur_vitesseG=0;
 
  Codeuse_Droite=0;//Nbr de tick droite
  Codeuse_Gauche=0;//Nbr de tick gauche

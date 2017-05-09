@@ -15,7 +15,6 @@ void recuperer(byte A) {
       splitString(inputString_Codeuse, SEPARATEUR, data_Codeuse);
       Codeuse_Droite = data_Codeuse[1].toInt();
       Codeuse_Gauche = -data_Codeuse[2].toInt();
-      
       fini = false;
 
     } else
