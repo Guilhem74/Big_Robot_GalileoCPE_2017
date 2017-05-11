@@ -14,7 +14,7 @@ void setup_asservissement()
   pinMode(PIN_MOTEUR_GAUCHE_SENS, OUTPUT);
   initialisation_variables();
   Serial.println("INIT Gros Robot");
-
+Consigne_termine=false;
  delay(100);
 
 }
@@ -33,9 +33,7 @@ void initialisation_variables()
  Codeuse_Gauche=0;//Nbr de tick gauche
  Codeuse_Droite_PAST=0;//Ancien nbr de tick droite
  Codeuse_Gauche_PAST=0;//Ancien nbr de tick gauche
- t_precedent=0;
- t_actuel=0;
- delta_T=0;
+
  //X_POS=0,Y_POS=0,ANGLE_POS=0;
  //angle_radian=0;
 

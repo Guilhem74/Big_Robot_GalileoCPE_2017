@@ -4,15 +4,16 @@
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
 
+
 bool Etat_bras_voulu = 0;
 bool Etat_bras = 0;
 int cnt = 0;                 // nombre de données découpées
 String data[10];             // stockage des données découpées
 bool stringComplete = false; // pour savoir si la chaine est complète
 String inputString = "";     // chaine de caractères pour contenir les données
-
-
-
+bool Chargeur_Pret=false;
+int Quart=0;
+int Quart_Reel=0;
 float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
 float Rampe_angle = 0;
@@ -36,27 +37,24 @@ float angle_radian = ANGLE_POS * DEG_TO_RAD;
 #define TICS2MM ((PI * DIAMETRE_ROUE) / (TICCODEUSES))
 #define MM2TICS ((TICCODEUSES) / (PI * DIAMETRE_ROUE))
 
-/*Variable de l'assert*********************************************/
-#define DUREE_VALIDATION_ETAT_FINAL                                            \
-  \
-10 // Nombre de coup d'assert pour valider la position finale
+
 #define TOLERANCE_ANGLE 0.2
 float Distance_moyenne = 0;
 float erreur_angle_radian = 0;
 
 #define TEMPS_MIN_ASSERT 10 // en ms
 // Asservissement linéaire ****
-#define P_LINEAIRE 0.39
-
-#define I_LINEAIRE 0.0065
-#define D_LINEAIRE 0.001
+#define P_LINEAIRE 0.50
+// 0.64 pour 40 cm
+#define I_LINEAIRE 0.015
+#define D_LINEAIRE 0.000047
 float erreur_lineaire = 0;
 float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
-#define P_ANGULAIRE 42
-#define I_ANGULAIRE 0.04
-#define D_ANGULAIRE 0.04
+#define P_ANGULAIRE 38.5
+#define I_ANGULAIRE 0//.04
+#define D_ANGULAIRE 0//.04
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
@@ -67,35 +65,94 @@ int32_t Codeuse_Gauche = 0;      // Nbr de tick gauche
 int32_t Codeuse_Droite_PAST = 0; // Ancien nbr de tick droite
 int32_t Codeuse_Gauche_PAST = 0; // Ancien nbr de tick gauche
 
-// Variable global
-int32_t t_precedent = 0;
-int32_t t_actuel = 0;
-float delta_T = 0;
+int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
-
-float vitesse_G = 0;
-float vitesse_D = 0;
+int32_t Temp_debut_match=0;
+#define TEMPS_MATCH 90000
 #define COEFF_RAMP_ANG 0.001
 #define COEFF_RAMP_ANG_FINAL 0.001
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50
 #define SEUIL_I_LINEAIRE 125
-struct Consigne {
-  float P_ang = P_ANGULAIRE, I_ang = I_ANGULAIRE, D_ang = D_ANGULAIRE;
-  float P_lin = P_LINEAIRE, I_lin = I_LINEAIRE, D_lin = D_LINEAIRE;
-  float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={},Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
-  float X_DEST = X_POS, Y_DEST = Y_POS;
-  float ANGLE_FINAL = ANGLE_POS;
-  float coeff_ramp_lin = COEFF_RAMP_LINEAIRE, coeff_ramp_ang = COEFF_RAMP_ANG, Rampe_angle_final=COEFF_RAMP_ANG_FINAL;
+float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
+float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool New_moove_angle = true;
   bool New_moove_distance = false;
   bool New_moove_angle_final = false;
   bool premier_passage = false;
-  bool Consigne_termine=false, Derniere_Consigne=false;
+  bool Consigne_termine=false;
+
+  enum Etat_Robot{ Prechauff, En_Route,Fin};
+enum Type_Action {Deplacement, Pince_V, Pince_H, Chargeur_Cylindre,Bras};
+enum Deplacement {Detection_Active, Detection_Inactive};
+enum Pince_V_Action{Pince_V_UP,Pince_V_DOWN};
+enum Pince_H_Action{Pince_H_Serre,Pince_H_Pousse,Pince_H_Desserre};
+enum Bras_Action{Bras_Retracte,Bras_Pousse};
+enum Chargeur_Cylindre_Action{Chargeur_UP, Chargeur_Down};
+Etat_Robot Robot_Principal=Prechauff;
+
+ struct Consigne {
+  Type_Action Action=Deplacement;
+
+  float X_DEST = X_POS, Y_DEST = Y_POS, ANGLE_FINAL = ANGLE_POS;
+  int32_t TimeOut=-1;//En ms
+  int Information_Supplementaire=Detection_Active;
+  bool Derniere_Consigne=false;
   Consigne *consigne_suivante = NULL;
+  Consigne(Type_Action Action2,float X,float Y,float A,int32_t Time, int Inf, bool Cons,Consigne *Next ):Action(Action2),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(Cons),consigne_suivante(Next) {}
+  Consigne():X_DEST(X_POS),Y_DEST(Y_POS),ANGLE_FINAL(ANGLE_POS) {}
+  Consigne(float X,float Y,float A,Consigne *Next ):X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),consigne_suivante(Next) {}
+  Consigne(float X,float Y,float A ):X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(true) {}
 };
+//RAZ des Tableaux et des news moove
+/*
+float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
+float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
+  bool New_moove_angle = true;
+  bool New_moove_distance = false;
+  bool New_moove_angle_final = false;
+  bool premier_passage = false;
+  bool Consigne_termine=false,*/
 Consigne *Consigne_Actuel;
 Consigne ConsigneTemp;
-Consigne Consigne[NBR_ETAPE];
+
 float DELTA_Consigne_Init=0;
+
+//ACTIONNEUR
+
+#define GPIO_PINCE_SERRAGE_DROITE 3
+#define GPIO_PINCE_SERRAGE_GAUCHE 5
+#define GPIO_PINCE_LEVAGE_DROITE 4
+#define GPIO_PINCE_LEVAGE_GAUCHE 2
+
+#define GPIO_TIRRETTE 22
+#define GPIO_COULEUR_JAUNE 26
+#define GPIO_COULEUR_BLEU 24
+
+#define Servo_S_D_CLOSE 162
+#define Servo_S_G_CLOSE 15
+#define Servo_S_D_UP 155
+#define Servo_S_G_UP 5
+#define Servo_S_D_OPEN 5
+#define Servo_S_G_OPEN 180
+#define Servo_S_D_DOWN 73
+#define Servo_S_G_DOWN 77
+#define Servo_S_D_WAIT 150
+#define Servo_S_G_WAIT 25
+#define GPIO_Fourche_Optique 45
+
+#define Fin_Course_Retracte 53
+#define Fin_Course_Pousse 51
+
+#define PIN_Chargeur_Cylindre_DIR 49
+#define PIN_Chargeur_Cylindre_PWM 7
+#define Vitesse_MIN_Chargeur_Cylindre 60
+#define PIN_Bras_DIR 47
+#define PIN_Bras_PWM 6
+#define VITESSE_BRAS_AVANCE 200
+#define VITESSE_BRAS_RECULE 200
+#define ETAT_BRAS_AVANCE HIGH
+#define ETAT_BRAS_RECULE LOW
+//Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};
+//Consigne Consigne1 = {.Type_Action=Deplacement,.X_DEST=400,.Y_DEST=1070,.ANGLE_FINAL=90,.TimeOut=-1,.Information_Supplementaire=1,.Derniere_Consigne=true,.consigne_suivante=&ConsigneTemp};
 #endif

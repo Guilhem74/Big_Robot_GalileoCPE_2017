@@ -1,34 +1,5 @@
 #include <Arduino.h>
-
-#define GPIO_PINCE_SERRAGE_DROITE 3
-#define GPIO_PINCE_SERRAGE_GAUCHE 5
-#define GPIO_PINCE_LEVAGE_DROITE 4
-#define GPIO_PINCE_LEVAGE_GAUCHE 2
 #include <Servo.h>
-#define Servo_S_D_CLOSE 160
-#define Servo_S_G_CLOSE 20
-#define Servo_S_D_UP 155
-#define Servo_S_G_UP 5
-#define Servo_S_D_OPEN 5
-#define Servo_S_G_OPEN 180
-#define Servo_S_D_DOWN 85
-#define Servo_S_G_DOWN 75
-#define Servo_S_D_WAIT 145
-#define Servo_S_G_WAIT 35
-
-#define Fin_Course_Retracte 53
-#define Fin_Course_Pousse 51
-
-#define PIN_Chargeur_Cylindre_DIR 45
-#define PIN_Chargeur_Cylindre_PWM 7
-#define Vitesse_MIN_Chargeur_Cylindre 60
-#define PIN_Bras_DIR 47
-#define PIN_Bras_PWM 6
-#define VITESSE_BRAS_AVANCE 200
-#define VITESSE_BRAS_RECULE 200
-#define ETAT_BRAS_AVANCE HIGH
-#define ETAT_BRAS_RECULE LOW
-
 Servo Servo_S_D;
 Servo Servo_S_G;
 Servo Servo_L_D;
@@ -45,7 +16,10 @@ void Setup_Actionneur() {
   pinMode(PIN_Chargeur_Cylindre_PWM, OUTPUT);
   pinMode(PIN_Bras_DIR, OUTPUT);
   pinMode(PIN_Bras_PWM, OUTPUT);
-
+  pinMode(GPIO_Fourche_Optique,INPUT);
+  pinMode(GPIO_TIRRETTE,INPUT);
+  pinMode(GPIO_COULEUR_BLEU,INPUT);
+  pinMode(GPIO_COULEUR_JAUNE,INPUT);
   digitalWrite(PIN_Chargeur_Cylindre_DIR, LOW);
   analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
 
@@ -82,12 +56,13 @@ void Pince_DOWN() {
 }
 
 void Pince_WAIT() {
-  Servo_L_D.write(Servo_S_D_WAIT);
-  Servo_L_G.write(Servo_S_G_WAIT);
+  Servo_S_D.write(Servo_S_D_WAIT);
+  Servo_S_G.write(Servo_S_G_WAIT);
 }
 
 void Mise_a_jour_bras() {
-  if (digitalRead(Fin_Course_Pousse) == HIGH && Etat_bras_voulu == 1) {
+
+  if (digitalRead(Fin_Course_Pousse) == HIGH && Etat_bras_voulu == 1) {//Bras poussé
     Etat_bras = 1;
     analogWrite(PIN_Bras_PWM, 0);
   } else if (digitalRead(Fin_Course_Pousse) == LOW && Etat_bras_voulu == 1) {
@@ -99,5 +74,52 @@ void Mise_a_jour_bras() {
   } else if (digitalRead(Fin_Course_Retracte) == HIGH && Etat_bras_voulu == 0) {
     Etat_bras = 0;
     analogWrite(PIN_Bras_PWM, 0);
+  }
+
+  static bool Etat_Precedent=HIGH;
+  static bool Etat_Actuel=HIGH;
+  static bool Sens_Aiguille_Montre=true;
+
+  Etat_Actuel=digitalRead(GPIO_Fourche_Optique);
+  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH)
+  {
+  Quart_Reel++;
+
+  }
+  Etat_Precedent=Etat_Actuel;
+  Chargeur_Pret=false;
+  if(Quart==Quart_Reel)
+  {
+
+    analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
+    Chargeur_Pret=true;
+  }
+  else
+  {
+    /*//Serial.println("Quart");
+    //Serial.println(Quart_Reel);
+    //Serial.println(Quart);*/
+    Chargeur_Pret=false;
+    digitalWrite(PIN_Chargeur_Cylindre_DIR,LOW);
+    analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
+  }
+}
+void Mise_A_Jour_Tirette()
+{
+    //Serial.println("Waiting Tirette");
+  if(digitalRead(GPIO_TIRRETTE)==LOW)
+  {
+    //Serial.println("GOOOO");
+    if(digitalRead(GPIO_COULEUR_JAUNE)==LOW)
+    {
+      //Couleur Jaune
+          //Serial.println("yellow");
+    }
+    else if(digitalRead(GPIO_COULEUR_BLEU)==LOW)
+    {
+      //Serial.println("Blue");
+      //Couleur Bleu
+    }
+    Robot_Principal=En_Route;
   }
 }

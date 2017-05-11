@@ -9,7 +9,7 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
 
   bool sens_D = ETAT_MOTEUR_AVANCE;
   bool sens_G = !ETAT_MOTEUR_AVANCE;
-  
+
   if (Commande_D < 0)
     sens_D = !ETAT_MOTEUR_AVANCE;
   if (Commande_G < 0)
@@ -38,11 +38,11 @@ float asservissement_lineaire(float Consigne) {
   float delta_erreur_lineaire =
       erreur_lineaire - erreur_precedente_lineaire; // D
       static int32_t i=0;
-  Consigne_Actuel->Somme_Erreur_Lin[i%TAILLE_TABLEAU_SOMME]= erreur_lineaire;         // I
+  Somme_Erreur_Lin[i%TAILLE_TABLEAU_SOMME]= erreur_lineaire;         // I
   float Somme_Erreur_Lineaire_Local=0;
   for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
   {
-    Somme_Erreur_Lineaire_Local+=  Consigne_Actuel->Somme_Erreur_Lin[j%TAILLE_TABLEAU_SOMME];
+    Somme_Erreur_Lineaire_Local+=  Somme_Erreur_Lin[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
   if(I_LINEAIRE * Somme_Erreur_Lineaire_Local>SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
@@ -61,11 +61,11 @@ float asservissement_angulaire(float Consigne) {
   float delta_erreur_angulaire =
       erreur_angulaire - erreur_precedente_angulaire; // D
       static int32_t i=0;
-  Consigne_Actuel->Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
+  Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
   float Somme_Erreur_Angulaire_Local=0;
   for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
   {
-    Somme_Erreur_Angulaire_Local+=  Consigne_Actuel->Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
+    Somme_Erreur_Angulaire_Local+= Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
   float Commande_angulaire = erreur_angulaire * P_ANGULAIRE +
@@ -73,37 +73,11 @@ float asservissement_angulaire(float Consigne) {
                              D_ANGULAIRE * delta_erreur_angulaire; // PID
   return Commande_angulaire;
 }
+void Arreter_Robot()
+{
 
-// int asservissement_vitesseD(int Commande)
-//{
-//  int Commande_vitesseD;
-//  float erreur_precedente_vitesseD = erreur_vitesseD;//Sauvegarde de l'erreur
-//  precedente
-//  erreur_vitesseD = Commande - vitesse_D;
-//
-//  float delta_erreur_vitesseD =
-//  erreur_vitesseD-erreur_precedente_vitesseD;//Calcul de la difference des
-//  erreurs, utile pour la derivee
-//    Somme_erreur_vitesseD +=erreur_vitesseD;//Somme des erreurs utile pour
-//    l'integrale
-//
-// Commande_vitesseD = erreur_vitesseD * P_VITESSE
-// +I_VITESSE*Somme_erreur_vitesseD+D_VITESSE*delta_erreur_vitesseD;;
-//
-// return Commande_vitesseD;
-//}
-// int asservissement_vitesseG(int Commande)
-//{
-//  int Commande_vitesseG;
-//  float erreur_precedente_vitesseG = erreur_vitesseG;//Sauvegarde de l'erreur
-//  precedente
-//  erreur_vitesseG = Commande - vitesse_G;
-//  float delta_erreur_vitesseG =
-//  erreur_vitesseG-erreur_precedente_vitesseG;//Calcul de la difference des
-//  erreurs, utile pour la derivee
-//    Somme_erreur_vitesseG +=erreur_vitesseG;//Somme des erreurs utile pour
-//    l'integrale
-// Commande_vitesseG = erreur_vitesseG * P_VITESSE
-// +I_VITESSE*Somme_erreur_vitesseG+D_VITESSE*delta_erreur_vitesseG;;
-// return Commande_vitesseG;
-//}
+  analogWrite(PIN_MOTEUR_DROITE_VITESSE, 0);
+  analogWrite(PIN_MOTEUR_GAUCHE_VITESSE, 0);
+  analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
+  analogWrite(PIN_Bras_PWM, 0);
+}

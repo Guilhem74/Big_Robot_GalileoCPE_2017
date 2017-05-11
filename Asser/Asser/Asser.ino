@@ -19,60 +19,75 @@ void setup() {
 
   setup_asservissement();
   Setup_Commande();
-  Pince_UP();
+   Pince_DOWN();
   Pince_CLOSE();
+
+  Quart=1;
+  while( Chargeur_Pret==false)
+  {
+    Mise_a_jour_bras();
+  }
   delay(1000);
-  // Droit_Au_But();
 }
 
 void loop() {
+  if( Robot_Principal==Prechauff)
+    {//Tirette attaché
+        Mise_A_Jour_Tirette();
 
-  //Where_Is_Robot();
-  Mise_a_jour_bras();
-   /*if(Etat_bras==1&&Etat_bras_voulu!=0)
-  {
-    Pince_CLOSE();
-    delay(1500);
-    Etat_bras_voulu=0;
-  }
-  else if (Etat_bras==0&&Etat_bras_voulu!=1)
-  {
-    Pince_UP();
-    delay(1000);
-    Pince_OPEN();
-    delay(500);
-    Pince_WAIT();
-    delay(1000);
-    Pince_DOWN();
-    delay(500);
-    digitalWrite(45, LOW);
-    Etat_bras_voulu=1;
-  }*/
-  if ((millis() - Temps_assert) > TEMPS_MIN_ASSERT) {
-    mise_a_jour_robot();
-    calcul_erreur();
-
-    Temps_assert = millis();
-    asservissement_robot(Distance_moyenne, erreur_angle_radian);
-    if(Consigne_Actuel->Consigne_termine==true&&Consigne_Actuel->Derniere_Consigne==false){
-      Consigne_Actuel=Consigne_Actuel->consigne_suivante;
-      //Serial.println("Fin de l'étape");
+        Temp_debut_match=millis();
     }
+    else
+    {
 
-  }
+      if( millis()-Temp_debut_match > TEMPS_MATCH&&Robot_Principal!=Fin)
+      {//Fin du match
+        Robot_Principal=Fin;
+        Serial.println("Fin du match");
+        Arreter_Robot();
+        while(1);
+      }
+      else
+      {//routine du robot
+        Routine_Robot();
 
-  Reception();
+      }
+
+    }
+    if( Robot_Principal==Fin)
+      {//Tirette attaché
+        Robot_Principal=Fin;
+        Serial.println("Fin du match");
+        Arreter_Robot();
+        while(1);
+      }
+
 }
 
-void serialEvent() {
-  while (Serial.available()) {
-    // récupérer le prochain octet (byte ou char) et l'enlever du buffer
-    char inChar = (char)Serial.read();
 
-    if (inChar == '\n') { // caractère de fin pour notre chaine
-      stringComplete = true;
-    } else { // concaténation des octets reçus
-      inputString += inChar;
-    }
-  }
+/*sif(Etat_bras==1&&Etat_bras_voulu!=0)
+{
+ Pince_CLOSE();
+ delay(1500);
+ Etat_bras_voulu=0;
 }
+else if (Etat_bras==0&&Etat_bras_voulu!=1)
+{
+ Pince_UP();
+ delay(1000);
+ Pince_OPEN();
+ delay(500);
+ Pince_DOWN();
+ delay(500);
+ Quart++;
+ while( Chargeur_Pret==false)
+ {
+   Mise_a_jour_bras();
+ }
+ Pince_WAIT();
+ delay(1000);
+
+ delay(500);
+ digitalWrite(45, LOW);
+ Etat_bras_voulu=1;
+}*/
