@@ -16,9 +16,9 @@ char Info[40] = {};
 void setup() {
 
   Setup_Actionneur();
-  Consigne_Actuel=&Consigne1;
-  setup_asservissement();
 
+  setup_asservissement();
+  Setup_Commande();
   Pince_UP();
   Pince_CLOSE();
   delay(1000);
@@ -54,6 +54,11 @@ void loop() {
 
     Temps_assert = millis();
     asservissement_robot(Distance_moyenne, erreur_angle_radian);
+    if(Consigne_Actuel->Consigne_termine==true&&Consigne_Actuel->Derniere_Consigne==false){
+      Consigne_Actuel=Consigne_Actuel->consigne_suivante;
+      //Serial.println("Fin de l'étape");
+    }
+
   }
 
   Reception();

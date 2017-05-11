@@ -61,10 +61,13 @@ void Traitement() {
     ConsigneTemp.New_moove_distance = false;
     ConsigneTemp.New_moove_angle_final = false;
     ConsigneTemp.premier_passage = false;
-erreur_precedente_lineaire=0;
-erreur_lineaire=0;
-erreur_precedente_angulaire=0;
-erreur_angulaire=0;
+    ConsigneTemp.Derniere_Consigne=true;
+    ConsigneTemp.consigne_suivante=&ConsigneTemp;
+
+  erreur_precedente_lineaire=0;
+  erreur_lineaire=0;
+  erreur_precedente_angulaire=0;
+  erreur_angulaire=0;
   //Rampe_angle = 0;
   Rampe_distance = 0;
   Consigne_Actuel=&ConsigneTemp;
@@ -84,6 +87,10 @@ erreur_angulaire=0;
     ConsigneTemp.New_moove_distance = false;
     ConsigneTemp.New_moove_angle_final = false;
     ConsigneTemp.premier_passage = false;
+    ConsigneTemp.Derniere_Consigne=true;
+    ConsigneTemp.consigne_suivante=&ConsigneTemp;
+
+
 erreur_precedente_lineaire=0;
 erreur_lineaire=0;
 erreur_precedente_angulaire=0;

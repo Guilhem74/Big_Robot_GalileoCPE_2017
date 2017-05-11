@@ -13,6 +13,8 @@ void setup_asservissement()
   pinMode(PIN_MOTEUR_GAUCHE_VITESSE, OUTPUT);
   pinMode(PIN_MOTEUR_GAUCHE_SENS, OUTPUT);
   initialisation_variables();
+  Serial.println("INIT Gros Robot");
+
  delay(100);
 
 }

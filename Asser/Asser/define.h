@@ -2,7 +2,7 @@
 #define DEFINE_H
 /*Communication*/
 #define SEPARATEUR ';'
-
+#define NBR_ETAPE 4
 
 bool Etat_bras_voulu = 0;
 bool Etat_bras = 0;
@@ -46,17 +46,17 @@ float erreur_angle_radian = 0;
 
 #define TEMPS_MIN_ASSERT 10 // en ms
 // Asservissement linéaire ****
-#define P_LINEAIRE 0.41
+#define P_LINEAIRE 0.39
 
-#define I_LINEAIRE 0
-#define D_LINEAIRE 0
+#define I_LINEAIRE 0.0065
+#define D_LINEAIRE 0.001
 float erreur_lineaire = 0;
 float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
-#define P_ANGULAIRE 40
+#define P_ANGULAIRE 42
 #define I_ANGULAIRE 0.04
-#define D_ANGULAIRE 0.4
+#define D_ANGULAIRE 0.04
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
@@ -78,7 +78,8 @@ float vitesse_D = 0;
 #define COEFF_RAMP_ANG 0.001
 #define COEFF_RAMP_ANG_FINAL 0.001
 #define COEFF_RAMP_LINEAIRE 0.001
-#define TAILLE_TABLEAU_SOMME 100
+#define TAILLE_TABLEAU_SOMME 50
+#define SEUIL_I_LINEAIRE 125
 struct Consigne {
   float P_ang = P_ANGULAIRE, I_ang = I_ANGULAIRE, D_ang = D_ANGULAIRE;
   float P_lin = P_LINEAIRE, I_lin = I_LINEAIRE, D_lin = D_LINEAIRE;
@@ -90,9 +91,11 @@ struct Consigne {
   bool New_moove_distance = false;
   bool New_moove_angle_final = false;
   bool premier_passage = false;
+  bool Consigne_termine=false, Derniere_Consigne=false;
   Consigne *consigne_suivante = NULL;
 };
-Consigne Consigne1;
-Consigne ConsigneTemp;
 Consigne *Consigne_Actuel;
+Consigne ConsigneTemp;
+Consigne Consigne[NBR_ETAPE];
+float DELTA_Consigne_Init=0;
 #endif

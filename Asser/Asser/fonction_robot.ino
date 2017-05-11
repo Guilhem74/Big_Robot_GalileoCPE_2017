@@ -29,7 +29,7 @@ void mise_a_jour_POS()
   float localX = 0, localY = 0;
   localY = (float)(((delta_D + delta_G) / 2.0f) * cos(angle_radian +(delta_D - delta_G) / (2* ECARTEMENT_ROUES)));//on parcourt cette distance avec l'angle initial
   localX = (float)(((delta_D + delta_G) / 2.0f) * sin(angle_radian +(delta_D - delta_G) / (2* ECARTEMENT_ROUES)));
-  angle_radian += ((float)(delta_D - delta_G) / ECARTEMENT_ROUES); //Mise a jour de l'angle pour le prochain déplacement,toutes les distances doivent avoir les mêmes unités!
+  angle_radian += ((float)(delta_D - delta_G) / ECARTEMENT_ROUES)*0; //Mise a jour de l'angle pour le prochain déplacement,toutes les distances doivent avoir les mêmes unités!
 
 
   X_POS += localX;
@@ -117,20 +117,10 @@ void calcul_erreur()
   if(abs(dy)<2&&dx>0&&abs(angle_robot+angle_envoye)-90<=2) avancer=-1;
   else if((((abs(angle_robot+angle_envoye)<=90 || angle_robot+angle_envoye>=270) && Consigne_Actuel->Y_DEST>Y_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Consigne_Actuel->Y_DEST<Y_POS)) || (((angle_robot+angle_envoye>-180 && angle_robot+angle_envoye<0) || angle_robot+angle_envoye>=180) && Consigne_Actuel->X_DEST>X_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Consigne_Actuel->Y_DEST<Y_POS)|| (((angle_robot+angle_envoye>0 && angle_robot+angle_envoye<180) || angle_robot+angle_envoye<-180) && Consigne_Actuel->X_DEST<X_POS)) avancer=1;
   else avancer=-1;//
-//  Serial.print("\n");
-//  Serial.print(angle_envoye);
-//  Serial.print("\n");
-//  Serial.print(avancer);
-//  Serial.print("\n");
 
 
+   /*Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));*/
 
-
-    // if(abs(angle_envoye)<5)
-
-   Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
-   //else Distance_moyenne=0;
-    //angle_envoye-=ANGLE_FINAL;
 
     if(abs(angle_envoye)>5 && Consigne_Actuel->New_moove_angle==true){
 
@@ -153,7 +143,7 @@ void calcul_erreur()
       Consigne_Actuel->New_moove_distance=true;
     }
 
-
+/*
     if(abs(Distance_moyenne)>=50 && Consigne_Actuel->New_moove_distance==true){
         if(Distance_moyenne>=0){
           Rampe_distance+=Consigne_Actuel->coeff_ramp_lin*TEMPS_MIN_ASSERT*Distance_moyenne/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne distance au bout de 2s
@@ -168,10 +158,24 @@ void calcul_erreur()
       Consigne_Actuel->New_moove_distance=false;
       Consigne_Actuel->New_moove_angle_final=true;
       Consigne_Actuel->premier_passage=true;
+    }*/
+
+    if(sqrt(dx*dx+dy*dy)>=50 && Consigne_Actuel->New_moove_distance==true){
+        Rampe_distance+=Consigne_Actuel->coeff_ramp_lin*TEMPS_MIN_ASSERT*sqrt(dx*dx+dy*dy)/2;
+        if(Rampe_distance>=sqrt(dx*dx+dy*dy)) Rampe_distance=sqrt(dx*dx+dy*dy);
+        }
+    else if(Consigne_Actuel->New_moove_distance==true){
+      Consigne_Actuel->New_moove_distance=false;
+      Consigne_Actuel->New_moove_angle_final=true;
+      Consigne_Actuel->premier_passage=true;
     }
+    Distance_moyenne=avancer*Rampe_distance*abs(cos(angle_envoye*DEG_TO_RAD));
+    Serial.print("X;");
+    Serial.print(DELTA_Consigne_Init+Distance_moyenne);
+    Serial.print(";");
+    Serial.println(DELTA_Consigne_Init);
 
-
-   if(sqrt(dx*dx+dy*dy)<50 && Consigne_Actuel->New_moove_angle_final==true){
+  /* if(sqrt(dx*dx+dy*dy)<50 && Consigne_Actuel->New_moove_angle_final==true){
       if(Consigne_Actuel->premier_passage==true){
         angle_robot=angle_radian*RAD_TO_DEG;
         if(angle_robot<0) angle_robot+=360;
@@ -204,15 +208,23 @@ void calcul_erreur()
    if(sqrt(dx*dx+dy*dy)<50){
 
         erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
-   }
-   else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
+        if(abs(erreur_angle_radian*RAD_TO_DEG)<5)
+        {
+           Consigne_Actuel->Consigne_termine=true;
+           Serial.println("Fin etape");
+         }
 
+
+   }
+   else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;*/
+
+/*
    Serial.print("D_moy");
    Serial.println (Distance_moyenne);
    Serial.println(avancer);
 
    Serial.println(angle_envoye);
-   Serial.println(angle_robot);
+   Serial.println(angle_robot);*/
    /*
    Serial.print("\nx_pos y_pos");
    Serial.print(X_POS);

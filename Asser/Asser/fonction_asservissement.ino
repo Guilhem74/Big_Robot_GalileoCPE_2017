@@ -9,7 +9,7 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
 
   bool sens_D = ETAT_MOTEUR_AVANCE;
   bool sens_G = !ETAT_MOTEUR_AVANCE;
-
+  
   if (Commande_D < 0)
     sens_D = !ETAT_MOTEUR_AVANCE;
   if (Commande_G < 0)
@@ -38,17 +38,19 @@ float asservissement_lineaire(float Consigne) {
   float delta_erreur_lineaire =
       erreur_lineaire - erreur_precedente_lineaire; // D
       static int32_t i=0;
-  Consigne_Actuel->Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
+  Consigne_Actuel->Somme_Erreur_Lin[i%TAILLE_TABLEAU_SOMME]= erreur_lineaire;         // I
   float Somme_Erreur_Lineaire_Local=0;
   for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
   {
-    Somme_Erreur_Lineaire_Local+=  Consigne_Actuel->Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
+    Somme_Erreur_Lineaire_Local+=  Consigne_Actuel->Somme_Erreur_Lin[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
+  if(I_LINEAIRE * Somme_Erreur_Lineaire_Local>SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
+  else if(I_LINEAIRE * Somme_Erreur_Lineaire_Local<-SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=-SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
   float Commande_lineaire =
       P_LINEAIRE * erreur_lineaire + I_LINEAIRE * Somme_Erreur_Lineaire_Local  +
       D_LINEAIRE * delta_erreur_lineaire; // On determine la commande a envoyer
-                                          // aux moteurs;
+
   return Commande_lineaire;
 }
 
