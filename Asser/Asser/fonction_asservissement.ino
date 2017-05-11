@@ -7,12 +7,14 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
   float Commande_D = round(Commande_Lin + Commande_Ang);
   float Commande_G = round(Commande_Lin - Commande_Ang);
 
+
+
   bool sens_D = ETAT_MOTEUR_AVANCE;
   bool sens_G = !ETAT_MOTEUR_AVANCE;
 
   if (Commande_D < 0)
     sens_D = !ETAT_MOTEUR_AVANCE;
-  if (Commande_G < 0)
+  if (Commande_G <= 0)
     sens_G = ETAT_MOTEUR_AVANCE;
 
   Commande_D = abs(Commande_D);
@@ -26,9 +28,9 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
   digitalWrite(PIN_MOTEUR_DROITE_SENS, sens_D);
   digitalWrite(PIN_MOTEUR_GAUCHE_SENS, sens_G);
   delayMicroseconds(10);
-
   analogWrite(PIN_MOTEUR_DROITE_VITESSE, Commande_D);
   analogWrite(PIN_MOTEUR_GAUCHE_VITESSE, Commande_G);
+
 }
 float asservissement_lineaire(float Consigne) {
   erreur_precedente_lineaire =
@@ -68,6 +70,14 @@ float asservissement_angulaire(float Consigne) {
     Somme_Erreur_Angulaire_Local+= Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
+  Serial.println(Somme_Erreur_Angulaire_Local);
+  if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local>SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Angulaire_Local=(float) SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);
+  else if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local<-SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME){
+
+
+   Somme_Erreur_Angulaire_Local=- (float)SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);
+ }
+Serial.println(Somme_Erreur_Angulaire_Local);
   float Commande_angulaire = erreur_angulaire * P_ANGULAIRE +
                              I_ANGULAIRE * Somme_Erreur_Angulaire_Local +
                              D_ANGULAIRE * delta_erreur_angulaire; // PID

@@ -23,10 +23,6 @@ void setup() {
   Pince_CLOSE();
 
   Quart=1;
-  while( Chargeur_Pret==false)
-  {
-    Mise_a_jour_bras();
-  }
   delay(1000);
 }
 

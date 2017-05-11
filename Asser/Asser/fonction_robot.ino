@@ -210,7 +210,7 @@ void calcul_erreur()
    }
    else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
    erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);*/
-   erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
+   erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD*0);
 
    Serial.print("X;");
    Serial.print(DELTA_Consigne_Init);
@@ -237,17 +237,19 @@ void calcul_erreur()
 
 void Routine_Robot()
 {
-  Mise_A_Jour_Action_Robot();
-  Mise_a_jour_bras();
+
   if ((millis() - Temps_assert) > TEMPS_MIN_ASSERT) {
+
     mise_a_jour_robot();
     calcul_erreur();
 
     Temps_assert = millis();
     asservissement_robot(Distance_moyenne, erreur_angle_radian);
-
+    Mise_A_Jour_Action_Robot();
+    Mise_a_jour_bras();
 
   }
+
   Reception();
 }
 
