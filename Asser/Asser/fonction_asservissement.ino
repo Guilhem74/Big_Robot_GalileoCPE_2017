@@ -47,8 +47,8 @@ float asservissement_lineaire(float Consigne) {
     Somme_Erreur_Lineaire_Local+=  Somme_Erreur_Lin[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
-  if(I_LINEAIRE * Somme_Erreur_Lineaire_Local>SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
-  else if(I_LINEAIRE * Somme_Erreur_Lineaire_Local<-SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=-SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
+  if(I_LINEAIRE * Somme_Erreur_Lineaire_Local>SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=(float)SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
+  else if(I_LINEAIRE * Somme_Erreur_Lineaire_Local<-SEUIL_I_LINEAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Lineaire_Local=-(float)SEUIL_I_LINEAIRE/(TAILLE_TABLEAU_SOMME*I_LINEAIRE);
   float Commande_lineaire =
       P_LINEAIRE * erreur_lineaire + I_LINEAIRE * Somme_Erreur_Lineaire_Local  +
       D_LINEAIRE * delta_erreur_lineaire; // On determine la commande a envoyer
@@ -70,14 +70,8 @@ float asservissement_angulaire(float Consigne) {
     Somme_Erreur_Angulaire_Local+= Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
   }
   i++;
-  Serial.println(Somme_Erreur_Angulaire_Local);
   if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local>SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Angulaire_Local=(float) SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);
-  else if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local<-SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME){
-
-
-   Somme_Erreur_Angulaire_Local=- (float)SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);
- }
-Serial.println(Somme_Erreur_Angulaire_Local);
+  else if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local<-SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME){ Somme_Erreur_Angulaire_Local=- (float)SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);}
   float Commande_angulaire = erreur_angulaire * P_ANGULAIRE +
                              I_ANGULAIRE * Somme_Erreur_Angulaire_Local +
                              D_ANGULAIRE * delta_erreur_angulaire; // PID

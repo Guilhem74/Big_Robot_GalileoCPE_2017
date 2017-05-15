@@ -45,16 +45,16 @@ float erreur_angle_radian = 0;
 #define TEMPS_MIN_ASSERT 10 // en ms
 // Asservissement linéaire ****
 #define P_LINEAIRE 0.50
-// 0.64 pour 40 cm
+// 0.64 pour 40 .
 #define I_LINEAIRE 0.015
 #define D_LINEAIRE 0.000047
 float erreur_lineaire = 0;
 float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
-#define P_ANGULAIRE 38.5
-#define I_ANGULAIRE 20//1
-#define D_ANGULAIRE 0//.4
+#define P_ANGULAIRE 10
+#define I_ANGULAIRE 0.95
+#define D_ANGULAIRE 200
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
@@ -74,7 +74,7 @@ int32_t Temp_debut_match=0;
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50
 #define SEUIL_I_LINEAIRE 125
-#define SEUIL_I_ANGULAIRE 500
+#define SEUIL_I_ANGULAIRE 700
 float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
 float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool New_moove_angle = true;
@@ -83,7 +83,7 @@ float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool premier_passage = false;
   bool Consigne_termine=false;
 
-  enum Etat_Robot{ Prechauff, En_Route,Fin};
+enum Etat_Robot{ Prechauff, En_Route,Fin};
 enum Type_Action {Deplacement, Pince_V, Pince_H, Chargeur_Cylindre,Bras};
 enum Deplacement {Detection_Active, Detection_Inactive};
 enum Pince_V_Action{Pince_V_UP,Pince_V_DOWN};

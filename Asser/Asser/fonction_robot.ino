@@ -29,7 +29,7 @@ void mise_a_jour_POS()
 
   X_POS += localX*0;
   Y_POS -= localY*0;
-  ANGLE_POS = (angle_radian * 360 / (float)(2 * PI));
+  ANGLE_POS = (angle_radian * RAD_TO_DEG);
 //Serial.println(ANGLE_POS);
 
 }
@@ -210,7 +210,7 @@ void calcul_erreur()
    }
    else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
    erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);*/
-   erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD*0);
+   erreur_angle_radian=-(angle_radian-0);
 
    Serial.print("X;");
    Serial.print(DELTA_Consigne_Init);
