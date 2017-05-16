@@ -44,12 +44,15 @@ void loop() {
         Arreter_Robot();
         while(1);
       }
-      else
+      else if( Robot_Principal!= Fin)
       {//routine du robot
         Routine_Robot();
 
       }
-      
+      if(Robot_Principal== Fin)
+        Arreter_Robot();
+
+
     }
 
 

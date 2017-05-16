@@ -60,7 +60,7 @@ Consigne Consigne6(Bras,1000,Bras_Pousse,&Consigne7);
 Consigne Consigne5(Pince_H,1000,Pince_H_Pousse,&Consigne6);
 Consigne Consigne4(Pince_V,1000,Pince_V_DOWN,&Consigne5);
 Consigne Consigne3(175,1250,90,&Consigne4);
-Consigne Consigne2(130,1070,90,&Consigne17);
+Consigne Consigne2(0,1070,90,&Consigne17);
 Consigne Consigne1(0,1070,90,&Consigne2);
 
 void Setup_Commande()
