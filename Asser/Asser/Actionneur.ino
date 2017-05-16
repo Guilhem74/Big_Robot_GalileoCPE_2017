@@ -4,12 +4,13 @@ Servo Servo_S_D;
 Servo Servo_S_G;
 Servo Servo_L_D;
 Servo Servo_L_G;
-
+Servo Servo_Funny;
 void Setup_Actionneur() {
   Servo_S_D.attach(GPIO_PINCE_SERRAGE_DROITE);
   Servo_S_G.attach(GPIO_PINCE_SERRAGE_GAUCHE);
   Servo_L_D.attach(GPIO_PINCE_LEVAGE_DROITE);
   Servo_L_G.attach(GPIO_PINCE_LEVAGE_GAUCHE);
+  Servo_Funny.attach(GPIO_FUNNY_ACTION);
   pinMode(Fin_Course_Retracte, INPUT_PULLUP);
   pinMode(Fin_Course_Pousse, INPUT_PULLUP);
   pinMode(PIN_Chargeur_Cylindre_DIR, OUTPUT);
@@ -70,9 +71,13 @@ void Pince_V_Bourre(){
   Servo_L_D.write(Servo_S_D_BOURRE);
   Servo_L_G.write(Servo_S_G_BOURRE);
 }
-
+void ACTIVER_FUNNY_ACTION(){
+  Servo_Funny.write(80);
+}
+void DESACTIVER_FUNNY_ACTION(){
+  Servo_Funny.write(50);
+}
 void Mise_a_jour_bras() {
-
   if (digitalRead(Fin_Course_Pousse) == HIGH && Etat_bras_voulu == 1) {//Bras poussé
     Etat_bras = 1;
     analogWrite(PIN_Bras_PWM, 0);

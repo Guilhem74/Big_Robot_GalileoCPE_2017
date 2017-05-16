@@ -10,11 +10,10 @@ void Tourner_Moteur_G()
 void Plz_Share_What_U_Know_About_Encoder()
 void Where_Is_Robot()
 */
-
 char Info[40] = {};
 
 void setup() {
-
+DESACTIVER_FUNNY_ACTION();
   Setup_Actionneur();
 
   setup_asservissement();
@@ -36,10 +35,12 @@ void loop() {
     else
     {
 
-      if( millis()-Temp_debut_match > TEMPS_MATCH&&Robot_Principal!=Fin)
+      if( millis()-Temp_debut_match > TEMPS_MATCH)
       {//Fin du match
         Robot_Principal=Fin;
         Serial.println("Fin du match");
+        ACTIVER_FUNNY_ACTION();
+
         Arreter_Robot();
         while(1);
       }
@@ -48,15 +49,9 @@ void loop() {
         Routine_Robot();
 
       }
-
+      
     }
-    if( Robot_Principal==Fin)
-      {//Tirette attaché
-        Robot_Principal=Fin;
-        Serial.println("Fin du match");
-        Arreter_Robot();
-        while(1);
-      }
+
 
 }
 
