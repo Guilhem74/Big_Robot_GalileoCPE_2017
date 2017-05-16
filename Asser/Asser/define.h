@@ -87,8 +87,8 @@ float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
 enum Etat_Robot{ Prechauff, En_Route,Fin};
 enum Type_Action {Deplacement, Pince_V, Pince_H, Chargeur_Cylindre,Bras};
 enum Deplacement {Detection_Active, Detection_Inactive};
-enum Pince_V_Action{Pince_V_UP,Pince_V_DOWN};
-enum Pince_H_Action{Pince_H_Serre,Pince_H_Pousse,Pince_H_Desserre};
+enum Pince_V_Action{Pince_V_UP,Pince_V_DOWN,Pince_V_Bourrage};
+enum Pince_H_Action{Pince_H_Serre,Pince_H_Pousse,Pince_H_Desserre,Pince_H_Droite_Desserre,Pince_H_Gauche_Desserre};
 enum Bras_Action{Bras_Retracte,Bras_Pousse};
 enum Chargeur_Cylindre_Action{Chargeur_UP, Chargeur_Down};
 Etat_Robot Robot_Principal=Prechauff;
@@ -132,14 +132,18 @@ float DELTA_Consigne_Init=0;
 #define GPIO_COULEUR_JAUNE 26
 #define GPIO_COULEUR_BLEU 24
 
+
+#define Servo_S_D_OPEN 115
+#define Servo_S_G_OPEN 60
 #define Servo_S_D_CLOSE 162
 #define Servo_S_G_CLOSE 15
 #define Servo_S_D_UP 155
 #define Servo_S_G_UP 5
-#define Servo_S_D_OPEN 5
-#define Servo_S_G_OPEN 180
 #define Servo_S_D_DOWN 73
 #define Servo_S_G_DOWN 77
+#define Servo_S_D_BOURRE 110
+#define Servo_S_G_BOURRE 40
+
 #define Servo_S_D_WAIT 150
 #define Servo_S_G_WAIT 25
 #define GPIO_Fourche_Optique 45

@@ -47,7 +47,13 @@ void Pince_UP() {
 }
 
 void Pince_OPEN() {
+  Pince_D_OPEN();
+  Pince_G_OPEN();
+}
+void Pince_D_OPEN() {
   Servo_S_D.write(Servo_S_D_OPEN);
+}
+void Pince_G_OPEN() {
   Servo_S_G.write(Servo_S_G_OPEN);
 }
 void Pince_DOWN() {
@@ -58,6 +64,11 @@ void Pince_DOWN() {
 void Pince_WAIT() {
   Servo_S_D.write(Servo_S_D_WAIT);
   Servo_S_G.write(Servo_S_G_WAIT);
+}
+
+void Pince_V_Bourre(){
+  Servo_L_D.write(Servo_S_D_BOURRE);
+  Servo_L_G.write(Servo_S_G_BOURRE);
 }
 
 void Mise_a_jour_bras() {
@@ -99,9 +110,11 @@ void Mise_a_jour_bras() {
     /*//Serial.println("Quart");
     //Serial.println(Quart_Reel);
     //Serial.println(Quart);*/
+    if(Quart_Reel>Quart)
+      Quart_Reel=Quart-1;
     Chargeur_Pret=false;
     digitalWrite(PIN_Chargeur_Cylindre_DIR,LOW);
-    analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
+    //analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
   }
 }
 void Mise_A_Jour_Tirette()

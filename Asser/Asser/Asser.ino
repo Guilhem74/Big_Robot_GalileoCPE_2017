@@ -19,9 +19,9 @@ void setup() {
 
   setup_asservissement();
   Setup_Commande();
-   Pince_DOWN();
-  Pince_CLOSE();
 
+  Pince_CLOSE();
+Pince_UP();
   Quart=1;
   delay(1000);
 }

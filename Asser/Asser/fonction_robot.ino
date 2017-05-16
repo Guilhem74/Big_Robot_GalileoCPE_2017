@@ -38,9 +38,10 @@ void calcul_erreur()
 
    int32_t dx=X_DEST-X_POS;
    int32_t dy=Y_DEST-Y_POS;
-   Serial.println(dy);
 
-   Serial.println(dx);
+   /*Serial.println("\n Dx;Dy :");
+   Serial.println(X_DEST);
+   Serial.println(Y_DEST);*/
     ///float angle_dest =-(atan2(dx,dy));
 
     int i=0;
@@ -111,25 +112,19 @@ void calcul_erreur()
 
   /*if(angle_envoye>=0) angle_envoye=-angle_envoye;
   else angle_envoye=abs(angle_envoye);*/
-  if(abs(dy)<2&&dx>0&&abs(angle_robot+angle_envoye)-90<=2) avancer=-1;
+  if(abs(dy)<2&&dx>0&&abs(angle_robot+angle_envoye)-90<=3) avancer=-1;
   else if((((abs(angle_robot+angle_envoye)<=90 || angle_robot+angle_envoye>=270) && Y_DEST>Y_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)) || (((angle_robot+angle_envoye>-180 && angle_robot+angle_envoye<0) || angle_robot+angle_envoye>=180) && X_DEST>X_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)|| (((angle_robot+angle_envoye>0 && angle_robot+angle_envoye<180) || angle_robot+angle_envoye<-180) && X_DEST<X_POS)) avancer=1;
   else avancer=-1;//
-//  Serial.print("\n");
-//  Serial.print(angle_envoye);
-//  Serial.print("\n");
-//  Serial.print(avancer);
-//  Serial.print("\n");
 
 
 
-    if(abs(angle_envoye)<=5)
+
+  if(abs(angle_envoye)<=5)
 
       Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
 
-
-   else Distance_moyenne=0;
     //angle_envoye-=ANGLE_FINAL;
-    if(abs(angle_envoye)>5 && New_moove_angle==true){
+  if(abs(angle_envoye)>5 && New_moove_angle==true){
 
       Distance_moyenne=0;
       if(angle_envoye>=0){
@@ -151,7 +146,7 @@ void calcul_erreur()
     }
 
 
-    if(abs(Distance_moyenne)>=50 && New_moove_distance==true){
+    if(abs(Distance_moyenne)>=5 && New_moove_distance==true){
         if(Distance_moyenne>=0){
           Rampe_distance+=COEFF_RAMP_LINEAIRE*TEMPS_MIN_ASSERT*Distance_moyenne/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne distance au bout de 2s
           if(Rampe_distance>=Distance_moyenne) Rampe_distance=Distance_moyenne;
@@ -169,7 +164,7 @@ void calcul_erreur()
 
 
 
-   if(sqrt(dx*dx+dy*dy)<50 && New_moove_angle_final==true){
+   if(sqrt(dx*dx+dy*dy)<6 && New_moove_angle_final==true){
       if(premier_passage==true){
         angle_robot=angle_radian*RAD_TO_DEG;
         if(angle_robot<0) angle_robot+=360;
@@ -199,10 +194,10 @@ void calcul_erreur()
 
     }
 
-   if(sqrt(dx*dx+dy*dy)<50){
+   if(sqrt(dx*dx+dy*dy)<5 && New_moove_angle_final==false){
 
         erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
-        if(abs(erreur_angle_radian*RAD_TO_DEG)<1 && Consigne_Actuel->Action==Deplacement)
+        if(abs(erreur_angle_radian*RAD_TO_DEG)<2 && Consigne_Actuel->Action==Deplacement)
         {
            Consigne_termine=true;
            Serial.println("Fin etape");
@@ -213,11 +208,15 @@ void calcul_erreur()
    else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
    //erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
    //erreur_angle_radian=-(angle_radian-0);
-
-   Serial.print("Angle : ");
+    Serial.print("\n angle :");
+     Serial.println(angle_envoye);
+   //  Serial.print("\n");
+     Serial.println(Distance_moyenne);
+   //  Serial.print("\n");
+   /*Serial.print("Angle : ");
    Serial.print(angle_envoye);
    Serial.print(";");
-   Serial.println(sqrt(dx*dx+dy*dy));
+   Serial.println(sqrt(dx*dx+dy*dy));*/
 
 
    /*
@@ -299,6 +298,8 @@ void Mise_A_Jour_Action_Robot()
           Pince_UP();
       else if(Consigne_Actuel->Information_Supplementaire==Pince_V_DOWN)
           Pince_DOWN();
+      else if(Consigne_Actuel->Information_Supplementaire==Pince_V_Bourrage)
+          Pince_V_Bourre();
     break;
     case Pince_H:
       if(Consigne_Actuel->Information_Supplementaire==Pince_H_Desserre)
@@ -307,6 +308,10 @@ void Mise_A_Jour_Action_Robot()
         Pince_WAIT();
       else if(Consigne_Actuel->Information_Supplementaire==Pince_H_Serre)
         Pince_CLOSE();
+        else if(Consigne_Actuel->Information_Supplementaire==Pince_H_Droite_Desserre)
+          Pince_D_OPEN();
+        else if(Consigne_Actuel->Information_Supplementaire==Pince_H_Gauche_Desserre)
+          Pince_G_OPEN();
     break;
     case Chargeur_Cylindre:
       if(Consigne_Actuel->Information_Supplementaire==Chargeur_Down&&First_Passage_Action==true)

@@ -42,9 +42,26 @@ Consigne Consigne4(Pince_H,175,1250,90,1000,Pince_H_Pousse,false,&Consigne5);
 Consigne Consigne3(Pince_V,175,1250,90,1000,Pince_V_DOWN,false,&Consigne4);
 Consigne Consigne2(175,1250,90,&Consigne3);
 Consigne Consigne1(130,1070,130,&Consigne2);*/
-Consigne Consigne3(0,1370,90);
-Consigne Consigne2(0,1070,0,&Consigne3);
-Consigne Consigne1(Pince_V,1000,Pince_V_DOWN,&Consigne2);
+//Consigne Consigne4(0,1370,90);
+//Consigne Consigne3(0,1070,0,&Consigne4);
+
+Consigne Consigne17(Pince_V,1000,Pince_V_DOWN);
+Consigne Consigne16(Pince_V,1000,Pince_V_Bourrage,&Consigne17);
+Consigne Consigne15(Pince_V,1000,Pince_V_DOWN,&Consigne16);
+Consigne Consigne14(Pince_V,1000,Pince_V_Bourrage,&Consigne15);
+Consigne Consigne13(Pince_H,1000,Pince_H_Serre,&Consigne14);
+Consigne Consigne12(Pince_V,1000,Pince_V_DOWN,&Consigne13);
+Consigne Consigne11(Pince_H,1000,Pince_H_Gauche_Desserre,&Consigne12);
+Consigne Consigne10(Pince_H,2000,Pince_H_Droite_Desserre,&Consigne11);
+Consigne Consigne9(Pince_V,1000,Pince_V_UP,&Consigne10);
+Consigne Consigne8(Bras,2000,Bras_Retracte,&Consigne9);
+Consigne Consigne7(Pince_H,1000,Pince_H_Serre,&Consigne8);
+Consigne Consigne6(Bras,1000,Bras_Pousse,&Consigne7);
+Consigne Consigne5(Pince_H,1000,Pince_H_Pousse,&Consigne6);
+Consigne Consigne4(Pince_V,1000,Pince_V_DOWN,&Consigne5);
+Consigne Consigne3(175,1250,90,&Consigne4);
+Consigne Consigne2(130,1070,130);
+Consigne Consigne1(0,1070,90,&Consigne2);
 
 void Setup_Commande()
 {
