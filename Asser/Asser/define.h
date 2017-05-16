@@ -19,6 +19,7 @@ float angle_envoye_final = 0;
 float Rampe_angle = 0;
 float Rampe_distance = 0;
 float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
+float X_DEST=X_POS, Y_DEST=Y_POS, ANGLE_FINAL=ANGLE_POS;
 float angle_radian = ANGLE_POS * DEG_TO_RAD;
 // Paramètre constant du robot
 #define TICCODEUSES 1024 // Tick par tour de roue
@@ -53,8 +54,8 @@ float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
 #define P_ANGULAIRE 10
-#define I_ANGULAIRE 0.95
-#define D_ANGULAIRE 200
+#define I_ANGULAIRE 0.95//0.95
+#define D_ANGULAIRE 400
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
@@ -74,7 +75,7 @@ int32_t Temp_debut_match=0;
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50
 #define SEUIL_I_LINEAIRE 125
-#define SEUIL_I_ANGULAIRE 700
+#define SEUIL_I_ANGULAIRE 800//700
 float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
 float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool New_moove_angle = true;
@@ -100,10 +101,11 @@ Etat_Robot Robot_Principal=Prechauff;
   int Information_Supplementaire=Detection_Active;
   bool Derniere_Consigne=false;
   Consigne *consigne_suivante = NULL;
-  Consigne(Type_Action Action2,float X,float Y,float A,int32_t Time, int Inf, bool Cons,Consigne *Next ):Action(Action2),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(Cons),consigne_suivante(Next) {}
-  Consigne():X_DEST(X_POS),Y_DEST(Y_POS),ANGLE_FINAL(ANGLE_POS) {}
-  Consigne(float X,float Y,float A,Consigne *Next ):X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),consigne_suivante(Next) {}
-  Consigne(float X,float Y,float A ):X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(true) {}
+  Consigne(Type_Action Action2,int32_t Time, int Inf):Action(Action2), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(true){}
+  Consigne(Type_Action Action2,int32_t Time, int Inf,Consigne *Next ):Action(Action2), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(false),consigne_suivante(Next) {}
+  Consigne(): Action( Deplacement), X_DEST(X_POS),Y_DEST(Y_POS),ANGLE_FINAL(ANGLE_POS) {}
+  Consigne(float X,float Y,float A,Consigne *Next ):Action( Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(false),consigne_suivante(Next) {}
+  Consigne(float X,float Y,float A ):Action(Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(true) {}
 };
 //RAZ des Tableaux et des news moove
 /*

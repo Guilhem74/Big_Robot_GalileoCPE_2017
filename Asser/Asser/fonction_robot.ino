@@ -27,19 +27,21 @@ void mise_a_jour_POS()
   angle_radian += ((float)(delta_D - delta_G) / ECARTEMENT_ROUES); //Mise a jour de l'angle pour le prochain déplacement,toutes les distances doivent avoir les mêmes unités!
 
 
-  X_POS += localX*0;
-  Y_POS -= localY*0;
+  X_POS += localX;
+  Y_POS -= localY;
   ANGLE_POS = (angle_radian * RAD_TO_DEG);
 //Serial.println(ANGLE_POS);
 
 }
 void calcul_erreur()
 {
-/*
-   int32_t dx=Consigne_Actuel->X_DEST-X_POS;
-   int32_t dy=Consigne_Actuel->Y_DEST-Y_POS;
-    ///float angle_dest =-(atan2(dx,dy));
 
+   int32_t dx=X_DEST-X_POS;
+   int32_t dy=Y_DEST-Y_POS;
+   Serial.println(dy);
+
+   Serial.println(dx);
+    ///float angle_dest =-(atan2(dx,dy));
 
     int i=0;
     int avancer=0;
@@ -109,8 +111,8 @@ void calcul_erreur()
 
   /*if(angle_envoye>=0) angle_envoye=-angle_envoye;
   else angle_envoye=abs(angle_envoye);*/
-  /*if(abs(dy)<2&&dx>0&&abs(angle_robot+angle_envoye)-90<=2) avancer=-1;
-  else if((((abs(angle_robot+angle_envoye)<=90 || angle_robot+angle_envoye>=270) && Consigne_Actuel->Y_DEST>Y_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Consigne_Actuel->Y_DEST<Y_POS)) || (((angle_robot+angle_envoye>-180 && angle_robot+angle_envoye<0) || angle_robot+angle_envoye>=180) && Consigne_Actuel->X_DEST>X_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Consigne_Actuel->Y_DEST<Y_POS)|| (((angle_robot+angle_envoye>0 && angle_robot+angle_envoye<180) || angle_robot+angle_envoye<-180) && Consigne_Actuel->X_DEST<X_POS)) avancer=1;
+  if(abs(dy)<2&&dx>0&&abs(angle_robot+angle_envoye)-90<=2) avancer=-1;
+  else if((((abs(angle_robot+angle_envoye)<=90 || angle_robot+angle_envoye>=270) && Y_DEST>Y_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)) || (((angle_robot+angle_envoye>-180 && angle_robot+angle_envoye<0) || angle_robot+angle_envoye>=180) && X_DEST>X_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)|| (((angle_robot+angle_envoye>0 && angle_robot+angle_envoye<180) || angle_robot+angle_envoye<-180) && X_DEST<X_POS)) avancer=1;
   else avancer=-1;//
 //  Serial.print("\n");
 //  Serial.print(angle_envoye);
@@ -120,13 +122,13 @@ void calcul_erreur()
 
 
 
-    // if(abs(angle_envoye)<5)
+    if(abs(angle_envoye)<=5)
 
-   Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
+      Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
 
-   //else Distance_moyenne=0;
+
+   else Distance_moyenne=0;
     //angle_envoye-=ANGLE_FINAL;
-
     if(abs(angle_envoye)>5 && New_moove_angle==true){
 
       Distance_moyenne=0;
@@ -171,51 +173,53 @@ void calcul_erreur()
       if(premier_passage==true){
         angle_robot=angle_radian*RAD_TO_DEG;
         if(angle_robot<0) angle_robot+=360;
-        if(Consigne_Actuel->ANGLE_FINAL<0) Consigne_Actuel->ANGLE_FINAL+=360;
+        if(ANGLE_FINAL<0) ANGLE_FINAL+=360;
         Distance_moyenne=0;
         Rampe_angle=0;
         premier_passage==false;
       }
-      if(angle_robot<=Consigne_Actuel->ANGLE_FINAL){
-          Rampe_angle+=COEFF_RAMP_ANG_FINAL*TEMPS_MIN_ASSERT*Consigne_Actuel->ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
+      if(angle_robot<=ANGLE_FINAL){
+          Rampe_angle+=COEFF_RAMP_ANG_FINAL*TEMPS_MIN_ASSERT*ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
           erreur_angle_radian=angle_envoye*DEG_TO_RAD;
-          if(Rampe_angle+angle_robot>=Consigne_Actuel->ANGLE_FINAL){
-            erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
+          if(Rampe_angle+angle_robot>=ANGLE_FINAL){
+            erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
             New_moove_angle_final=false;
           }
       }
-      if(angle_robot>Consigne_Actuel->ANGLE_FINAL){
-          Rampe_angle-=COEFF_RAMP_ANG_FINAL*TEMPS_MIN_ASSERT*Consigne_Actuel->ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
+      if(angle_robot>ANGLE_FINAL){
+          Rampe_angle-=COEFF_RAMP_ANG_FINAL*TEMPS_MIN_ASSERT*ANGLE_FINAL/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
           erreur_angle_radian=angle_envoye*DEG_TO_RAD;
-          if(Rampe_angle+angle_robot<=Consigne_Actuel->ANGLE_FINAL){
-            erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
+          if(Rampe_angle+angle_robot<=ANGLE_FINAL){
+            erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
             New_moove_angle_final=false;
           }
       }
       //angle_envoye=Rampe_angle;
-      erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
+      erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
 
     }
 
    if(sqrt(dx*dx+dy*dy)<50){
 
-        erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);
-        if(abs(erreur_angle_radian*RAD_TO_DEG)<5 && Consigne_Actuel->Action==Deplacement)
+        erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
+        if(abs(erreur_angle_radian*RAD_TO_DEG)<1 && Consigne_Actuel->Action==Deplacement)
         {
-           //Consigne_termine=true;
-           //Serial.println("Fin etape");
+           Consigne_termine=true;
+           Serial.println("Fin etape");
          }
 
 
    }
    else     erreur_angle_radian=angle_envoye*DEG_TO_RAD;
-   erreur_angle_radian=-(angle_radian-Consigne_Actuel->ANGLE_FINAL*DEG_TO_RAD);*/
-   erreur_angle_radian=-(angle_radian-0);
+   //erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
+   //erreur_angle_radian=-(angle_radian-0);
 
-   Serial.print("X;");
-   Serial.print(DELTA_Consigne_Init);
+   Serial.print("Angle : ");
+   Serial.print(angle_envoye);
    Serial.print(";");
-   Serial.println(erreur_angle_radian*RAD_TO_DEG);
+   Serial.println(sqrt(dx*dx+dy*dy));
+
+
    /*
    Serial.print("D_moy");
    Serial.println (Distance_moyenne);
@@ -285,6 +289,9 @@ void Mise_A_Jour_Action_Robot()
 
   switch (Consigne_Actuel->Action) {
     case Deplacement:
+          X_DEST=Consigne_Actuel->X_DEST;
+          Y_DEST=Consigne_Actuel->Y_DEST;
+          ANGLE_FINAL=Consigne_Actuel->ANGLE_FINAL;
 
     break;
     case Pince_V:

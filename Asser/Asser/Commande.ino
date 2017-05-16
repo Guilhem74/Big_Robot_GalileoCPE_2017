@@ -42,8 +42,9 @@ Consigne Consigne4(Pince_H,175,1250,90,1000,Pince_H_Pousse,false,&Consigne5);
 Consigne Consigne3(Pince_V,175,1250,90,1000,Pince_V_DOWN,false,&Consigne4);
 Consigne Consigne2(175,1250,90,&Consigne3);
 Consigne Consigne1(130,1070,130,&Consigne2);*/
-Consigne Consigne1(0,1070,0);
-
+Consigne Consigne3(0,1370,90);
+Consigne Consigne2(0,1070,0,&Consigne3);
+Consigne Consigne1(Pince_V,1000,Pince_V_DOWN,&Consigne2);
 
 void Setup_Commande()
 {
