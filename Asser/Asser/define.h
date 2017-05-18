@@ -4,6 +4,9 @@
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
 
+bool Obstacle_devant=false;
+bool Obstacle_derriere=false;
+
 
 bool Etat_bras_voulu = 0;
 bool Etat_bras = 0;
@@ -141,8 +144,8 @@ float DELTA_Consigne_Init=0;
 #define Servo_S_G_CLOSE 10
 #define Servo_S_D_UP 165
 #define Servo_S_G_UP 1
-#define Servo_S_D_DOWN 73
-#define Servo_S_G_DOWN 77
+#define Servo_S_D_DOWN 65
+#define Servo_S_G_DOWN 90
 #define Servo_S_D_BOURRE 100
 #define Servo_S_G_BOURRE 60
 
@@ -155,7 +158,7 @@ float DELTA_Consigne_Init=0;
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM 7
-#define Vitesse_MIN_Chargeur_Cylindre 80
+#define Vitesse_MIN_Chargeur_Cylindre 100
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
 #define VITESSE_BRAS_AVANCE 220

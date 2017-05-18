@@ -215,6 +215,17 @@ static int cpt=0;
     //Serial.println(erreur_angle_radian);
 
 if(Consigne_Actuel->Action!=Deplacement) erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
+
+if(Obstacle_devant==true && Distance_moyenne>0){
+  Distance_moyenne=0;
+  Rampe_angle=0;
+  Rampe_distance=0;
+}
+else if(Obstacle_derriere==true && Distance_moyenne<0){
+  Distance_moyenne=0;
+  Rampe_angle=0;
+  Rampe_distance=0;
+}
 /*  if(sqrt(dx*dx+dy*dy)<50 && New_moove_angle_final==false){
         erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
         if(abs(erreur_angle_radian*RAD_TO_DEG)<2 && Consigne_Actuel->Action==Deplacement)

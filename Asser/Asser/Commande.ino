@@ -44,16 +44,44 @@ Consigne Consigne2(175,1250,90,&Consigne3);
 Consigne Consigne1(130,1070,130,&Consigne2);*/
 //Consigne Consigne4(0,1370,90);
 //Consigne Consigne3(0,1070,0,&Consigne4);
-int vitesse_servo=350;
+int vitesse_servo=320;
 
+Consigne Consigne97(Bras,vitesse_servo,Bras_Retracte);
+Consigne Consigne96(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne97);
+Consigne Consigne95(Bras,vitesse_servo,Bras_Pousse,&Consigne96);
+Consigne Consigne94(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne95);
+Consigne Consigne93(Bras,vitesse_servo,Bras_Retracte,&Consigne94);
+Consigne Consigne92(Bras,vitesse_servo,Bras_Pousse,&Consigne93);
+Consigne Consigne91(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne92);
 
+Consigne Consigne90(Bras,vitesse_servo,Bras_Retracte,&Consigne91);
+Consigne Consigne89(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne90);
+Consigne Consigne88(Bras,vitesse_servo,Bras_Pousse,&Consigne89);
+Consigne Consigne87(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne88);
+Consigne Consigne86(Bras,vitesse_servo,Bras_Retracte,&Consigne87);
+Consigne Consigne85(Bras,vitesse_servo,Bras_Pousse,&Consigne86);
+Consigne Consigne84(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne85);
 
-/*Consigne Consigne59(Bras,vitesse_servo,Bras_Pousse);
-Consigne Consigne58(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne59);
-Consigne Consigne57(825,1675,-90,&Consigne58);
-Consigne Consigne56(300,1650,0,&Consigne57);*/
+Consigne Consigne83(Bras,vitesse_servo,Bras_Retracte,&Consigne84);
+Consigne Consigne82(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne83);
+Consigne Consigne81(Bras,vitesse_servo,Bras_Pousse,&Consigne82);
+Consigne Consigne80(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne81);
+Consigne Consigne79(Bras,vitesse_servo,Bras_Retracte,&Consigne80);
+Consigne Consigne78(Bras,vitesse_servo,Bras_Pousse,&Consigne79);
+Consigne Consigne77(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne78);
 
-Consigne Consigne67(Pince_V,vitesse_servo,Pince_V_DOWN);
+Consigne Consigne76(Bras,vitesse_servo,Bras_Retracte,&Consigne77);
+Consigne Consigne75(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne76);
+Consigne Consigne74(Bras,vitesse_servo,Bras_Pousse,&Consigne75);
+Consigne Consigne73(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne74);
+Consigne Consigne72(Bras,vitesse_servo,Bras_Retracte,&Consigne73);
+Consigne Consigne71(Bras,vitesse_servo,Bras_Pousse,&Consigne72);
+Consigne Consigne70(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne71);
+
+Consigne Consigne69(825,1665,-90,&Consigne70);
+Consigne Consigne68(300,1650,0,&Consigne69);
+
+Consigne Consigne67(Pince_V,vitesse_servo,Pince_V_DOWN,&Consigne68);
 Consigne Consigne66(Pince_V,vitesse_servo,Pince_V_Bourrage,&Consigne67);
 Consigne Consigne65(Pince_V,vitesse_servo,Pince_V_DOWN,&Consigne66);
 Consigne Consigne64(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne65);
@@ -112,11 +140,10 @@ Consigne Consigne21(Bras,1000,Bras_Retracte,&Consigne22);
 Consigne Consigne20(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne21);
 Consigne Consigne19(Bras,vitesse_servo,Bras_Pousse,&Consigne20);
 Consigne Consigne18(Pince_H,vitesse_servo,Pince_H_Pousse,&Consigne19);
-Consigne Consigne17(Pince_V,vitesse_servo,Pince_V_DOWN,&Consigne18);
+//Consigne Consigne17(Pince_V,vitesse_servo,Pince_V_DOWN,&Consigne18);
 
-Consigne Consigne100(Pince_H,vitesse_servo,Pince_H_Desserre,&Consigne17);
 
-Consigne Consigne16(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne100);
+Consigne Consigne16(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne18);
 Consigne Consigne15(Pince_V,vitesse_servo,Pince_V_DOWN,&Consigne16);
 Consigne Consigne14(Pince_V,vitesse_servo,Pince_V_Bourrage,&Consigne15);
 Consigne Consigne13(Pince_H,vitesse_servo,Pince_H_Serre,&Consigne14);
