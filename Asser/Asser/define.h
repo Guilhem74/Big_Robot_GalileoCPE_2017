@@ -127,6 +127,8 @@ float DELTA_Consigne_Init=0;
 
 //ACTIONNEUR
 
+#define GPIO_DETECTION_AVANT 41
+#define GPIO_DETECTION_ARRIERE 43
 #define GPIO_PINCE_SERRAGE_DROITE 4
 #define GPIO_PINCE_SERRAGE_GAUCHE 2
 #define GPIO_PINCE_LEVAGE_DROITE 3
@@ -138,8 +140,8 @@ float DELTA_Consigne_Init=0;
 #define GPIO_COULEUR_BLEU 24
 
 
-#define Servo_S_D_OPEN 70
-#define Servo_S_G_OPEN 100
+#define Servo_S_D_OPEN 50
+#define Servo_S_G_OPEN 120
 #define Servo_S_D_CLOSE 168
 #define Servo_S_G_CLOSE 10
 #define Servo_S_D_UP 165
@@ -147,7 +149,7 @@ float DELTA_Consigne_Init=0;
 #define Servo_S_D_DOWN 65
 #define Servo_S_G_DOWN 90
 #define Servo_S_D_BOURRE 100
-#define Servo_S_G_BOURRE 60
+#define Servo_S_G_BOURRE 35
 
 #define Servo_S_D_WAIT 150
 #define Servo_S_G_WAIT 45

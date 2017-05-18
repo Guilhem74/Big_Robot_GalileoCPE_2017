@@ -294,6 +294,7 @@ void Routine_Robot()
 
   }
   Reception();
+  Mise_a_jour_detection();
 }
 void Mise_A_Jour_Action_Robot()
 {

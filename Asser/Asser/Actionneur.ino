@@ -123,6 +123,10 @@ void Mise_a_jour_bras() {
     Quart=Quart_Reel;
   }
 }
+Mise_a_jour_detection(){
+  Obstacle_devant=digitalRead(41);
+  Obstacle_derriere=digitalRead(43);
+}
 void Mise_A_Jour_Tirette()
 {
     //Serial.println("Waiting Tirette");
