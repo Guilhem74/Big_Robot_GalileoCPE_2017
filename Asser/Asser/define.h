@@ -53,9 +53,9 @@ float erreur_lineaire = 0;
 float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
-#define P_ANGULAIRE 10
-#define I_ANGULAIRE 0.95//0.95
-#define D_ANGULAIRE 400
+#define P_ANGULAIRE 8//5
+#define I_ANGULAIRE 10//5//0.95
+#define D_ANGULAIRE 1800//1000
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
 
@@ -74,8 +74,9 @@ int32_t Temp_debut_match=0;
 #define COEFF_RAMP_ANG_FINAL 0.001
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50
+#define TAILLE_TABLEAU_SOMME_ANGULAIRE 10
 #define SEUIL_I_LINEAIRE 125
-#define SEUIL_I_ANGULAIRE 800//700
+#define SEUIL_I_ANGULAIRE 50000//1000//700
 float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
 float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool New_moove_angle = true;
@@ -101,8 +102,8 @@ Etat_Robot Robot_Principal=Prechauff;
   int Information_Supplementaire=Detection_Active;
   bool Derniere_Consigne=false;
   Consigne *consigne_suivante = NULL;
-  Consigne(Type_Action Action2,int32_t Time, int Inf):Action(Action2), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(true){}
-  Consigne(Type_Action Action2,int32_t Time, int Inf,Consigne *Next ):Action(Action2), TimeOut(Time),Information_Supplementaire(Inf),Derniere_Consigne(false),consigne_suivante(Next) {}
+  Consigne(Type_Action Action2,int32_t Time, int Inf):Action(Action2), TimeOut(Time),Information_Supplementaire((int)Inf),Derniere_Consigne(true){}
+  Consigne(Type_Action Action2,int32_t Time, int Inf,Consigne *Next ):Action(Action2), TimeOut(Time),Information_Supplementaire((int)Inf),Derniere_Consigne(false),consigne_suivante(Next) {}
   Consigne(): Action( Deplacement), X_DEST(X_POS),Y_DEST(Y_POS),ANGLE_FINAL(ANGLE_POS) {}
   Consigne(float X,float Y,float A,Consigne *Next ):Action( Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(false),consigne_suivante(Next) {}
   Consigne(float X,float Y,float A ):Action(Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(true) {}
@@ -123,10 +124,10 @@ float DELTA_Consigne_Init=0;
 
 //ACTIONNEUR
 
-#define GPIO_PINCE_SERRAGE_DROITE 3
-#define GPIO_PINCE_SERRAGE_GAUCHE 5
-#define GPIO_PINCE_LEVAGE_DROITE 4
-#define GPIO_PINCE_LEVAGE_GAUCHE 2
+#define GPIO_PINCE_SERRAGE_DROITE 4
+#define GPIO_PINCE_SERRAGE_GAUCHE 2
+#define GPIO_PINCE_LEVAGE_DROITE 3
+#define GPIO_PINCE_LEVAGE_GAUCHE 5
 #define GPIO_FUNNY_ACTION 12
 
 #define GPIO_TIRRETTE 22
@@ -134,31 +135,31 @@ float DELTA_Consigne_Init=0;
 #define GPIO_COULEUR_BLEU 24
 
 
-#define Servo_S_D_OPEN 115
-#define Servo_S_G_OPEN 60
-#define Servo_S_D_CLOSE 162
-#define Servo_S_G_CLOSE 15
-#define Servo_S_D_UP 155
-#define Servo_S_G_UP 5
+#define Servo_S_D_OPEN 70
+#define Servo_S_G_OPEN 100
+#define Servo_S_D_CLOSE 168
+#define Servo_S_G_CLOSE 10
+#define Servo_S_D_UP 165
+#define Servo_S_G_UP 1
 #define Servo_S_D_DOWN 73
 #define Servo_S_G_DOWN 77
-#define Servo_S_D_BOURRE 110
-#define Servo_S_G_BOURRE 40
+#define Servo_S_D_BOURRE 100
+#define Servo_S_G_BOURRE 60
 
 #define Servo_S_D_WAIT 150
-#define Servo_S_G_WAIT 25
+#define Servo_S_G_WAIT 45
 #define GPIO_Fourche_Optique 45
 
-#define Fin_Course_Retracte 53
-#define Fin_Course_Pousse 51
+#define Fin_Course_Retracte 51
+#define Fin_Course_Pousse 53
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM 7
-#define Vitesse_MIN_Chargeur_Cylindre 60
+#define Vitesse_MIN_Chargeur_Cylindre 80
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
-#define VITESSE_BRAS_AVANCE 200
-#define VITESSE_BRAS_RECULE 200
+#define VITESSE_BRAS_AVANCE 220
+#define VITESSE_BRAS_RECULE 220
 #define ETAT_BRAS_AVANCE HIGH
 #define ETAT_BRAS_RECULE LOW
 //Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};

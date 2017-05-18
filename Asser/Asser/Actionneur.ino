@@ -78,16 +78,17 @@ void DESACTIVER_FUNNY_ACTION(){
   Servo_Funny.write(50);
 }
 void Mise_a_jour_bras() {
-  if (digitalRead(Fin_Course_Pousse) == HIGH && Etat_bras_voulu == 1) {//Bras poussé
+
+  if (digitalRead(Fin_Course_Pousse) == LOW && Etat_bras_voulu == 1) {//Bras poussé
     Etat_bras = 1;
     analogWrite(PIN_Bras_PWM, 0);
-  } else if (digitalRead(Fin_Course_Pousse) == LOW && Etat_bras_voulu == 1) {
+  } else if (digitalRead(Fin_Course_Pousse) == HIGH && Etat_bras_voulu == 1) {
     digitalWrite(PIN_Bras_DIR, ETAT_BRAS_AVANCE);
     analogWrite(PIN_Bras_PWM, VITESSE_BRAS_AVANCE);
-  } else if (digitalRead(Fin_Course_Retracte) == LOW && Etat_bras_voulu == 0) {
+  } else if (digitalRead(Fin_Course_Retracte) == HIGH && Etat_bras_voulu == 0) {
     digitalWrite(PIN_Bras_DIR, ETAT_BRAS_RECULE);
     analogWrite(PIN_Bras_PWM, VITESSE_BRAS_RECULE);
-  } else if (digitalRead(Fin_Course_Retracte) == HIGH && Etat_bras_voulu == 0) {
+  } else if (digitalRead(Fin_Course_Retracte) == LOW && Etat_bras_voulu == 0) {
     Etat_bras = 0;
     analogWrite(PIN_Bras_PWM, 0);
   }
@@ -104,28 +105,28 @@ void Mise_a_jour_bras() {
   }
   Etat_Precedent=Etat_Actuel;
   Chargeur_Pret=false;
+
   if(Quart==Quart_Reel)
   {
 
-    analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
+   analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
     Chargeur_Pret=true;
   }
-  else
+  else  if(Quart>Quart_Reel)
   {
-    /*//Serial.println("Quart");
-    //Serial.println(Quart_Reel);
-    //Serial.println(Quart);*/
-    if(Quart_Reel>Quart)
-      Quart_Reel=Quart-1;
     Chargeur_Pret=false;
     digitalWrite(PIN_Chargeur_Cylindre_DIR,LOW);
-    //analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
+    analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
+  }
+  else if (Quart<Quart_Reel)
+  {
+    Quart=Quart_Reel;
   }
 }
 void Mise_A_Jour_Tirette()
 {
     //Serial.println("Waiting Tirette");
-  if(digitalRead(GPIO_TIRRETTE)==LOW)
+  if(digitalRead(GPIO_TIRRETTE)==HIGH)
   {
     //Serial.println("GOOOO");
     if(digitalRead(GPIO_COULEUR_JAUNE)==LOW)

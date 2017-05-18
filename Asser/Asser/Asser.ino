@@ -19,10 +19,11 @@ DESACTIVER_FUNNY_ACTION();
   setup_asservissement();
   Setup_Commande();
 
-  Pince_CLOSE();
+  Pince_OPEN();
 Pince_UP();
   Quart=1;
   delay(1000);
+  Etat_bras_voulu=0;
 }
 
 void loop() {
@@ -31,6 +32,8 @@ void loop() {
         Mise_A_Jour_Tirette();
 
         Temp_debut_match=millis();
+        Temps_Base_Systeme=millis();
+
     }
     else
     {

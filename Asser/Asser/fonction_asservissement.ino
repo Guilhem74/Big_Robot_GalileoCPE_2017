@@ -3,9 +3,11 @@
 void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
   float Commande_Lin = asservissement_lineaire(Consigne_Lin);
   float Commande_Ang = asservissement_angulaire(Consigne_Ang);
+  if(Commande_Lin>160) Commande_Lin=160;
+  if(Commande_Lin<-160) Commande_Lin=-160;
 
-  float Commande_D = round(Commande_Lin + Commande_Ang);
-  float Commande_G = round(Commande_Lin - Commande_Ang);
+  float Commande_D = Commande_Lin + Commande_Ang;
+  float Commande_G = Commande_Lin - Commande_Ang;
 
 
 
@@ -14,7 +16,7 @@ void asservissement_robot(float Consigne_Lin, float Consigne_Ang) {
 
   if (Commande_D < 0)
     sens_D = !ETAT_MOTEUR_AVANCE;
-  if (Commande_G <= 0)
+  if (Commande_G < 0)
     sens_G = ETAT_MOTEUR_AVANCE;
 
   Commande_D = abs(Commande_D);
@@ -63,18 +65,19 @@ float asservissement_angulaire(float Consigne) {
   float delta_erreur_angulaire =
       erreur_angulaire - erreur_precedente_angulaire; // D
       static int32_t i=0;
-  Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME]= erreur_angulaire;         // I
+  Somme_Erreur_Ang[i%TAILLE_TABLEAU_SOMME_ANGULAIRE]= erreur_angulaire;         // I
   float Somme_Erreur_Angulaire_Local=0;
-  for(int j=0;j<TAILLE_TABLEAU_SOMME;j++)
+  for(int j=0;j<TAILLE_TABLEAU_SOMME_ANGULAIRE;j++)
   {
-    Somme_Erreur_Angulaire_Local+= Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME];
+    Somme_Erreur_Angulaire_Local+= Somme_Erreur_Ang[j%TAILLE_TABLEAU_SOMME_ANGULAIRE];
   }
   i++;
-  if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local>SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME) Somme_Erreur_Angulaire_Local=(float) SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);
-  else if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local<-SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME){ Somme_Erreur_Angulaire_Local=- (float)SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME*I_ANGULAIRE);}
+  if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local>SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME_ANGULAIRE) Somme_Erreur_Angulaire_Local=(float) SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME_ANGULAIRE*I_ANGULAIRE);
+  else if(I_ANGULAIRE * Somme_Erreur_Angulaire_Local<-SEUIL_I_ANGULAIRE/TAILLE_TABLEAU_SOMME_ANGULAIRE){ Somme_Erreur_Angulaire_Local=- (float)SEUIL_I_ANGULAIRE/(TAILLE_TABLEAU_SOMME_ANGULAIRE*I_ANGULAIRE);}
   float Commande_angulaire = erreur_angulaire * P_ANGULAIRE +
                              I_ANGULAIRE * Somme_Erreur_Angulaire_Local +
                              D_ANGULAIRE * delta_erreur_angulaire; // PID
+
   return Commande_angulaire;
 }
 void Arreter_Robot()
