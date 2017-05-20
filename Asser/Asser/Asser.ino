@@ -19,11 +19,12 @@ DESACTIVER_FUNNY_ACTION();
   setup_asservissement();
   Setup_Commande();
 
-  Pince_OPEN();
-Pince_UP();
+  Pince_CLOSE();
+Pince_WAIT();
   Quart=1;
-  delay(1000);
+  delay(100);
   Etat_bras_voulu=0;
+
 }
 
 void loop() {

@@ -32,7 +32,7 @@ void setup() {
   pinMode(3,INPUT);
    pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
-  
+  pinMode(13,OUTPUT);
   attachInterrupt(digitalPinToInterrupt(3),ISR_objet,FALLING);
   attachInterrupt(digitalPinToInterrupt(2),ISR_tour,RISING);
   reboot_tableaux();
@@ -54,9 +54,6 @@ void loop() {
         Avant_Detect=false;
       }
     digitalWrite(PIN_Detection_AVANT,Avant_Detect);
-    Serial.println("D:"); 
-    Serial.println(Avant_Detect);
-
     if(Arriere>1)
     {
       Arriere_Detect=true;
@@ -66,7 +63,16 @@ void loop() {
         Arriere_Detect=false;
       }
       digitalWrite(PIN_Detection_ARRIERE,Arriere_Detect);
-Serial.println(Arriere_Detect);
+      if(Arriere_Detect==true || Avant_Detect==true)
+      {
+        digitalWrite(13,HIGH);
+      }
+      else
+      {
+        digitalWrite(13,LOW);
+
+      }
+
 
 
   reboot_tableaux();

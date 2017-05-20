@@ -21,7 +21,12 @@ float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
 float Rampe_angle = 0;
 float Rampe_distance = 0;
+
 float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
+
+
+//float X_POS = 0, Y_POS = 2225, ANGLE_POS = 270;
+
 float X_DEST=X_POS, Y_DEST=Y_POS, ANGLE_FINAL=ANGLE_POS;
 float angle_radian = ANGLE_POS * DEG_TO_RAD;
 // Paramètre constant du robot
@@ -122,7 +127,7 @@ float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool Consigne_termine=false,*/
 Consigne *Consigne_Actuel;
 Consigne ConsigneTemp;
-
+int Compteur_Fourche_Optique=0;
 float DELTA_Consigne_Init=0;
 
 //ACTIONNEUR
@@ -140,23 +145,23 @@ float DELTA_Consigne_Init=0;
 #define GPIO_COULEUR_BLEU 24
 
 
-#define Servo_S_D_OPEN 50
-#define Servo_S_G_OPEN 120
-#define Servo_S_D_CLOSE 168
-#define Servo_S_G_CLOSE 10
+#define Servo_S_D_OPEN 75
+#define Servo_S_G_OPEN 100
+#define Servo_S_D_CLOSE 175
+#define Servo_S_G_CLOSE 0
 #define Servo_S_D_UP 165
-#define Servo_S_G_UP 1
-#define Servo_S_D_DOWN 65
-#define Servo_S_G_DOWN 90
-#define Servo_S_D_BOURRE 100
-#define Servo_S_G_BOURRE 35
+#define Servo_S_G_UP 10
+#define Servo_S_D_DOWN 70
+#define Servo_S_G_DOWN 115
+#define Servo_S_D_BOURRE 110
+#define Servo_S_G_BOURRE 60
 
 #define Servo_S_D_WAIT 150
-#define Servo_S_G_WAIT 45
+#define Servo_S_G_WAIT 20
 #define GPIO_Fourche_Optique 45
 
-#define Fin_Course_Retracte 51
-#define Fin_Course_Pousse 53
+#define Fin_Course_Retracte 53
+#define Fin_Course_Pousse 51
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM 7

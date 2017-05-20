@@ -93,35 +93,22 @@ void Mise_a_jour_bras() {
     analogWrite(PIN_Bras_PWM, 0);
   }
 
-  static bool Etat_Precedent=HIGH;
-  static bool Etat_Actuel=HIGH;
-  static bool Sens_Aiguille_Montre=true;
 
-  Etat_Actuel=digitalRead(GPIO_Fourche_Optique);
-  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH)
+//Lecture_Fourche_Optique();
+
+  if(  Chargeur_Pret==false&& Consigne_Actuel->Action==Chargeur_Cylindre)
   {
-  Quart_Reel++;
-
-  }
-  Etat_Precedent=Etat_Actuel;
-  Chargeur_Pret=false;
-
-  if(Quart==Quart_Reel)
-  {
-
-   analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
-    Chargeur_Pret=true;
-  }
-  else  if(Quart>Quart_Reel)
-  {
-    Chargeur_Pret=false;
     digitalWrite(PIN_Chargeur_Cylindre_DIR,LOW);
     analogWrite(PIN_Chargeur_Cylindre_PWM, Vitesse_MIN_Chargeur_Cylindre);
+    Compteur_Fourche_Optique++;
   }
-  else if (Quart<Quart_Reel)
+  else
   {
-    Quart=Quart_Reel;
+    Compteur_Fourche_Optique=0;
+    digitalWrite(PIN_Chargeur_Cylindre_DIR,HIGH);
+    analogWrite(PIN_Chargeur_Cylindre_PWM, 2);
   }
+
 }
 Mise_a_jour_detection(){
   Obstacle_devant=digitalRead(41);
@@ -145,4 +132,15 @@ void Mise_A_Jour_Tirette()
     }
     Robot_Principal=En_Route;
   }
+}
+void Lecture_Fourche_Optique()
+{
+  static bool Etat_Actuel=HIGH;
+  static bool Etat_Precedent=HIGH;
+  Etat_Actuel=digitalRead(GPIO_Fourche_Optique);
+  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH&& Compteur_Fourche_Optique>10)
+  {
+  Chargeur_Pret=true;
+  }
+  Etat_Precedent=Etat_Actuel;
 }
