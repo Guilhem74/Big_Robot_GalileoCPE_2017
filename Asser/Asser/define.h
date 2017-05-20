@@ -22,10 +22,11 @@ float angle_envoye_final = 0;
 float Rampe_angle = 0;
 float Rampe_distance = 0;
 
-float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
+//float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
 
 
-//float X_POS = 0, Y_POS = 2225, ANGLE_POS = 270;
+float X_POS = 0, Y_POS = 2225, ANGLE_POS = -90;
+//float X_POS = 0, Y_POS = 0, ANGLE_POS = 0;
 
 float X_DEST=X_POS, Y_DEST=Y_POS, ANGLE_FINAL=ANGLE_POS;
 float angle_radian = ANGLE_POS * DEG_TO_RAD;
@@ -78,7 +79,7 @@ int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
 #define TEMPS_MATCH 90000
-#define COEFF_RAMP_ANG 0.001
+#define COEFF_RAMP_ANG 0.0005
 #define COEFF_RAMP_ANG_FINAL 0.001
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50
@@ -136,25 +137,25 @@ float DELTA_Consigne_Init=0;
 #define GPIO_DETECTION_ARRIERE 43
 #define GPIO_PINCE_SERRAGE_DROITE 4
 #define GPIO_PINCE_SERRAGE_GAUCHE 2
-#define GPIO_PINCE_LEVAGE_DROITE 3
-#define GPIO_PINCE_LEVAGE_GAUCHE 5
+#define GPIO_PINCE_LEVAGE_DROITE 5
+#define GPIO_PINCE_LEVAGE_GAUCHE 3
 #define GPIO_FUNNY_ACTION 12
 
 #define GPIO_TIRRETTE 22
 #define GPIO_COULEUR_JAUNE 26
 #define GPIO_COULEUR_BLEU 24
-
-
+float Rampe_angle_Final=0;
+bool premier_passage_A=true;
 #define Servo_S_D_OPEN 75
 #define Servo_S_G_OPEN 100
-#define Servo_S_D_CLOSE 175
-#define Servo_S_G_CLOSE 0
-#define Servo_S_D_UP 165
-#define Servo_S_G_UP 10
+#define Servo_S_D_CLOSE 177
+#define Servo_S_G_CLOSE 2
+#define Servo_S_D_UP 155
+#define Servo_S_G_UP  
 #define Servo_S_D_DOWN 70
-#define Servo_S_G_DOWN 115
+#define Servo_S_G_DOWN 170
 #define Servo_S_D_BOURRE 110
-#define Servo_S_G_BOURRE 60
+#define Servo_S_G_BOURRE 140
 
 #define Servo_S_D_WAIT 150
 #define Servo_S_G_WAIT 20

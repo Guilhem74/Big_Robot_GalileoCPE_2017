@@ -20,9 +20,10 @@ DESACTIVER_FUNNY_ACTION();
   Setup_Commande();
 
   Pince_CLOSE();
-Pince_WAIT();
+Pince_UP();
   Quart=1;
-  delay(100);
+  delay(30000);
+
   Etat_bras_voulu=0;
 
 }
@@ -38,7 +39,6 @@ void loop() {
     }
     else
     {
-
       if( millis()-Temp_debut_match > TEMPS_MATCH)
       {//Fin du match
         Robot_Principal=Fin;

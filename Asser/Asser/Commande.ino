@@ -46,48 +46,73 @@ Consigne Consigne1(130,1070,130,&Consigne2);*/
 //Consigne Consigne3(0,1070,0,&Consigne4);
 #define TIMEOUT_SERVO 500
 #define TIMEOUT_BRAS 1200
-#define YELLOW false
+#define YELLOW true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #if YELLOW==0
-Consigne Consigne100(565,1365,180);
+Consigne Consigne101(100,1070,90);
+Consigne Consigne100(565,1365,180,&Consigne101);
 Consigne Consigne99(565,1665,180,&Consigne100);
 Consigne Consigne98(565,1665,90,&Consigne99);
 
-Consigne Consigne97(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne98);
-Consigne Consigne96(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne97);
+Consigne Consigne97(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne98);
+Consigne Consigne96(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne97);
 Consigne Consigne95(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne96);
 Consigne Consigne94(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne95);
 Consigne Consigne93(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne94);
 Consigne Consigne92(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne93);
 Consigne Consigne91(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne92);
 
-Consigne Consigne90(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne91);
-Consigne Consigne89(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne90);
+Consigne Consigne90(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne91);
+Consigne Consigne89(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne90);
 Consigne Consigne88(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne89);
 Consigne Consigne87(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne88);
 Consigne Consigne86(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne87);
 Consigne Consigne85(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne86);
 Consigne Consigne84(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne85);
 
-Consigne Consigne83(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne84);
-Consigne Consigne82(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne83);
+Consigne Consigne83(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne84);
+Consigne Consigne82(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne83);
 Consigne Consigne81(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne82);
 Consigne Consigne80(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne81);
 Consigne Consigne79(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne80);
 Consigne Consigne78(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne79);
 Consigne Consigne77(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne78);
 
-Consigne Consigne76(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne77);
-Consigne Consigne75(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne76);
+Consigne Consigne76(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne77);
+Consigne Consigne75(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne76);
 Consigne Consigne74(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne75);
 Consigne Consigne73(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne74);
 Consigne Consigne72(Bras,TIMEOUT_BRAS,Bras_Retracte,&Consigne73);
 Consigne Consigne71(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne72);
 Consigne Consigne70(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne71);
 
-Consigne Consigne69(700,1700,270,&Consigne70);
-Consigne Consigne68(300,1700,270,&Consigne69);
+Consigne Consigne69(810,1630,-90,&Consigne70);
+Consigne Consigne400(300,1630,-90,&Consigne69);
 
-Consigne Consigne67(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN);
+Consigne Consigne68(300,1630,-15,&Consigne400);
+
+Consigne Consigne67(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne68);
 Consigne Consigne66(Pince_V,TIMEOUT_SERVO,Pince_V_Bourrage,&Consigne67);
 Consigne Consigne65(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne66);
 Consigne Consigne64(Chargeur_Cylindre,1000,Chargeur_UP,&Consigne65);
@@ -162,15 +187,18 @@ Consigne Consigne7(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne8);
 Consigne Consigne6(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne7);
 Consigne Consigne5(Pince_H,TIMEOUT_SERVO,Pince_H_Pousse,&Consigne6);
 Consigne Consigne4(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne5);
-Consigne Consigne3(170,1310,95,&Consigne4);
+Consigne Consigne3(180,1290,85 ,&Consigne4);
 Consigne Consigne2(90,1070,90,&Consigne3);
 Consigne Consigne1(Pince_V,TIMEOUT_SERVO,Pince_V_UP,&Consigne2);
+//Consigne Consigne1(400,1070,90);
 
 /*Consigne Consigne3(Chargeur_Cylindre,1000,Chargeur_UP);
 Consigne Consigne2(Chargeur_Cylindre,4000,Chargeur_UP,&Consigne3);
 Consigne Consigne1(0,1070,90,&Consigne2);*/
 #else
-Consigne Consigne100(565,1365,180);
+Consigne Consigne101(0,2200,90);
+
+Consigne Consigne100(1000,2200,90,&Consigne101);
 Consigne Consigne99(565,1665,180,&Consigne100);
 Consigne Consigne98(565,1665,90,&Consigne99);
 
@@ -283,10 +311,10 @@ Consigne Consigne7(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne8);
 Consigne Consigne6(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne7);
 Consigne Consigne5(Pince_H,TIMEOUT_SERVO,Pince_H_Pousse,&Consigne6);
 Consigne Consigne4(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne5);
-Consigne Consigne200(270,2000,90,&Consigne4);
+Consigne Consigne200(270,2000,90,&Consigne68);
 Consigne Consigne3(270,2000,90,&Consigne200);
 Consigne Consigne2(270,2225,180,&Consigne3);
-Consigne Consigne1(Pince_V,100,Pince_V_UP,&Consigne2);
+Consigne Consigne1(Pince_V,300,Pince_V_UP,&Consigne2);
 
 #endif
 
