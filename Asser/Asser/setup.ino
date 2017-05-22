@@ -2,6 +2,21 @@
 
 #include "define.h"
 
+void Setup_Commande()
+{
+  /*
+  Consigne[0].X_DEST=400;
+  Consigne[0].Y_DEST=1070;
+  Consigne[0].ANGLE_FINAL=90;
+  Consigne[0].Derniere_Consigne=true;
+  Consigne[0].consigne_suivante=&Consigne[0];*/
+  Consigne_Actuel=&Consigne1;
+  int32_t dx=Consigne_Actuel->X_DEST-X_POS;
+  int32_t dy=Consigne_Actuel->Y_DEST-Y_POS;
+  DELTA_Consigne_Init=Consigne1.ANGLE_FINAL;//sqrt(dx*dx+dy*dy);
+
+
+}
 void setup_asservissement()
 {
    Serial.begin(115200);
@@ -16,6 +31,7 @@ void setup_asservissement()
   Serial.println("INIT Gros Robot");
 Consigne_termine=false;
  delay(100);
+ 
 
 }
 void initialisation_variables()

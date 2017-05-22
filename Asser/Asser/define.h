@@ -3,6 +3,16 @@
 /*Communication*/
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
+#define TIMEOUT_SERVO 500
+#define TIMEOUT_BRAS 1200
+#define YELLOW true
+
+#if YELLOW==0
+#include "Start1_BLUE.h"
+
+#else
+#include "Start1_YELLOW.h"
+#endif
 
 bool Obstacle_devant=false;
 bool Obstacle_derriere=false;
@@ -21,7 +31,6 @@ float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
 float Rampe_distance = 0;
 
-float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
 
 
 //float X_POS = 0, Y_POS = 2225, ANGLE_POS = -90;
@@ -78,9 +87,9 @@ int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
 #define TEMPS_MATCH 90000
-#define COEFF_RAMP_ANG 0.005
+float COEFF_RAMP_ANG=0.01;
 #define COEFF_RAMP_ANG_FINAL 0.001
-#define COEFF_RAMP_LINEAIRE 0.001
+float COEFF_RAMP_LINEAIRE=0.01;
 #define TAILLE_TABLEAU_SOMME 50
 #define TAILLE_TABLEAU_SOMME_ANGULAIRE 10
 #define SEUIL_I_LINEAIRE 125
@@ -93,40 +102,7 @@ float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
   bool premier_passage = false;
   bool Consigne_termine=false;
 
-enum Etat_Robot{ Prechauff, En_Route,Fin};
-enum Type_Action {Deplacement, Pince_V, Pince_H, Chargeur_Cylindre,Bras};
-enum Deplacement {Detection_Active, Detection_Inactive};
-enum Pince_V_Action{Pince_V_UP,Pince_V_DOWN,Pince_V_Bourrage};
-enum Pince_H_Action{Pince_H_Serre,Pince_H_Pousse,Pince_H_Desserre,Pince_H_Droite_Desserre,Pince_H_Gauche_Desserre};
-enum Bras_Action{Bras_Retracte,Bras_Pousse};
-enum Chargeur_Cylindre_Action{Chargeur_UP, Chargeur_Down};
-Etat_Robot Robot_Principal=Prechauff;
 
- struct Consigne {
-  Type_Action Action=Deplacement;
-
-  float X_DEST = X_POS, Y_DEST = Y_POS, ANGLE_FINAL = ANGLE_POS;
-  int32_t TimeOut=-1;//En ms
-  int Information_Supplementaire=Detection_Active;
-  bool Derniere_Consigne=false;
-  Consigne *consigne_suivante = NULL;
-  Consigne(Type_Action Action2,int32_t Time, int Inf):Action(Action2), TimeOut(Time),Information_Supplementaire((int)Inf),Derniere_Consigne(true){}
-  Consigne(Type_Action Action2,int32_t Time, int Inf,Consigne *Next ):Action(Action2), TimeOut(Time),Information_Supplementaire((int)Inf),Derniere_Consigne(false),consigne_suivante(Next) {}
-  Consigne(): Action( Deplacement), X_DEST(X_POS),Y_DEST(Y_POS),ANGLE_FINAL(ANGLE_POS) {}
-  Consigne(float X,float Y,float A,Consigne *Next ):Action( Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(false),consigne_suivante(Next) {}
-  Consigne(float X,float Y,float A ):Action(Deplacement),X_DEST(X),Y_DEST(Y),ANGLE_FINAL(A),Derniere_Consigne(true) {}
-};
-//RAZ des Tableaux et des news moove
-/*
-float Somme_Erreur_Lin[TAILLE_TABLEAU_SOMME]={};
-float Somme_Erreur_Ang[TAILLE_TABLEAU_SOMME]={};
-  bool New_moove_angle = true;
-  bool New_moove_distance = false;
-  bool New_moove_angle_final = false;
-  bool premier_passage = false;
-  bool Consigne_termine=false,*/
-Consigne *Consigne_Actuel;
-Consigne ConsigneTemp;
 int Compteur_Fourche_Optique=0;
 float DELTA_Consigne_Init=0;
 
@@ -154,8 +130,9 @@ bool premier_passage_A=true;
 #define Servo_S_D_DOWN 70
 #define Servo_S_G_DOWN 135
 #define Servo_S_D_BOURRE 110
-#define Servo_S_G_BOURRE 140
-
+#define Servo_S_G_BOURRE 95
+#define Servo_S_G_Decharge 35
+#define Servo_S_D_Decharge 135
 #define Servo_S_D_WAIT 150
 #define Servo_S_G_WAIT 20
 #define GPIO_Fourche_Optique 45
@@ -169,7 +146,7 @@ bool premier_passage_A=true;
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
 #define VITESSE_BRAS_AVANCE 220
-#define VITESSE_BRAS_RECULE 220
+#define VITESSE_BRAS_RECULE 180
 #define ETAT_BRAS_AVANCE HIGH
 #define ETAT_BRAS_RECULE LOW
 //Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};

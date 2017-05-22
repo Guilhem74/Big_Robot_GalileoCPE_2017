@@ -71,6 +71,10 @@ void Pince_V_Bourre(){
   Servo_L_D.write(Servo_S_D_BOURRE);
   Servo_L_G.write(Servo_S_G_BOURRE);
 }
+void Pince_H_Decharge(){
+  Servo_S_D.write(Servo_S_D_Decharge);
+  Servo_S_G.write(Servo_S_G_Decharge);
+}
 void ACTIVER_FUNNY_ACTION(){
   Servo_Funny.write(80);
 }
@@ -138,7 +142,7 @@ void Lecture_Fourche_Optique()
   static bool Etat_Actuel=HIGH;
   static bool Etat_Precedent=HIGH;
   Etat_Actuel=digitalRead(GPIO_Fourche_Optique);
-  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH&& Compteur_Fourche_Optique>10)
+  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH&& Compteur_Fourche_Optique>8)
   {
   Chargeur_Pret=true;
   }
