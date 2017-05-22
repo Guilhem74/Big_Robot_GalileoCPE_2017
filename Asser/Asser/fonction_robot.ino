@@ -94,6 +94,8 @@ static int cpt=0;
 
   if(abs(angle_envoye)>6 && New_moove_angle==true){
       Serial.println("Boule_Angle");
+      Serial.println(angle_envoye);
+
       Distance_moyenne=0;
       if(angle_envoye>=0){
           Rampe_angle+=COEFF_RAMP_ANG*TEMPS_MIN_ASSERT*angle_envoye/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s

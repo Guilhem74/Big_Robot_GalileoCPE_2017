@@ -22,7 +22,7 @@ DESACTIVER_FUNNY_ACTION();
   Pince_CLOSE();
 Pince_UP();
   Quart=1;
-  delay(30000);
+  delay(100);
 
   Etat_bras_voulu=0;
 
