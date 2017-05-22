@@ -188,9 +188,10 @@ Consigne Consigne6(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne7);
 Consigne Consigne5(Pince_H,TIMEOUT_SERVO,Pince_H_Pousse,&Consigne6);
 Consigne Consigne4(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne5);
 Consigne Consigne3(180,1290,85 ,&Consigne4);
-Consigne Consigne2(90,1070,90,&Consigne3);
+Consigne Consigne2(120,1070,130,&Consigne3);
 Consigne Consigne1(Pince_V,TIMEOUT_SERVO,Pince_V_UP,&Consigne2);
 //Consigne Consigne1(400,1070,90);
+
 
 /*Consigne Consigne3(Chargeur_Cylindre,1000,Chargeur_UP);
 Consigne Consigne2(Chargeur_Cylindre,4000,Chargeur_UP,&Consigne3);

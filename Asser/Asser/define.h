@@ -19,7 +19,6 @@ int Quart=0;
 int Quart_Reel=0;
 float ANGLE_DEST = 0;
 float angle_envoye_final = 0;
-float Rampe_angle = 0;
 float Rampe_distance = 0;
 
 float X_POS = 0, Y_POS = 1070, ANGLE_POS = 90;
@@ -79,7 +78,7 @@ int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
 #define TEMPS_MATCH 90000
-#define COEFF_RAMP_ANG 0.0005
+#define COEFF_RAMP_ANG 0.005
 #define COEFF_RAMP_ANG_FINAL 0.001
 #define COEFF_RAMP_LINEAIRE 0.001
 #define TAILLE_TABLEAU_SOMME 50

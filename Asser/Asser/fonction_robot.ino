@@ -92,6 +92,62 @@ static int cpt=0;
   else if((((abs(angle_robot+angle_envoye)<=90 || angle_robot+angle_envoye>=270) && Y_DEST>Y_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)) || (((angle_robot+angle_envoye>-180 && angle_robot+angle_envoye<0) || angle_robot+angle_envoye>=180) && X_DEST>X_POS) || (angle_robot+angle_envoye>90 && angle_robot+angle_envoye<270 && Y_DEST<Y_POS)|| (((angle_robot+angle_envoye>0 && angle_robot+angle_envoye<180) || angle_robot+angle_envoye<-180) && X_DEST<X_POS)) avancer=1;
   else avancer=-1;//
 
+
+
+  static float Rampe_Angle=0;
+  static float Rampe_Distance=0;
+  float erreur_angle=angle_envoye;
+  #define TOLERANCE_ANGLE_RAMPE 25
+  #define TOLERANCE_DISTANCE_RAMPE 60
+  #define TOLERANCE_DISTANCE_BOULE_ANGLE_FINAL 40
+  #define TOLERANCE_DISTANCE 30
+  bool Mise_A_Angle_Final=false;
+if(sqrt(dx*dx+dy*dy)<TOLERANCE_DISTANCE_BOULE_ANGLE_FINAL)
+{
+  erreur_angle=-(angle_radian*RAD_TO_DEG-ANGLE_FINAL);//Asservissement a l'angle_Final
+  Mise_A_Angle_Final=true;
+}
+else erreur_angle=angle_envoye ;//Asservissement a l'angle pour effectuer notre destination
+Serial.println("");
+  Serial.println(sqrt(dx*dx+dy*dy));
+  Serial.println(erreur_angle);
+
+float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD));
+  if(abs(Erreur_Distance)>TOLERANCE_DISTANCE_RAMPE)
+  {
+      Rampe_Distance+=COEFF_RAMP_LINEAIRE;
+      if(Rampe_Distance>1) Rampe_Distance=1;
+      Erreur_Distance*=Rampe_Distance;
+  }
+  else
+  {
+      Rampe_Distance=0;
+      Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD));
+      if(abs(Erreur_Distance)<TOLERANCE_DISTANCE&&Mise_A_Angle_Final==true &&Consigne_Actuel->Action==Deplacement)
+      {
+          Consigne_termine=true;
+      }
+
+  }
+
+  float Erreur_Angulaire_Degres=erreur_angle;
+  if(abs(Erreur_Angulaire_Degres)>TOLERANCE_ANGLE_RAMPE)
+  {//L'erreur est trop grande il faut ramper
+       Rampe_Angle+=COEFF_RAMP_ANG;
+       if (Rampe_Angle > 1 ) Rampe_Angle=1 ;
+       Erreur_Angulaire_Degres*=Rampe_Angle;
+  }
+  else
+  {
+    Rampe_Angle=0;
+    Erreur_Angulaire_Degres=erreur_angle;//Pas de rampe
+  }
+  erreur_angle_radian=Erreur_Angulaire_Degres*DEG_TO_RAD;
+  Distance_moyenne=Erreur_Distance;
+
+  Serial.println(Erreur_Angulaire_Degres);
+  Serial.println(Distance_moyenne);
+  #if 0
   if(abs(angle_envoye)>6 && New_moove_angle==true){
       Serial.println("Boule_Angle");
       Serial.println(angle_envoye);
@@ -194,7 +250,7 @@ static int cpt=0;
     Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle_radian));//Assert vitesse classique
 
   }
-
+#endif
     //Serial.println(erreur_angle_radian);
 
 if(Consigne_Actuel->Action!=Deplacement){
@@ -205,13 +261,13 @@ if(Consigne_Actuel->Action!=Deplacement){
 /*Cas de detection*/
 if(Obstacle_devant==true && Distance_moyenne>0){
   Distance_moyenne=0;
-  Rampe_angle=0;
-  Rampe_distance=0;
+  /*Rampe_angle=0;
+  Rampe_distance=0;*/
 }
 else if(Obstacle_derriere==true && Distance_moyenne<0){
   Distance_moyenne=0;
-  Rampe_angle=0;
-  Rampe_distance=0;
+  /*Rampe_angle=0;
+  Rampe_distance=0;*/
 }
 
 
