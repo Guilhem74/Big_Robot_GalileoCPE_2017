@@ -3,6 +3,7 @@
 /*Communication*/
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
+#define TIMEOUT_CYLINDRE 1300
 #define TIMEOUT_SERVO 350
 #define TIMEOUT_BRAS 800
 #define TIMEOUT_DEPLACEMENT 5000
