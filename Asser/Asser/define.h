@@ -3,11 +3,11 @@
 /*Communication*/
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
-#define TIMEOUT_CYLINDRE 1300
-#define TIMEOUT_SERVO 350
-#define TIMEOUT_BRAS 800
+#define TIMEOUT_CYLINDRE 1000
+#define TIMEOUT_SERVO 300
+#define TIMEOUT_BRAS 700
 #define TIMEOUT_DEPLACEMENT 5000
-#define YELLOW false
+#define YELLOW true
 
 #if YELLOW==0
 #include "Start1_BLUE.h"
@@ -88,7 +88,7 @@ int32_t Codeuse_Gauche_PAST = 0; // Ancien nbr de tick gauche
 int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
-#define TEMPS_MATCH 90000
+#define TEMPS_MATCH 90000000
 float COEFF_RAMP_ANG=0.025;
 #define COEFF_RAMP_ANG_FINAL 0.001
 float COEFF_RAMP_LINEAIRE=0.01;
@@ -128,7 +128,7 @@ bool premier_passage_A=true;
 #define Servo_S_D_CLOSE 175
 #define Servo_S_G_CLOSE 0
 #define Servo_S_D_UP 160
-#define Servo_S_G_UP 50
+#define Servo_S_G_UP 55
 #define Servo_S_D_DOWN 65
 #define Servo_S_G_DOWN 140
 #define Servo_S_D_BOURRE 110
@@ -136,9 +136,9 @@ bool premier_passage_A=true;
 #define Servo_S_G_Decharge 56
 #define Servo_S_D_Decharge 136
 #define Servo_S_D_WAIT 157
-#define Servo_S_G_WAIT 14
-#define Servo_S_D_POUSSE 60
-#define Servo_S_G_POUSSE 145
+#define Servo_S_G_WAIT 19
+#define Servo_S_D_POUSSE 57
+#define Servo_S_G_POUSSE 148
 #define GPIO_Fourche_Optique 45
 
 #define Fin_Course_Retracte 53
@@ -146,11 +146,11 @@ bool premier_passage_A=true;
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM  7
-#define Vitesse_MIN_Chargeur_Cylindre 100
+#define Vitesse_MIN_Chargeur_Cylindre 110
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
 #define VITESSE_BRAS_AVANCE 220
-#define VITESSE_BRAS_RECULE 160
+#define VITESSE_BRAS_RECULE 180
 #define ETAT_BRAS_AVANCE HIGH
 #define ETAT_BRAS_RECULE LOW
 //Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};

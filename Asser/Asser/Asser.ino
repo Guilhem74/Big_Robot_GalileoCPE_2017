@@ -30,7 +30,7 @@ Pince_UP();
 }
 
 void loop() {
-//  Where_Is_Robot();
+ Where_Is_Robot();
   if( Robot_Principal==Prechauff)
     {//Tirette attaché
         Mise_A_Jour_Tirette();

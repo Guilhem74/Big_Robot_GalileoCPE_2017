@@ -84,7 +84,7 @@ Consigne Consigne71(Bras,TIMEOUT_BRAS,Bras_Pousse,&Consigne4800);
 Consigne Consigne70(Pince_H,TIMEOUT_SERVO,Pince_H_Dechargement,&Consigne71);
 
 
-Consigne Consigne605(1167,606,-45,TIMEOUT_DEPLACEMENT,&Consigne70);
+Consigne Consigne605(1250,670,-45,TIMEOUT_DEPLACEMENT,&Consigne70);
 Consigne Consigne56000(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne605);
 
 Consigne Consigne604(1054,507,-42,TIMEOUT_DEPLACEMENT,&Consigne56000);
@@ -93,7 +93,7 @@ Consigne Consigne694(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne5600);
 Consigne Consigne603(1197,388,-135,TIMEOUT_DEPLACEMENT,&Consigne694);
 Consigne Consigne602(1108,475,-135,TIMEOUT_DEPLACEMENT,&Consigne603);
 Consigne Consigne692(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne602);
-Consigne Consigne601(1178,604,-47,TIMEOUT_DEPLACEMENT,&Consigne692);
+Consigne Consigne601(1250,670,-45,TIMEOUT_DEPLACEMENT,&Consigne692);
 Consigne Consigne750(Pince_H,TIMEOUT_SERVO,Pince_H_Pousse,&Consigne601);
 
 Consigne Consigne6000(1104,536,-46,TIMEOUT_DEPLACEMENT,&Consigne750);
@@ -122,8 +122,8 @@ Consigne Consigne54(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne55);
 Consigne Consigne53(Pince_V,TIMEOUT_SERVO,Pince_V_Bourrage,&Consigne54);
 Consigne Consigne52(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne53);
 Consigne Consigne51(Pince_V,TIMEOUT_SERVO,Pince_V_DOWN,&Consigne52);
-Consigne Consigne50(Pince_H,TIMEOUT_SERVO+200,Pince_H_Gauche_Desserre,&Consigne51);
-Consigne Consigne49(Pince_H,TIMEOUT_SERVO+2003.,Pince_H_Droite_Desserre,&Consigne50);
+Consigne Consigne50(Pince_H,TIMEOUT_SERVO,Pince_H_Gauche_Desserre,&Consigne51);
+Consigne Consigne49(Pince_H,TIMEOUT_SERVO,Pince_H_Droite_Desserre,&Consigne50);
 Consigne Consigne48(Pince_V,TIMEOUT_SERVO,Pince_V_UP,&Consigne49);
 Consigne Consigne47(Bras,1000,Bras_Retracte,&Consigne48);
 Consigne Consigne46(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne47);
