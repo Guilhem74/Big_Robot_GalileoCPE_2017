@@ -22,13 +22,15 @@ DESACTIVER_FUNNY_ACTION();
   Pince_CLOSE();
 Pince_UP();
   Quart=1;
-  delay(100);
+  delay(1000);
+
+
   Etat_bras_voulu=0;
 
 }
 
 void loop() {
-  Where_Is_Robot();
+//  Where_Is_Robot();
   if( Robot_Principal==Prechauff)
     {//Tirette attaché
         Mise_A_Jour_Tirette();

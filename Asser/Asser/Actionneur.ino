@@ -119,13 +119,11 @@ void Mise_a_jour_bras() {
   }
 
 }
-Mise_a_jour_detection(){
+void Mise_a_jour_detection(){
   Obstacle_devant=digitalRead(GPIO_DETECTION_AVANT);
-  Serial.print(Obstacle_devant);
-  Serial.print(" ");
+
 
   Obstacle_derriere=digitalRead(GPIO_DETECTION_ARRIERE);
-  Serial.println(Obstacle_derriere);
 
 }
 void Mise_A_Jour_Tirette()
@@ -147,17 +145,4 @@ void Mise_A_Jour_Tirette()
     Robot_Principal=En_Route;
   }
 }
-void Lecture_Fourche_Optique()
-{
-  static bool Etat_Actuel=HIGH;
-  static bool Etat_Precedent=HIGH;
-  Etat_Actuel=digitalRead(GPIO_Fourche_Optique);
-  if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH&& Compteur_Fourche_Optique>8)
-  {
-  Chargeur_Pret=true;
-  Compteur_Fourche_Optique=0;
-  digitalWrite(PIN_Chargeur_Cylindre_DIR,HIGH);
-  analogWrite(PIN_Chargeur_Cylindre_PWM, 2);
-  }
-  Etat_Precedent=Etat_Actuel;
-}
+

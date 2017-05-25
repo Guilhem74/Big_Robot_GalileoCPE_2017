@@ -194,7 +194,6 @@ void Routine_Robot()
 
   if ((millis() - Temps_assert) > TEMPS_MIN_ASSERT) {
     Mise_A_Jour_Action_Robot();
-    Lecture_Fourche_Optique();
     Mise_a_jour_bras();
     mise_a_jour_robot();
     calcul_erreur();

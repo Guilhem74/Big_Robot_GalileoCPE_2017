@@ -146,7 +146,7 @@ bool premier_passage_A=true;
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM  7
-#define Vitesse_MIN_Chargeur_Cylindre 80
+#define Vitesse_MIN_Chargeur_Cylindre 100
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
 #define VITESSE_BRAS_AVANCE 220

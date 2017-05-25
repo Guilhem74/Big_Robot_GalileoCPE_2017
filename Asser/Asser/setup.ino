@@ -25,6 +25,8 @@ void setup_asservissement()
 
   Serial3.begin(115200);
   Serial3.print("R\n");
+  pinMode(20, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(20), Cylindre_Rotation, FALLING);
 
  pinMode(PIN_MOTEUR_DROITE_VITESSE, OUTPUT);
   pinMode(PIN_MOTEUR_DROITE_SENS, OUTPUT);
@@ -37,6 +39,17 @@ Consigne_termine=false;
 
 
 }
+void Cylindre_Rotation() {
+  if(Compteur_Fourche_Optique>5&&digitalRead(20)==LOW)
+  {
+  Chargeur_Pret=true;
+  Compteur_Fourche_Optique=0;
+  digitalWrite(PIN_Chargeur_Cylindre_DIR,HIGH);
+  analogWrite(PIN_Chargeur_Cylindre_PWM, 0);
+  }
+  Serial.println("EDE");
+
+ }
 void initialisation_variables()
 {
  cnt = 0; // nombre de données découpées
