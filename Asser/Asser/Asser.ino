@@ -23,7 +23,6 @@ DESACTIVER_FUNNY_ACTION();
 Pince_UP();
   Quart=1;
   delay(100);
-
   Etat_bras_voulu=0;
 
 }
@@ -50,7 +49,7 @@ void loop() {
         while(1);
       }
       else if( Robot_Principal!= Fin)
-      {//routine du robot
+      {//routine du robot*/
         Routine_Robot();
 
       }

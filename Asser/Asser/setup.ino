@@ -20,6 +20,9 @@ void Setup_Commande()
 void setup_asservissement()
 {
    Serial.begin(115200);
+   Serial1.begin(115200);
+   //while(!Serial1.available());
+
   Serial3.begin(115200);
   Serial3.print("R\n");
 
@@ -28,10 +31,10 @@ void setup_asservissement()
   pinMode(PIN_MOTEUR_GAUCHE_VITESSE, OUTPUT);
   pinMode(PIN_MOTEUR_GAUCHE_SENS, OUTPUT);
   initialisation_variables();
-  Serial.println("INIT Gros Robot");
+  Serial1.println("INIT Gros Robot");
 Consigne_termine=false;
  delay(100);
- 
+
 
 }
 void initialisation_variables()

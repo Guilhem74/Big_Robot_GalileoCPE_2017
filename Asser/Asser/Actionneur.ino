@@ -81,6 +81,11 @@ void ACTIVER_FUNNY_ACTION(){
 void DESACTIVER_FUNNY_ACTION(){
   Servo_Funny.write(50);
 }
+void Pince_V_Pousse_Action()
+{
+  Servo_L_D.write(Servo_S_D_POUSSE);
+  Servo_L_G.write(Servo_S_G_POUSSE);
+}
 void Mise_a_jour_bras() {
 
   if (digitalRead(Fin_Course_Pousse) == LOW && Etat_bras_voulu == 1) {//Bras poussé
@@ -115,8 +120,13 @@ void Mise_a_jour_bras() {
 
 }
 Mise_a_jour_detection(){
-  Obstacle_devant=digitalRead(41);
-  Obstacle_derriere=digitalRead(43);
+  Obstacle_devant=digitalRead(GPIO_DETECTION_AVANT);
+  Serial.print(Obstacle_devant);
+  Serial.print(" ");
+
+  Obstacle_derriere=digitalRead(GPIO_DETECTION_ARRIERE);
+  Serial.println(Obstacle_derriere);
+
 }
 void Mise_A_Jour_Tirette()
 {
@@ -145,6 +155,9 @@ void Lecture_Fourche_Optique()
   if(Etat_Actuel!=Etat_Precedent&&Etat_Precedent==HIGH&& Compteur_Fourche_Optique>8)
   {
   Chargeur_Pret=true;
+  Compteur_Fourche_Optique=0;
+  digitalWrite(PIN_Chargeur_Cylindre_DIR,HIGH);
+  analogWrite(PIN_Chargeur_Cylindre_PWM, 2);
   }
   Etat_Precedent=Etat_Actuel;
 }

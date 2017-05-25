@@ -97,7 +97,7 @@ static int cpt=0;
   static float Rampe_Angle=0;
   static float Rampe_Distance=0;
   float erreur_angle=angle_envoye;
-  #define TOLERANCE_ANGLE_RAMPE 15
+  #define TOLERANCE_ANGLE_RAMPE 8
   #define TOLERANCE_DISTANCE_RAMPE 20
   #define TOLERANCE_DISTANCE_BOULE_ANGLE_FINAL 20
   #define TOLERANCE_DISTANCE 30
@@ -121,6 +121,7 @@ else
 float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD));
   if(abs(Erreur_Distance)>TOLERANCE_DISTANCE_RAMPE)
   {
+    
       Rampe_Distance+=COEFF_RAMP_LINEAIRE;
       if(Rampe_Distance>1) Rampe_Distance=1;
       Erreur_Distance*=Rampe_Distance;
@@ -153,7 +154,7 @@ float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD)
   {
     Rampe_Angle=0;
     Erreur_Angulaire_Degres=erreur_angle;//Pas de rampe
-    if(abs(Erreur_Angulaire_Degres)<4&&Mise_A_Angle==true)Mise_A_Angle=false;
+    if(abs(Erreur_Angulaire_Degres)<5&&Mise_A_Angle==true)Mise_A_Angle=false;
 
   }
 
@@ -161,112 +162,6 @@ float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD)
 (Mise_A_Angle==true/*&&sqrt(dx*dx+dy*dy)<50*/)? Distance_moyenne=0:Distance_moyenne=Erreur_Distance;
 
 
-
-  #if 0
-  if(abs(angle_envoye)>6 && New_moove_angle==true){
-      Serial.println("Boule_Angle");
-      Serial.println(angle_envoye);
-
-      Distance_moyenne=0;
-      if(angle_envoye>=0){
-          Rampe_angle+=COEFF_RAMP_ANG*TEMPS_MIN_ASSERT*angle_envoye/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
-          if(Rampe_angle>=angle_envoye) Rampe_angle=angle_envoye;
-      }
-      if(angle_envoye<0){
-        Rampe_angle+=COEFF_RAMP_ANG*TEMPS_MIN_ASSERT*angle_envoye/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne d'angle au bout de 5s
-        if(Rampe_angle<=angle_envoye) Rampe_angle=angle_envoye;
-      }
-
-      angle_envoye=Rampe_angle;
-    }
-    else if(New_moove_angle==true){//Angle_Envoye<6
-
-      New_moove_angle=false;
-      New_moove_distance=true;
-    }
-
-    if(sqrt(dx*dx+dy*dy)>=50 && New_moove_distance==true){//Rampe de distance
-
-        Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(angle_envoye*DEG_TO_RAD));
-        if(Distance_moyenne>=0){
-          Rampe_distance+=COEFF_RAMP_LINEAIRE*TEMPS_MIN_ASSERT*Distance_moyenne/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne distance au bout de 2s
-          if(Rampe_distance>=Distance_moyenne) Rampe_distance=Distance_moyenne;
-        }
-        if(Distance_moyenne<0){
-          Rampe_distance+=COEFF_RAMP_LINEAIRE*TEMPS_MIN_ASSERT*Distance_moyenne/2; //temps_min_assert en ms, vaut actuellement 10, donc on atteint notre consigne distance au bout de 2s
-          if(Rampe_distance<=Distance_moyenne) Rampe_distance=Distance_moyenne;
-        }
-        Distance_moyenne=Rampe_distance;
-        Serial.println("Boule_Distance");
-        Serial.println(Distance_moyenne);
-
-    }else if(New_moove_distance==true){//On est moins loin que 50 mm
-      New_moove_distance=false;
-      New_moove_angle_final=true;
-      New_moove_angle=false;
-    }
-
-
-
-
-
-   if(sqrt(dx*dx+dy*dy)<80 && New_moove_angle_final==true){//Si on est a proximité du point final et qu'on commence un mouvement pour aller a l'angle final
-   Serial.println("ANgle_Final_Boule");
-
-          double coeff=0;
-          angle_robot=angle_radian*RAD_TO_DEG;
-          coeff=0.1;
-          float ERREUR=angle_robot-ANGLE_FINAL;
-          if(abs(ERREUR)>45)
-          {//Faire une rampe car l'erreur est trop grande
-            if(ERREUR>0)
-            {
-              Rampe_angle_Final+=coeff;
-              if(Rampe_angle_Final>ERREUR)
-              {
-                Rampe_angle_Final=ERREUR;
-              }
-            }
-            else
-            {
-              Rampe_angle_Final-=coeff;
-              if(Rampe_angle_Final<ERREUR)
-              {
-                Rampe_angle_Final=ERREUR;
-              }
-            }
-            erreur_angle_radian=-(Rampe_angle_Final*DEG_TO_RAD);
-
-          }
-          else
-          {//L'erreur est petite, prendre en compte directement l'erreur -> Pas de rampe
-            erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
-            Rampe_angle_Final=0;
-          if(abs(erreur_angle_radian*RAD_TO_DEG)<5){//Tellement petit qu'on passe a l'étape Suivante
-
-            if(Consigne_Actuel->Action==Deplacement)
-            {
-                Consigne_termine=true;
-                Serial.println("Fin etape");
-            }
-
-          }
-
-        }
-          Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle_radian));//On corrige la distance pendant la mise a l'angle final
-
-
-  }else if(New_moove_angle_final==true) {
-    //New_moove_angle_final=false;
-  //  New_moove_angle=true;
-  Serial.println("Boule_Exté");
-
-    erreur_angle_radian=angle_envoye*DEG_TO_RAD;//Assert Angulaire classique
-    Distance_moyenne=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle_radian));//Assert vitesse classique
-
-  }
-#endif
-    //Serial.println(erreur_angle_radian);
 
 if(Consigne_Actuel->Action!=Deplacement){
   erreur_angle_radian=-(angle_radian-ANGLE_FINAL*DEG_TO_RAD);
@@ -276,11 +171,15 @@ if(Consigne_Actuel->Action!=Deplacement){
 /*Cas de detection*/
 if(Obstacle_devant==true && Distance_moyenne>0){
   Distance_moyenne=0;
+  Rampe_Distance=0;
+  Rampe_Angle=0;
   /*Rampe_angle=0;
   Rampe_distance=0;*/
 }
 else if(Obstacle_derriere==true && Distance_moyenne<0){
   Distance_moyenne=0;
+  Rampe_Distance=0;
+  Rampe_Angle=0;
   /*Rampe_angle=0;
   Rampe_distance=0;*/
 }
@@ -354,6 +253,8 @@ void Mise_A_Jour_Action_Robot()
           Pince_DOWN();
       else if(Consigne_Actuel->Information_Supplementaire==Pince_V_Bourrage)
           Pince_V_Bourre();
+      else if(Consigne_Actuel->Information_Supplementaire==Pince_V_Pousse)
+          Pince_V_Pousse_Action();
     break;
     case Pince_H:
       if(Consigne_Actuel->Information_Supplementaire==Pince_H_Desserre)

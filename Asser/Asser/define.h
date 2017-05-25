@@ -3,9 +3,10 @@
 /*Communication*/
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
-#define TIMEOUT_SERVO 500
-#define TIMEOUT_BRAS 1200
-#define YELLOW true
+#define TIMEOUT_SERVO 350
+#define TIMEOUT_BRAS 800
+#define TIMEOUT_DEPLACEMENT 5000
+#define YELLOW false
 
 #if YELLOW==0
 #include "Start1_BLUE.h"
@@ -87,7 +88,7 @@ int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
 #define TEMPS_MATCH 90000
-float COEFF_RAMP_ANG=0.01;
+float COEFF_RAMP_ANG=0.025;
 #define COEFF_RAMP_ANG_FINAL 0.001
 float COEFF_RAMP_LINEAIRE=0.01;
 #define TAILLE_TABLEAU_SOMME 50
@@ -108,8 +109,8 @@ float DELTA_Consigne_Init=0;
 
 //ACTIONNEUR
 
-#define GPIO_DETECTION_AVANT 41
-#define GPIO_DETECTION_ARRIERE 43
+#define GPIO_DETECTION_AVANT 43
+#define GPIO_DETECTION_ARRIERE 41
 #define GPIO_PINCE_SERRAGE_DROITE 5
 #define GPIO_PINCE_SERRAGE_GAUCHE 2
 #define GPIO_PINCE_LEVAGE_DROITE 4
@@ -123,18 +124,20 @@ float Rampe_angle_Final=0;
 bool premier_passage_A=true;
 #define Servo_S_D_OPEN 75
 #define Servo_S_G_OPEN 100
-#define Servo_S_D_CLOSE 177
-#define Servo_S_G_CLOSE 2
+#define Servo_S_D_CLOSE 175
+#define Servo_S_G_CLOSE 0
 #define Servo_S_D_UP 160
 #define Servo_S_G_UP 50
-#define Servo_S_D_DOWN 70
-#define Servo_S_G_DOWN 135
+#define Servo_S_D_DOWN 65
+#define Servo_S_G_DOWN 140
 #define Servo_S_D_BOURRE 110
 #define Servo_S_G_BOURRE 95
-#define Servo_S_G_Decharge 35
-#define Servo_S_D_Decharge 135
-#define Servo_S_D_WAIT 150
-#define Servo_S_G_WAIT 20
+#define Servo_S_G_Decharge 56
+#define Servo_S_D_Decharge 136
+#define Servo_S_D_WAIT 157
+#define Servo_S_G_WAIT 14
+#define Servo_S_D_POUSSE 60
+#define Servo_S_G_POUSSE 145
 #define GPIO_Fourche_Optique 45
 
 #define Fin_Course_Retracte 53
@@ -142,11 +145,11 @@ bool premier_passage_A=true;
 
 #define PIN_Chargeur_Cylindre_DIR 49
 #define PIN_Chargeur_Cylindre_PWM  7
-#define Vitesse_MIN_Chargeur_Cylindre 100
+#define Vitesse_MIN_Chargeur_Cylindre 80
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
 #define VITESSE_BRAS_AVANCE 220
-#define VITESSE_BRAS_RECULE 180
+#define VITESSE_BRAS_RECULE 160
 #define ETAT_BRAS_AVANCE HIGH
 #define ETAT_BRAS_RECULE LOW
 //Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};
