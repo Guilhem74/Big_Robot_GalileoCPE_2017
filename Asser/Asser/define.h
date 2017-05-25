@@ -7,7 +7,7 @@
 #define TIMEOUT_SERVO 300
 #define TIMEOUT_BRAS 700
 #define TIMEOUT_DEPLACEMENT 5000
-#define YELLOW true
+#define YELLOW false
 
 #if YELLOW==0
 #include "Start1_BLUE.h"
@@ -129,7 +129,7 @@ bool premier_passage_A=true;
 #define Servo_S_G_CLOSE 0
 #define Servo_S_D_UP 160
 #define Servo_S_G_UP 55
-#define Servo_S_D_DOWN 65
+#define Servo_S_D_DOWN 61
 #define Servo_S_G_DOWN 140
 #define Servo_S_D_BOURRE 110
 #define Servo_S_G_BOURRE 95
