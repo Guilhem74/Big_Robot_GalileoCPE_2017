@@ -61,7 +61,12 @@ void Pince_DOWN() {
   Servo_L_D.write(Servo_S_D_DOWN);
   Servo_L_G.write(Servo_S_G_DOWN);
 }
-
+void Pince_V_d_up(){
+  Servo_L_D.write(Servo_S_D_seul_UP);
+}
+void Pince_V_g_up(){
+  Servo_L_G.write(Servo_S_G_UP);
+}
 void Pince_WAIT() {
   Servo_S_D.write(Servo_S_D_WAIT);
   Servo_S_G.write(Servo_S_G_WAIT);
@@ -145,4 +150,3 @@ void Mise_A_Jour_Tirette()
     Robot_Principal=En_Route;
   }
 }
-

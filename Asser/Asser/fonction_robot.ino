@@ -119,7 +119,7 @@ else
 
 
 float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD));
-  if(abs(Erreur_Distance)>TOLERANCE_DISTANCE_RAMPE)
+  if(abs(Erreur_Distance)>TOLERANCE_DISTANCE_RAMPE&&Consigne_Actuel->Rampe_Distance_Active==true)
   {
 
       Rampe_Distance+=COEFF_RAMP_LINEAIRE;
@@ -254,6 +254,10 @@ void Mise_A_Jour_Action_Robot()
           Pince_V_Bourre();
       else if(Consigne_Actuel->Information_Supplementaire==Pince_V_Pousse)
           Pince_V_Pousse_Action();
+      else if(Consigne_Actuel->Information_Supplementaire==Pince_V_droite_up)
+          Pince_V_d_up();
+          else if(Consigne_Actuel->Information_Supplementaire==Pince_V_gauche_up)
+              Pince_V_g_up();
     break;
     case Pince_H:
       if(Consigne_Actuel->Information_Supplementaire==Pince_H_Desserre)

@@ -73,7 +73,7 @@ float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
 #define P_ANGULAIRE 8//5
-#define I_ANGULAIRE 11//5//0.95
+#define I_ANGULAIRE 13//5//0.95
 #define D_ANGULAIRE 1800//1000
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
@@ -133,6 +133,8 @@ bool premier_passage_A=true;
 #define Servo_S_G_DOWN 142
 #define Servo_S_D_BOURRE 120
 #define Servo_S_G_BOURRE 95
+#define Servo_S_D_seul_UP 130
+#define Servo_S_G_seul_UP 55
 #define Servo_S_G_Decharge 69
 #define Servo_S_D_Decharge 128
 //MArron vert jaune orange rien rouge
