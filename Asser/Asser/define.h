@@ -4,8 +4,8 @@
 #define SEPARATEUR ';'
 #define NBR_ETAPE 4
 #define TIMEOUT_CYLINDRE 1000
-#define TIMEOUT_SERVO 300
-#define TIMEOUT_BRAS 700
+#define TIMEOUT_SERVO 350
+#define TIMEOUT_BRAS 1000
 #define TIMEOUT_DEPLACEMENT 5000
 #define YELLOW false
 
@@ -73,7 +73,7 @@ float erreur_precedente_lineaire = 0;
 
 // Asservissement angulaire ****
 #define P_ANGULAIRE 8//5
-#define I_ANGULAIRE 10//5//0.95
+#define I_ANGULAIRE 11//5//0.95
 #define D_ANGULAIRE 1800//1000
 float erreur_angulaire = 0;
 float erreur_precedente_angulaire = 0;
@@ -88,7 +88,7 @@ int32_t Codeuse_Gauche_PAST = 0; // Ancien nbr de tick gauche
 int32_t Temps_Base_Systeme=0;
 int32_t Temps_assert = 0;
 int32_t Temp_debut_match=0;
-#define TEMPS_MATCH 90000000
+#define TEMPS_MATCH 9000000
 float COEFF_RAMP_ANG=0.025;
 #define COEFF_RAMP_ANG_FINAL 0.001
 float COEFF_RAMP_LINEAIRE=0.01;
@@ -112,10 +112,10 @@ float DELTA_Consigne_Init=0;
 
 #define GPIO_DETECTION_AVANT 43
 #define GPIO_DETECTION_ARRIERE 41
-#define GPIO_PINCE_SERRAGE_DROITE 5
-#define GPIO_PINCE_SERRAGE_GAUCHE 2
+#define GPIO_PINCE_SERRAGE_DROITE 2
+#define GPIO_PINCE_SERRAGE_GAUCHE 3
 #define GPIO_PINCE_LEVAGE_DROITE 4
-#define GPIO_PINCE_LEVAGE_GAUCHE 3
+#define GPIO_PINCE_LEVAGE_GAUCHE 5
 #define GPIO_FUNNY_ACTION 12
 
 #define GPIO_TIRRETTE 22
@@ -123,20 +123,21 @@ float DELTA_Consigne_Init=0;
 #define GPIO_COULEUR_BLEU 24
 float Rampe_angle_Final=0;
 bool premier_passage_A=true;
-#define Servo_S_D_OPEN 75
-#define Servo_S_G_OPEN 100
-#define Servo_S_D_CLOSE 175
-#define Servo_S_G_CLOSE 0
-#define Servo_S_D_UP 160
+#define Servo_S_D_OPEN 72
+#define Servo_S_G_OPEN 130
+#define Servo_S_D_CLOSE 170
+#define Servo_S_G_CLOSE 17
+#define Servo_S_D_UP 166
 #define Servo_S_G_UP 55
-#define Servo_S_D_DOWN 61
-#define Servo_S_G_DOWN 140
-#define Servo_S_D_BOURRE 110
+#define Servo_S_D_DOWN 68
+#define Servo_S_G_DOWN 142
+#define Servo_S_D_BOURRE 120
 #define Servo_S_G_BOURRE 95
-#define Servo_S_G_Decharge 56
-#define Servo_S_D_Decharge 136
-#define Servo_S_D_WAIT 157
-#define Servo_S_G_WAIT 19
+#define Servo_S_G_Decharge 69
+#define Servo_S_D_Decharge 128
+//MArron vert jaune orange rien rouge
+#define Servo_S_D_WAIT 148
+#define Servo_S_G_WAIT 36
 #define Servo_S_D_POUSSE 57
 #define Servo_S_G_POUSSE 148
 #define GPIO_Fourche_Optique 45
@@ -149,8 +150,8 @@ bool premier_passage_A=true;
 #define Vitesse_MIN_Chargeur_Cylindre 110
 #define PIN_Bras_DIR 47
 #define PIN_Bras_PWM 6
-#define VITESSE_BRAS_AVANCE 220
-#define VITESSE_BRAS_RECULE 180
+#define VITESSE_BRAS_AVANCE 200
+#define VITESSE_BRAS_RECULE 200
 #define ETAT_BRAS_AVANCE HIGH
 #define ETAT_BRAS_RECULE LOW
 //Consigne Consigne1 = {Deplacement,400,1070,90,-1,Detection_Active,true,NULL};
