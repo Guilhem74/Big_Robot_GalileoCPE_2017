@@ -121,7 +121,7 @@ else
 float Erreur_Distance=avancer*sqrt(dx*dx+dy*dy)*abs(cos(erreur_angle*DEG_TO_RAD));
   if(abs(Erreur_Distance)>TOLERANCE_DISTANCE_RAMPE)
   {
-    
+
       Rampe_Distance+=COEFF_RAMP_LINEAIRE;
       if(Rampe_Distance>1) Rampe_Distance=1;
       Erreur_Distance*=Rampe_Distance;
@@ -169,14 +169,14 @@ if(Consigne_Actuel->Action!=Deplacement){
 }
 
 /*Cas de detection*/
-if(Obstacle_devant==true && Distance_moyenne>0){
+if(Obstacle_devant==true && Distance_moyenne>0&& (millis()-Temp_debut_match)>20000){
   Distance_moyenne=0;
   Rampe_Distance=0;
   Rampe_Angle=0;
   /*Rampe_angle=0;
   Rampe_distance=0;*/
 }
-else if(Obstacle_derriere==true && Distance_moyenne<0){
+else if(Obstacle_derriere==true && Distance_moyenne<0&&(millis()-Temp_debut_match)>20000){
   Distance_moyenne=0;
   Rampe_Distance=0;
   Rampe_Angle=0;

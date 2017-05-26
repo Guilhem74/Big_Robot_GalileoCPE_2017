@@ -97,6 +97,11 @@ erreur_angulaire=0;
   Rampe_distance = 0;
   Consigne_Actuel=&ConsigneTemp;
   }
+  if (data[0].equals("S")) {
+    Servo_S_D.write((float)data[1].toInt());
+    Servo_S_G.write((float)data[2].toInt());
+  }
+
 }
 void serialEvent() {
   while (Serial.available()) {

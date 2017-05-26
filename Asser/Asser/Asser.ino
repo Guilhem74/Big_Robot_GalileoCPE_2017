@@ -19,10 +19,12 @@ DESACTIVER_FUNNY_ACTION();
   setup_asservissement();
   Setup_Commande();
 
-  Pince_CLOSE();
-Pince_UP();
+  Pince_WAIT();
   Quart=1;
-  delay(1000);
+  Pince_V_Bourre();
+  delay(100);
+
+
 
 
   Etat_bras_voulu=0;
@@ -31,10 +33,10 @@ Pince_UP();
 
 void loop() {
  Where_Is_Robot();
+// Plz_Share_What_U_Know_About_Encoder();
   if( Robot_Principal==Prechauff)
     {//Tirette attaché
         Mise_A_Jour_Tirette();
-
         Temp_debut_match=millis();
         Temps_Base_Systeme=millis();
 
