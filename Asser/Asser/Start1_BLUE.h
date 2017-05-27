@@ -146,7 +146,7 @@ Consigne Consigne603(612,154,-17,TIMEOUT_DEPLACEMENT,&Consigne694);
 Consigne Consigne602(1045,393,-42,TIMEOUT_DEPLACEMENT,&Consigne603);*/
 
 Consigne Consigne692896(Pince_H,TIMEOUT_SERVO,Pince_H_Desserre,&Consigne56000);
-Consigne Consigne601(1250,670,-45,TIMEOUT_DEPLACEMENT,false,&Consigne692896);
+Consigne Consigne601(1250,670,-45,TIMEOUT_DEPLACEMENT,true,&Consigne692896);
 Consigne Consigne7503557(Pince_H,TIMEOUT_SERVO,Pince_H_Gauche_Desserre,&Consigne601);
 Consigne Consigne750(Pince_V,TIMEOUT_SERVO,Pince_V_droite_up,&Consigne7503557);
 Consigne Consigne692985(Pince_H,TIMEOUT_SERVO,Pince_H_Serre,&Consigne750);
