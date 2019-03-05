@@ -1,0 +1,4 @@
+
+*.o
+
+QT_Display_Galileo/debug/
