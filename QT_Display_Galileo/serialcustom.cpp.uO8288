@@ -1,0 +1,97 @@
+#include "SerialCustom.h"
+#include "define.h"
+#include "iostream"
+void splitString(string message, char separator,string* data) ;
+SerialCustom::SerialCustom()
+{
+    QTextStream standardOutput(stdout);
+    QString serialPortName = SERIAL_PORT_NAME;
+    serialPort.setPortName(serialPortName);
+
+    int serialPortBaudRate =  QSerialPort::BAUDRATE;
+    serialPort.setBaudRate(serialPortBaudRate);
+    if (!serialPort.open(QIODevice::ReadWrite)) {
+        standardOutput << QObject::tr("Failed to open port %1, error: %2").arg(serialPortName).arg(serialPort.errorString()) << endl;
+         abort();
+        return ;
+    }
+}
+void SerialCustom::write(char *seq)
+{
+    QTextStream standardOutput(stdout);
+    serialPort.write(seq);
+    serialPort.waitForBytesWritten(5000);
+    return;
+}
+char* SerialCustom::read()
+{
+    static int X=100;
+    QTextStream standardOutput(stdout);
+    QByteArray readData = {};
+    do{
+        readData.append(serialPort.readAll());
+
+//
+    }while(serialPort.waitForReadyRead(1));
+//std::cout<<endl;
+        char* t=readData.data();
+if(t[0]=='X'&&t[1]=='Y'&&t[2]=='Z'&&t[3]==';')
+{
+    int i=4;
+    while(t[i]!=';')
+    {
+     i++;
+    }
+    int Size=i-4;
+    if(Size==0)
+    {
+         standardOutput << "Error"<<endl;
+    return NULL;
+    }
+    char J[Size];
+    for(int j=0;i<Size;i++)
+    {
+        J[j]=t[4+j];
+    }
+    standardOutput << J<<endl;
+
+
+}
+string data[50]={};
+splitString("XYZ;100;100;100",';',data);
+int Value=);
+int Value2=stoi(data[2]);
+sscanf(stoi(data[1],"%d",&Value);
+
+    std::cout<< Value<<" "<<Value2<<endl;
+ //standardOutput << readData.data();
+ //standardOutput<<t[0]<<" "<<t[1]<<" "<<endl;
+}
+
+void splitString(string message, char separator,string* data) {
+  int index = 0;
+  for(int i=0; i<10;i++)
+    {
+      data[i]="";
+    }
+  int cnt = 0;
+    do {
+      index = message.find(separator);
+      if(index != -1) {// s'il y a bien un caractère séparateu
+          // on découpe la chaine et on stocke le bout dans le tableau
+          data[cnt] = message.substr(0,index);
+          cnt++;
+          // on enlève du message le bout stocké
+          message = message.substr(index+1, message.length());
+      } else {
+         // après le dernier espace
+         // on s'assure que la chaine n'est pas vide
+         if(message.length() > 0) {
+
+           data[cnt] = message.substr(0,index); // dernier bout
+           cnt++;
+         }
+      }
+   } while(index >=0); // tant qu'il y a bien un séparateur dans la chaine
+
+}
